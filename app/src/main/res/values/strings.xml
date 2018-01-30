@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">247Around Technician</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="wall_mount_stand">Wall Mount Stand</string>
+
+    <!-- Strings related to login -->
+    <string name="askGPSPermission">Please Provide GPS Location Access</string>
+    <string name="askPassword">Please Enter Password</string>
+    <string name="phoneValidation">Please Enter Valid Mobile No</string>
+    <string name="loginFailedTitle">Login failed!</string>
+    <string name="loginFailedMsg">Login failed!</string>
+    <string name="serverConnectionFailedTitle">Opps!</string>
+    <string name="serverConnectionFailedMsg">Server Connection Failed</string>
+    <string name="prompt_phone">Mobile Number</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Login</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="login_msg">Enter User Name and Password</string>
+    <string name="title_activity_demo_login">Sign in</string>
+    <string name="loading">Please Wait...</string>
+    <string name="search_booking_hint">Search Booking Or Phone No</string>
+
+    <!-- Strings related to Home -->
+    <string name="bookingNotFound">Booking Not Found</string>
+
+
+    <!-- Complete Booking Activity Toast -->
+    <string name="add_signature">Customer Signature</string>
+    <string name="save">Submit</string>
+    <string name="hint_sign">Get Signature</string>
+    <string name="dialog_title">SIGN HERE</string>
+    <string name="hint_cancel">Cancel</string>
+    <string name="hint_clear">Clear</string>
+    <string name="hint_save">Save</string>
+    <string name="signature_saved">Successfully Saved</string>
+    <string name="showAmountOnSigDialoag">Amount Paid By Customer:</string>
+    <string name="serialNumberRequiredMsg">Please Add Serial Number</string>
+    <string name="bookingUpdatedSuccessMsg">Booking Updated Successfully</string>
+    <string name="customerPaidAmountRequired">Please Enter Customer Paid Amount</string>
+    <string name="signatureRequired">Please Add Customer Signature</string>
+    <string name="serialNumberPictureRequired">"Please Add Serial Picture</string>
+    <string name="priceTagsCheckboxRequired">Please check Atleast one Checkbox</string>
+
+    <!-- Cancel Booking Activity Toast -->
+    <string name="cancellationReasonRequired">Please Select Atleast One Reason</string>
+
+</resources>

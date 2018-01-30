@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "280749050344",
+    "firebase_url": "https://aroundtechnician.firebaseio.com",
+    "project_id": "aroundtechnician",
+    "storage_bucket": "aroundtechnician.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280749050344:android:807b9efc1c39419a",
+        "android_client_info": {
+          "package_name": "com.around.technician"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280749050344-pgekme6idsklkoa5cvqnp9as67p8pv0u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtR4jcqJBFASHyEeWDTBzG3vzcyZIEEJE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

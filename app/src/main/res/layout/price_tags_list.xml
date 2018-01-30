@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="2dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.around.technician.CompleteBookingActivity">
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/unit_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/input_padding" />
+
+    <TextView
+        android:id="@+id/price_tags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/border2"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/unit_checkbox"
+        android:text="Wall Mount Stand"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size" />
+
+</RelativeLayout>

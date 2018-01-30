@@ -1,0 +1,171 @@
+package com.around.technician.adapters;
+
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.around.technician.BookingGetterSetter;
+import com.around.technician.CancelBookingActivity;
+import com.around.technician.CompleteBookingActivity;
+import com.around.technician.Misc;
+import com.around.technician.R;
+
+import java.util.List;
+
+/**
+ * Created by abhay on 29/12/17.
+ */
+public class SearchAdapter extends RecyclerView.Adapter {
+
+    private final int VIEW_ITEM = 1;
+    private final int VIEW_PROG = 0;
+    public Context context;
+    View v1;
+    RecyclerView.ViewHolder vh;
+    Misc misc;
+    private List<BookingGetterSetter> list;
+
+    public SearchAdapter(List<BookingGetterSetter> list, RecyclerView recyclerView) {
+
+        this.list = list;
+        context = recyclerView.getContext();
+        misc = new Misc(context);
+
+    }
+
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+
+        if (holder instanceof ViewHolder) {
+
+            final BookingGetterSetter bookingList = (BookingGetterSetter) list.get(position);
+            ((ViewHolder) holder).address.setText(bookingList.getAddress());
+            ((ViewHolder) holder).bookingID.setText(bookingList.getBookingID());
+            ((ViewHolder) holder).services.setText(bookingList.getServices());
+            ((ViewHolder) holder).customerName.setText(bookingList.getCustomerName());
+            ((ViewHolder) holder).primaryContactNo.setText(bookingList.getPrimaryContactNo());
+            // We will allow Engineer to take action when status has Pending Or Rescheduled
+            if (bookingList.getCurrent_status().equals("Pending") ||
+                    bookingList.getCurrent_status().equals("Rescheduled")) {
+                ((ViewHolder) holder).buttonPanel.setVisibility(View.VISIBLE);
+                ((ViewHolder) holder).current_status.setVisibility(View.GONE);
+            } else {
+                ((ViewHolder) holder).buttonPanel.setVisibility(View.GONE);
+                ((ViewHolder) holder).current_status.setText(bookingList.getCurrent_status());
+                ((ViewHolder) holder).current_status.setVisibility(View.VISIBLE);
+            }
+            // Open Compete Booking Activity
+            ((ViewHolder) holder).complete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CompleteBookingActivity.class);
+                    intent.putExtra("bookingID", bookingList.getBookingID());
+                    intent.putExtra("customerName", bookingList.getCustomerName());
+                    intent.putExtra("services", bookingList.getServices());
+                    Log.e("Amount Due1",bookingList.getAmountDue());
+                    intent.putExtra("amountDue", bookingList.getAmountDue());
+                    context.startActivity(intent);
+                }
+            });
+            //Open Cancel Booking Activity
+            ((ViewHolder) holder).cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CancelBookingActivity.class);
+                    intent.putExtra("bookingID", bookingList.getBookingID());
+                    intent.putExtra("customerName", bookingList.getCustomerName());
+                    intent.putExtra("services", bookingList.getServices());
+                    context.startActivity(intent);
+                }
+            });
+            // Call to Customer
+            ((ViewHolder) holder).call.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean per = misc.checkPhoneRequestPermissions();
+                    if (per) {
+                        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bookingList.getPrimaryContactNo()));
+                        try {
+                            context.startActivity(in);
+                        } catch (android.content.ActivityNotFoundException ex) {
+                            Toast.makeText(context, "Could not find an activity to place the call.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
+
+        } else {
+            ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                      int viewType) {
+        if (viewType == VIEW_ITEM) {
+
+            v1 = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.booking_list, parent, false);
+            vh = new ViewHolder(v1);
+            this.context = v1.getContext();
+            return vh;
+
+        } else {
+
+            v1 = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.progress_bar_item, parent, false);
+            vh = new ProgressViewHolder(v1);
+            return vh;
+        }
+
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return list.get(position) != null ? VIEW_ITEM : VIEW_PROG;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView bookingID, services, customerName, primaryContactNo, address, current_status;
+        LinearLayout call, complete, cancel;
+        RelativeLayout buttonPanel;
+
+        public ViewHolder(View view) {
+            super(view);
+            bookingID = (TextView) view.findViewById(R.id.bookingID);
+            services = (TextView) view.findViewById(R.id.services);
+            customerName = (TextView) view.findViewById(R.id.customerName);
+            primaryContactNo = (TextView) view.findViewById(R.id.phonenumber);
+            address = (TextView) view.findViewById(R.id.address);
+            call = (LinearLayout) view.findViewById(R.id.phone);
+            complete = (LinearLayout) view.findViewById(R.id.complete);
+            cancel = (LinearLayout) view.findViewById(R.id.cancel);
+            current_status = (TextView) view.findViewById(R.id.current_status);
+            buttonPanel = (RelativeLayout) view.findViewById(R.id.buttonPanel);
+        }
+    }
+
+    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+
+        public ProgressViewHolder(View v) {
+            super(v);
+
+            progressBar = (ProgressBar) v.findViewById(R.id.progressBar1);
+        }
+    }
+}
