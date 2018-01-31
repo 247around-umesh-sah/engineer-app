@@ -20,11 +20,10 @@ import org.json.JSONObject;
 
 import java.util.regex.Pattern;
 
+@SuppressWarnings("ALL")
 public class LoginActivity extends AppCompatActivity implements ApiResponse {
     //Mobile Number validation Pattern
-    private static final Pattern sPattern
-            = Pattern.compile("^[6-9]{1}[0-9]{9}$");
-    public String TAG = "LoginActivity";
+    private static final Pattern sPattern = Pattern.compile("^[6-9]{1}[0-9]{9}$");
     public ConnectionDetector cd;
     public EditText phone_number, password;
     public Button login_button;
@@ -41,9 +40,6 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         sharedPrefs = getSharedPreferences(SplashActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
-
-        editor = sharedPrefs.edit();
-
         cd = new ConnectionDetector(this);
         misc = new Misc(this);
         misc.checkAndLocationRequestPermissions();
@@ -54,10 +50,12 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
         login_button = (Button) findViewById(R.id.login_button);
         phone_number.addTextChangedListener(new TextWatcher() {
 
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {}
+                                          int count, int after) {
+            }
 
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
@@ -66,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
 
                 if (isValidPhone(mobileNo)) {
 
-                    if (phone_number.getText().length() > 9 && password.getText().length() > 6){
+                    if (phone_number.getText().length() > 9 && password.getText().length() > 6) {
 
                         login_button.setEnabled(true);
                         login_button.setTextColor(Color.parseColor("#FFFFFF"));
@@ -83,10 +81,12 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
 
         password.addTextChangedListener(new TextWatcher() {
 
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
 
             public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {}
+                                          int count, int after) {
+            }
 
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
 
                 if (isValidPhone(mobileNo)) {
 
-                    if (phone_number.getText().length() > 9 && password.getText().length() > 6){
+                    if (phone_number.getText().length() > 9 && password.getText().length() > 6) {
 
                         login_button.setEnabled(true);
                         login_button.setTextColor(Color.parseColor("#FFFFFF"));
@@ -112,17 +112,19 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
     }
 
     /**
-     * @desc Validate Mobile Number through Regex
-     * @param s
-     * @return
+     * Validate Mobile Number through Regex
+     *
+     * @param s phone number
+     * @return boolean
      */
     private boolean isValidPhone(String s) {
         return sPattern.matcher(s).matches();
     }
 
     /**
-     * @desc Call to api server to match Password and Mobile Number of any Engineer
-     * @param view
+     * Call to api server to match Password and Mobile Number of any Engineer
+     *
+     * @param view View
      */
     public void loginProcess(View view) {
 
@@ -149,18 +151,19 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
             }
 
         } else {
-            Toast.makeText(LoginActivity.this,R.string.phoneValidation, Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, R.string.phoneValidation, Toast.LENGTH_SHORT).show();
         }
     }
 
     /**
      * Get Response from Server as string.
      * If status code is 0000 means Mobile Number and password exist and Engineer able to logged in App.
-     * @param httpReqResponse
+     *
+     * @param httpReqResponse Api response
      */
     @Override
     public void processFinish(String httpReqResponse) {
-       // Log.w("LoginResponse", httpReqResponse);
+        // Log.w("LoginResponse", httpReqResponse);
         if (httpReqResponse.contains("data")) {
             JSONObject jsonObjectHttpReq;
 
@@ -183,7 +186,8 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
                     editor.putString("engineerID", response.getString("entity_id"));
                     editor.putString("phoneNumber", response.getString("user_id"));
 
-                    editor.commit();
+                    //editor.commit();
+                    editor.apply();
 
                     Bundle bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Param.ITEM_ID, response.getString("agent_id"));

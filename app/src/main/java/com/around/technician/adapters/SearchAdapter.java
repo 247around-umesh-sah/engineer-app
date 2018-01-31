@@ -25,10 +25,10 @@ import java.util.List;
 /**
  * Created by abhay on 29/12/17.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class SearchAdapter extends RecyclerView.Adapter {
 
     private final int VIEW_ITEM = 1;
-    private final int VIEW_PROG = 0;
     public Context context;
     View v1;
     RecyclerView.ViewHolder vh;
@@ -48,7 +48,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
 
         if (holder instanceof ViewHolder) {
 
-            final BookingGetterSetter bookingList = (BookingGetterSetter) list.get(position);
+            final BookingGetterSetter bookingList = list.get(position);
             ((ViewHolder) holder).address.setText(bookingList.getAddress());
             ((ViewHolder) holder).bookingID.setText(bookingList.getBookingID());
             ((ViewHolder) holder).services.setText(bookingList.getServices());
@@ -136,6 +136,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
+        int VIEW_PROG = 0;
         return list.get(position) != null ? VIEW_ITEM : VIEW_PROG;
     }
 
@@ -146,16 +147,16 @@ public class SearchAdapter extends RecyclerView.Adapter {
 
         public ViewHolder(View view) {
             super(view);
-            bookingID = (TextView) view.findViewById(R.id.bookingID);
-            services = (TextView) view.findViewById(R.id.services);
-            customerName = (TextView) view.findViewById(R.id.customerName);
-            primaryContactNo = (TextView) view.findViewById(R.id.phonenumber);
-            address = (TextView) view.findViewById(R.id.address);
-            call = (LinearLayout) view.findViewById(R.id.phone);
-            complete = (LinearLayout) view.findViewById(R.id.complete);
-            cancel = (LinearLayout) view.findViewById(R.id.cancel);
-            current_status = (TextView) view.findViewById(R.id.current_status);
-            buttonPanel = (RelativeLayout) view.findViewById(R.id.buttonPanel);
+            bookingID = view.findViewById(R.id.bookingID);
+            services = view.findViewById(R.id.services);
+            customerName = view.findViewById(R.id.customerName);
+            primaryContactNo = view.findViewById(R.id.phonenumber);
+            address = view.findViewById(R.id.address);
+            call = view.findViewById(R.id.phone);
+            complete = view.findViewById(R.id.complete);
+            cancel = view.findViewById(R.id.cancel);
+            current_status = view.findViewById(R.id.current_status);
+            buttonPanel = view.findViewById(R.id.buttonPanel);
         }
     }
 
@@ -165,7 +166,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
         public ProgressViewHolder(View v) {
             super(v);
 
-            progressBar = (ProgressBar) v.findViewById(R.id.progressBar1);
+            progressBar = v.findViewById(R.id.progressBar1);
         }
     }
 }

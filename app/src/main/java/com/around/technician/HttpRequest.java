@@ -17,18 +17,20 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 
+@SuppressWarnings("ALL")
 public class HttpRequest extends AsyncTask<String, Void, String> {
     public static String base_url = "https://aroundhomzapp.com/api";
     public ApiResponse delegate = null;
     public ProgressDialog progress;
+    public JSONObject postDataParams;
+    public URL url;
     boolean is_progressbar;
     private Context context;
-    private JSONObject postDataParams;
-    private URL url;
 
     /**
      * If do not want to show loading while request on server then use false as parameter
-     * @param c context
+     *
+     * @param c              context
      * @param is_progressbar boolean
      */
     public HttpRequest(Context c, boolean is_progressbar) {
@@ -39,6 +41,7 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
 
     /**
      * This is used to post data to server from Asynchronous
+     *
      * @param params String Array
      * @return String
      */
@@ -75,23 +78,23 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
             if (responseCode == HttpsURLConnection.HTTP_OK) {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuffer sb = new StringBuffer("");
+                StringBuffer stringBuffer = new StringBuffer("");
                 String line = "";
 
                 while ((line = in.readLine()) != null) {
 
-                    sb.append(line);
+                    stringBuffer.append(line);
                     break;
                 }
 
                 in.close();
-                return sb.toString();
+                return stringBuffer.toString();
 
             } else {
-                return new String("false : " + responseCode);
+                return "false : " + responseCode;
             }
         } catch (Exception e) {
-            return new String("Exception: " + e.getMessage());
+            return e.getMessage();
         }
 
     }

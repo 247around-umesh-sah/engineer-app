@@ -7,7 +7,7 @@ public class JwtClaims {
     protected long iat;
     protected long exp;
     protected String qsh;
-    protected String sub;
+    //protected String sub;
 
 
     public void setIss(String key) {

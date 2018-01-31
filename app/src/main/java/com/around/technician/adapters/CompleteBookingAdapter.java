@@ -38,10 +38,10 @@ import java.util.Locale;
 /**
  * Created by abhay on 2/1/18.
  */
+@SuppressWarnings("ALL")
 public class CompleteBookingAdapter extends RecyclerView.Adapter {
 
     private final int VIEW_ITEM = 1;
-    private final int VIEW_PROG = 0;
     private List<BookingGetterSetter> list;
     public Context context;
     View v1;
@@ -273,6 +273,7 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
+        int VIEW_PROG = 0;
         return list.get(position) != null ? VIEW_ITEM : VIEW_PROG;
     }
 

@@ -28,7 +28,7 @@ public class CancelBookingActivity extends AppCompatActivity implements ApiRespo
     RecyclerView recyclerView;
     Button submit;
     CancelBookingAdapter mAdapter;
-    private List<BookingGetterSetter> cancellationReason = new ArrayList<BookingGetterSetter>();
+    private List<BookingGetterSetter> cancellationReason = new ArrayList<>();
     private HttpRequest httpRequest;
 
     @Override
@@ -36,22 +36,24 @@ public class CancelBookingActivity extends AppCompatActivity implements ApiRespo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cancel_booking);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Cancel Booking");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Cancel Booking");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         Intent intent = getIntent();
         bookingID = intent.getStringExtra("bookingID");
         appliance = intent.getStringExtra("services");
         customerName = intent.getStringExtra("customerName");
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        submit = (Button) findViewById(R.id.submit);
+        recyclerView = findViewById(R.id.recyclerview);
+        submit = findViewById(R.id.submit);
 
-        TextView bookingIDText = (TextView) findViewById(R.id.bookingID);
-        TextView services = (TextView) findViewById(R.id.services);
-        TextView name = (TextView) findViewById(R.id.customerName);
+        TextView bookingIDText = findViewById(R.id.bookingID);
+        TextView services = findViewById(R.id.services);
+        TextView name = findViewById(R.id.customerName);
 
         bookingIDText.setText(bookingID);
         services.setText(appliance);

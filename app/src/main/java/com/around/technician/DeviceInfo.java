@@ -11,6 +11,7 @@ import android.util.Base64;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 
+@SuppressWarnings("ALL")
 public class DeviceInfo {
 
     Context context;
@@ -48,6 +49,7 @@ public class DeviceInfo {
         TelephonyMgr = (TelephonyManager) this.context.getSystemService(Context.TELEPHONY_SERVICE);
 
         if (TelephonyMgr != null) {
+            //noinspection deprecation
             m_deviceId = TelephonyMgr.getDeviceId();
             return m_deviceId;
         } else {
@@ -57,8 +59,7 @@ public class DeviceInfo {
 
     public String getAndroidId() {
 
-        String m_androidId = Secure.getString(this.context.getContentResolver(), Secure.ANDROID_ID);
-        return m_androidId;
+        return Secure.getString(this.context.getContentResolver(), Secure.ANDROID_ID);
     }
 
     public String getWlanAdd() {
@@ -90,18 +91,13 @@ public class DeviceInfo {
 
         mUniqueId = getImeiId() + "-" + getAndroidId() + "-" + getWlanAdd() + "-" + getBluetoothAdd();
         byte[] data = mUniqueId.getBytes("UTF-8");
-        String base64 = Base64.encodeToString(data, Base64.NO_WRAP);
-        return base64;
+        return Base64.encodeToString(data, Base64.NO_WRAP);
     }
 
     public Boolean isEmulator() {
 
         String brand = Build.BRAND;
-        if (brand.compareTo("generic") == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return brand.compareTo("generic") == 0;
     }
 
     public boolean isRooted() {

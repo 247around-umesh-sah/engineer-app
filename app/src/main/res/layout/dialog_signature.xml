@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout1"
     android:layout_width="match_parent"
     android:layout_height="400dp"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:ignore="Overdraw">
 
     <TextView
         android:id="@+id/customerPaid"
@@ -14,11 +14,10 @@
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:padding="5dp"
-        android:text="Amount Paid: Rs 50"
+        android:text=""
         android:textColor="@android:color/white" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"

@@ -19,15 +19,15 @@ import java.util.List;
 /**
  * Created by abhay on 2/1/18.
  */
+@SuppressWarnings("ALL")
 public class PriceTagsAdapter extends RecyclerView.Adapter {
 
     private final int VIEW_ITEM = 1;
-    private final int VIEW_PROG = 0;
     public Context context;
     View v1;
     RecyclerView.ViewHolder vh;
     boolean IsDisable;
-    List<String> checkedLineItem = new ArrayList<String>();
+    List<String> checkedLineItem = new ArrayList<>();
     private List<BookingGetterSetter> list;
 
     public PriceTagsAdapter(List<BookingGetterSetter> list, RecyclerView recyclerView) {
@@ -115,6 +115,7 @@ public class PriceTagsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
+        int VIEW_PROG = 0;
         return list.get(position) != null ? VIEW_ITEM : VIEW_PROG;
     }
 

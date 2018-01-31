@@ -18,6 +18,7 @@ import java.util.UUID;
 /**
  * Created by abhay on 28/12/17.
  */
+@SuppressWarnings("DefaultFileTemplate")
 public class GetToken {
 
     public Context context;
@@ -28,6 +29,7 @@ public class GetToken {
     private String version = new DeviceInfo(this.context).getVersion();
     private String model = new DeviceInfo(this.context).getModel();
     private String device = new DeviceInfo(this.context).getDevice();
+
     public GetToken(Context context) {
         this.context = context;
         sharedPrefs = context.getSharedPreferences(SplashActivity.MyPREFERENCES,
@@ -36,9 +38,9 @@ public class GetToken {
 
     public String getAuthToken(String[] params) throws Exception {
 
-        String subUrl = (String) params[0];
+        String subUrl = params[0];
 
-        Map<String, String> urlParameters = new HashMap<String, String>();
+        Map<String, String> urlParameters = new HashMap<>();
         String deviceInfo = getDeviceInfo();
         urlParameters.put("deviceInfo", deviceInfo);
         urlParameters.put("method", "post");
@@ -51,6 +53,7 @@ public class GetToken {
             //e.printStackTrace();
         }
 
+        assert pInfo != null;
         String appVersion = pInfo.versionName;
         urlParameters.put("app_version", appVersion);
 
@@ -73,7 +76,7 @@ public class GetToken {
         }
 
         String token = generateToken(urlParameters, subUrl);
-        Map<String, String> jsonData = new HashMap<String, String>();
+        Map<String, String> jsonData = new HashMap<>();
 
         String deviceId = new DeviceInfo(this.context).bindIds();
 
@@ -83,9 +86,7 @@ public class GetToken {
         jsonData.put("requestUrl", subUrl);
         jsonData.put("deviceId", deviceId);
 
-        String json = new Gson().toJson(jsonData);
-
-        return json;
+        return new Gson().toJson(jsonData);
     }
 
     public String generateToken(Map<String, String> urlParameters, String subUrl) {
@@ -93,12 +94,10 @@ public class GetToken {
         try {
             String json = new Gson().toJson(urlParameters);
 
-            String requestUrl = subUrl;
-            String canonicalUrl = json;
             String key = "boloaaka-mobile-application";
             String sharedSecret = JwtBuilder.signHmac256("username", "boloaaka-signup-request");
 
-            jwtToken = JwtBuilder.generateJWTToken(requestUrl, canonicalUrl, key, sharedSecret);
+            jwtToken = JwtBuilder.generateJWTToken(subUrl, json, key, sharedSecret);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,15 +111,15 @@ public class GetToken {
                                                          String[] params) {
         try {
 
-            String amount = (String) params[1];
-            String SignatureEncode = (String) params[2];
+            String amount = params[1];
+            String SignatureEncode = params[2];
 
             urlParameters.put("amountDue", amount);
             urlParameters.put("SignatureEncode", SignatureEncode);
-            urlParameters.put("amountPaid", (String) params[3]);
-            urlParameters.put("UnitArray", (String) params[4]);
-            urlParameters.put("bookingID", (String) params[5]);
-            urlParameters.put("location", (String) params[6]);
+            urlParameters.put("amountPaid", params[3]);
+            urlParameters.put("UnitArray", params[4]);
+            urlParameters.put("bookingID", params[5]);
+            urlParameters.put("location", params[6]);
             urlParameters.put("service_center_id", sharedPrefs.getString("service_center_id", null));
             urlParameters.put("engineer_id", sharedPrefs.getString("engineerID", null));
             urlParameters.put("agent_id", sharedPrefs.getString("agentID", null));
@@ -137,8 +136,8 @@ public class GetToken {
     public Map<String, String> processCancelBooking(Map<String, String> urlParameters,
                                                     String[] params) {
         try {
-            urlParameters.put("bookingID", (String) params[1]);
-            urlParameters.put("cancellationReason", (String) params[2]);
+            urlParameters.put("bookingID", params[1]);
+            urlParameters.put("cancellationReason", params[2]);
             urlParameters.put("service_center_id", sharedPrefs.getString("service_center_id", null));
             urlParameters.put("engineer_id", sharedPrefs.getString("agentID", null));
             urlParameters.put("agent_id", sharedPrefs.getString("engineerID", null));
@@ -154,8 +153,8 @@ public class GetToken {
     public Map<String, String> engineerLogin(Map<String, String> urlParameters, String[] params) {
         try {
 
-            String mobile = (String) params[1];
-            String password = (String) params[2];
+            String mobile = params[1];
+            String password = params[2];
 
             urlParameters.put("mobile", mobile);
             urlParameters.put("password", password);
@@ -170,7 +169,7 @@ public class GetToken {
     public Map<String, String> getBookingAppliance(Map<String, String> urlParameters, String[] params) {
         try {
 
-            String bookingID = (String) params[1];
+            String bookingID = params[1];
 
             urlParameters.put("bookingID", bookingID);
 
@@ -184,7 +183,7 @@ public class GetToken {
     public Map<String, String> searchBookingID(Map<String, String> urlParameters, String[] params) {
         try {
 
-            String search_text = (String) params[1];
+            String search_text = params[1];
 
             urlParameters.put("search_text", search_text);
             urlParameters.put("service_center_id", sharedPrefs.getString("service_center_id", null));
@@ -224,7 +223,7 @@ public class GetToken {
 
     public String getDeviceInfo() {
 
-        HashMap<String, String> dInfo = new HashMap<String, String>();
+        HashMap<String, String> dInfo = new HashMap<>();
 
         dInfo.put("os", osName);
         dInfo.put("platformVersion", version);
@@ -233,9 +232,7 @@ public class GetToken {
         dInfo.put("isRooted", isRooted.toString());
         dInfo.put("isEmulator", isEmulator.toString());
 
-        String deviceInfo = new Gson().toJson(dInfo);
-
-        return deviceInfo;
+        return new Gson().toJson(dInfo);
     }
 
 }

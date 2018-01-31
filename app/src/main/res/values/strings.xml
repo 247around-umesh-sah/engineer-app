@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">247Around Technician</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="wall_mount_stand">Wall Mount Stand</string>
 
     <!-- Strings related to login -->
     <string name="askGPSPermission">Please Provide GPS Location Access</string>
@@ -14,18 +12,8 @@
     <string name="prompt_phone">Mobile Number</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Login</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
 
-    <string name="login_msg">Enter User Name and Password</string>
-    <string name="title_activity_demo_login">Sign in</string>
-    <string name="loading">Please Wait...</string>
+    <string name="loading">Please Wait…</string>
     <string name="search_booking_hint">Search Booking Or Phone No</string>
 
     <!-- Strings related to Home -->
@@ -35,8 +23,6 @@
     <!-- Complete Booking Activity Toast -->
     <string name="add_signature">Customer Signature</string>
     <string name="save">Submit</string>
-    <string name="hint_sign">Get Signature</string>
-    <string name="dialog_title">SIGN HERE</string>
     <string name="hint_cancel">Cancel</string>
     <string name="hint_clear">Clear</string>
     <string name="hint_save">Save</string>
@@ -51,5 +37,25 @@
 
     <!-- Cancel Booking Activity Toast -->
     <string name="cancellationReasonRequired">Please Select Atleast One Reason</string>
+
+    <!--Appliance List -->
+    <string name="brand_text">Brand: </string>
+    <string name="category_text">Category: </string>
+    <string name="capacity_text">Capacity: </string>
+    <string name="appliance_broken_text">Appliance Broken </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="input_serial_no_hint">Enter Serial No</string>
+    <string name="serial_number_text">Serial No</string>
+    <string name="serial_no_pic_text">Serial No Pic</string>
+
+
+    <!-- Content Complete booking -->
+    <string name="amount_due_text">Amount Due: </string>
+    <string name="amount_paid_text">Amount Paid</string>
+    <string name="input_paid_amount_hint">Customer Paid Amount</string>
+
+    <string name="cancellation_reason_title">Cancellation Reason</string>
+
 
 </resources>

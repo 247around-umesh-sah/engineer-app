@@ -1,5 +1,6 @@
 package com.around.technician;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -48,6 +49,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class CompleteBookingActivity extends AppCompatActivity implements ApiResponse {
     ConnectionDetector cd;
     Misc misc;
@@ -73,9 +75,8 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
     //    String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
     String StoredPath = "";
 
-    private List<BookingGetterSetter> unitDetails = new ArrayList<BookingGetterSetter>();
+    private List<BookingGetterSetter> unitDetails = new ArrayList<>();
     private HttpRequest httpRequest;
-
 
 
     @Override
@@ -85,9 +86,11 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
         setContentView(R.layout.activity_complete_booking);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Complete Booking");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Complete Booking");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         Intent intent = getIntent();
         bookingID = intent.getStringExtra("bookingID");
@@ -110,7 +113,8 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
 
         bookingIDText.setText(bookingID);
         services.setText(appliance);
-        amountDueText.setText("\u20B9" + amountDue);
+        String amount_due_with_icon = "\u20B9" + amountDue;
+        amountDueText.setText(amount_due_with_icon);
         name.setText(customerName);
 
 
@@ -163,7 +167,7 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
                 String amount = amountPaidInput.getText().toString();
 
                 if (Float.parseFloat(amountDue) > 0) {
-                    if(amount.isEmpty()){
+                    if (amount.isEmpty()) {
                         Snackbar.make(v, R.string.customerPaidAmountRequired, Snackbar.LENGTH_LONG).show();
                     } else {
                         if (Float.parseFloat(amount) > 0) {
@@ -187,7 +191,8 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
 
     /**
      * Get Current location of Mobile
-     * @return
+     *
+     * @return Address
      */
     public String getLocation() {
         Gson gson = new Gson();
@@ -203,7 +208,7 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
                     try {
                         if (!gps.getAddress().getPostalCode().isEmpty()) {
 
-                            Map<String, String> address = new HashMap<String, String>();
+                            Map<String, String> address = new HashMap<>();
 
                             address.put("pincode", gps.getAddress().getPostalCode());
                             address.put("city", gps.getAddress().getLocality());
@@ -222,7 +227,8 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
 
     /**
      * This is used to check validation whatever Engineer done to completed booking.
-     * @param view
+     *
+     * @param view View
      */
     public void submitProcess(View view) {
         boolean validation = true;
@@ -230,7 +236,7 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
 
         if (Integer.parseInt(amountDue) > 0) {
             String amountPaid = amountPaidInput.getText().toString();
-            if(amountPaid.isEmpty()){
+            if (amountPaid.isEmpty()) {
                 Snackbar.make(view, R.string.customerPaidAmountRequired, Snackbar.LENGTH_LONG).show();
             } else if (Integer.parseInt(amountPaid) == 0) {
                 validation = false;
@@ -283,13 +289,13 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
                 if (misc.checkAndLocationRequestPermissions()) {
 
 
-                    Map<Integer, Map<String, String>> unitParameter = new HashMap<Integer, Map<String, String>>();
+                    @SuppressLint("UseSparseArrays") Map<Integer, Map<String, String>> unitParameter = new HashMap<>();
                     int z = 0;
                     for (int i = 0; i < data.size(); i++) {
 
 
                         for (int k = 0; k < data.get(i).getUnitList().size(); k++) {
-                            Map<String, String> subParameter = new HashMap<String, String>();
+                            Map<String, String> subParameter = new HashMap<>();
                             List<String> list = new ArrayList<>();
                             if (data.get(i).getUnitList().get(k).getPod().equals("1") ||
                                     data.get(i).getSerialNoUrl().isEmpty()) {
@@ -381,85 +387,89 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
 
                 final JSONObject jsonObject = jsonObjectHttpReq.getJSONObject("data");
                 String statusCode = jsonObject.getString("code");
-                if (statusCode.equals("0000")) {
-                    if (jsonObject.has("unitDetails")) {
+                switch (statusCode) {
+                    case "0000":
+                        if (jsonObject.has("unitDetails")) {
 
-                        JSONArray posts = jsonObject.optJSONArray("unitDetails");
+                            JSONArray posts = jsonObject.optJSONArray("unitDetails");
 
-                        for (int i = 0; i < posts.length(); i++) {
-                            JSONObject post = posts.optJSONObject(i);
+                            for (int i = 0; i < posts.length(); i++) {
+                                JSONObject post = posts.optJSONObject(i);
 
-                            JSONArray unitArray = post.optJSONArray("quantity");
-                            unitList = new ArrayList<BookingGetterSetter>();
-                            unitList.clear();
-                            String pod = "0";
-                            String repair = "Repair";
-                            String repeat = "Repeat";
-                            boolean repairBooking = false;
-                            for (int k = 0; k < unitArray.length(); k++) {
-                                JSONObject unit = unitArray.optJSONObject(k);
-                                // Check POD
-                                if (unit.optString("pod").equals("1")) {
+                                JSONArray unitArray = post.optJSONArray("quantity");
+                                unitList = new ArrayList<>();
+                                unitList.clear();
+                                String pod = "0";
+                                String repair = "Repair";
+                                String repeat = "Repeat";
+                                boolean repairBooking = false;
+                                for (int k = 0; k < unitArray.length(); k++) {
+                                    JSONObject unit = unitArray.optJSONObject(k);
+                                    // Check POD
+                                    if (unit.optString("pod").equals("1")) {
 
-                                    pod = "1";
+                                        pod = "1";
+                                    }
+
+                                    //IF price tag string contains Repair or Repeat then we will not disable line item
+                                    if ((unit.optString("price_tags").toLowerCase().contains(repair.toLowerCase()))
+                                            || (unit.optString("price_tags").toLowerCase().contains(repeat.toLowerCase()))) {
+
+                                        repairBooking = true;
+
+                                    }
+
+
+                                    unitList.add(new BookingGetterSetter(unit.optString("unit_id"),
+                                            unit.optString("pod"), unit.optString("price_tags"),
+                                            unit.optString("customer_net_payable"), unit.optString("product_or_services"), false, false
+                                    ));
+
                                 }
 
-                                //IF price tag string contains Repair or Repeat then we will not disable line item
-                                if ((unit.optString("price_tags").toLowerCase().indexOf(repair.toLowerCase()) != -1)
-                                        || (unit.optString("price_tags").toLowerCase().indexOf(repeat.toLowerCase()) != -1)) {
-
-                                    repairBooking = true;
-
-                                }
-
-
-                                unitList.add(new BookingGetterSetter(unit.optString("unit_id"),
-                                        unit.optString("pod"), unit.optString("price_tags"),
-                                        unit.optString("customer_net_payable"), unit.optString("product_or_services"), false, false
-                                ));
-
+                                unitDetails.add(new BookingGetterSetter(post.optString("booking_id"), post.optString("brand"),
+                                        post.optString("partner_id"),
+                                        post.optString("service_id"),
+                                        post.optString("category"),
+                                        post.optString("capacity"),
+                                        post.optString("model_number"),
+                                        unitList, pod, "", "", null, repairBooking));
                             }
 
-                            unitDetails.add(new BookingGetterSetter(post.optString("booking_id"), post.optString("brand"),
-                                    post.optString("partner_id"),
-                                    post.optString("service_id"),
-                                    post.optString("category"),
-                                    post.optString("capacity"),
-                                    post.optString("model_number"),
-                                    unitList, pod, "", "", null, repairBooking));
+                            CompleteBookingActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    CompleteBookingActivity.this.mAdapter.notifyItemInserted(unitDetails.size());
+                                    CompleteBookingActivity.this.mAdapter.notifyDataSetChanged();
+                                    httpRequest.progress.dismiss();
+
+                                }
+                            });
+                        } else {
+                            httpRequest.progress.dismiss();
+                            new android.support.v7.app.AlertDialog.Builder(CompleteBookingActivity.this)
+
+                                    .setMessage(R.string.bookingUpdatedSuccessMsg)
+                                    .setCancelable(false)
+                                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent = new Intent(CompleteBookingActivity.this, SearchActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    }).show();
                         }
 
-                        CompleteBookingActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                CompleteBookingActivity.this.mAdapter.notifyItemInserted(unitDetails.size());
-                                CompleteBookingActivity.this.mAdapter.notifyDataSetChanged();
-                                httpRequest.progress.dismiss();
-
-                            }
-                        });
-                    } else {
+                        break;
+                    case "0018":
                         httpRequest.progress.dismiss();
-                        new android.support.v7.app.AlertDialog.Builder(CompleteBookingActivity.this)
-
-                                .setMessage(R.string.bookingUpdatedSuccessMsg)
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent = new Intent(CompleteBookingActivity.this, SearchActivity.class);
-                                        startActivity(intent);
-                                    }
-                                }).show();
-                    }
-
-                } else if (statusCode.equals("0018")) {
-                    httpRequest.progress.dismiss();
-                    misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serialNumberRequiredMsg);
-                } else {
-                    misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serverConnectionFailedMsg);
-                    httpRequest.progress.dismiss();
+                        misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serialNumberRequiredMsg);
+                        break;
+                    default:
+                        misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serverConnectionFailedMsg);
+                        httpRequest.progress.dismiss();
+                        break;
                 }
             } catch (JSONException e) {
                 misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serverConnectionFailedMsg);
@@ -493,7 +503,8 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
         save.setEnabled(false);
         mCancel = (Button) dialog.findViewById(R.id.cancel);
         view = mContent;
-        customerPaid.setText(R.string.showAmountOnSigDialoag + "\u20B9" + amountPaidInput.getText().toString());
+        String amountPaidTitle = getResources().getString(R.string.showAmountOnSigDialoag) + "\u20B9" + amountPaidInput.getText().toString();
+        customerPaid.setText(amountPaidTitle);
 
         mClear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -550,8 +561,8 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
         }
 
         public void save(View v, String StoredPath) {
-           // Log.v("tag", "Width: " + v.getWidth());
-          //  Log.v("tag", "Height: " + v.getHeight());
+            // Log.v("tag", "Width: " + v.getWidth());
+            //  Log.v("tag", "Height: " + v.getHeight());
             if (bitmap == null) {
                 bitmap = Bitmap.createBitmap(mContent.getWidth(), mContent.getHeight(), Bitmap.Config.RGB_565);
             }

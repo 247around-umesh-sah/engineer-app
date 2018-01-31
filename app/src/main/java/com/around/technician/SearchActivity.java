@@ -31,7 +31,7 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
     TextView bookingNotFound;
     RecyclerView recyclerView;
     SearchAdapter mAdapter;
-    private List<BookingGetterSetter> bookingList = new ArrayList<BookingGetterSetter>();
+    private List<BookingGetterSetter> bookingList = new ArrayList<>();
     private HttpRequest httpRequest;
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -40,17 +40,19 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
-        searchBooking = (AppCompatEditText) findViewById(R.id.searchBooking);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        searchBooking = findViewById(R.id.searchBooking);
+        progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-        bookingNotFound = (TextView) findViewById(R.id.bookingNotFound);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        bookingNotFound = findViewById(R.id.bookingNotFound);
+        recyclerView = findViewById(R.id.recyclerview);
         cd = new ConnectionDetector(this);
         misc = new Misc(this);
 
@@ -61,8 +63,8 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
             }
         });
 
-        InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(searchBooking, InputMethodManager.SHOW_IMPLICIT);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(searchBooking, InputMethodManager.SHOW_IMPLICIT);
 
         try {
             recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
@@ -90,7 +92,7 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
                                       int before, int count) {
                 //We will sent auto request after 9 character of string
                 if (s.length() > 9) {
-                    mFirebaseAnalytics.setUserProperty("Searched Boooking ID", s.toString());
+                    mFirebaseAnalytics.setUserProperty("Searched Booking ID", s.toString());
                     searchBookingID(s);
 
                 }
@@ -102,6 +104,7 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
 
     /**
      * Send api request to server to search booking by Mobile Number or Booking ID
+     *
      * @param searchedText CharSequence
      */
     public void searchBookingID(CharSequence searchedText) {
@@ -128,6 +131,7 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
     /**
      * Get Response from Search.
      * If booking Exist then we will show it as list
+     *
      * @param httpReqResponse String
      */
 

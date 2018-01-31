@@ -16,6 +16,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import static org.apache.commons.codec.binary.Base64.encodeBase64;
 
+@SuppressWarnings("ALL")
 public class JwtBuilder {
 
     static final String HEXES = "0123456789abcdef";
@@ -30,8 +31,7 @@ public class JwtBuilder {
         claims.setExp(claims.getIat() + 180L);
 
         claims.setQsh(canonicalUrl);
-        String jwtToken = sign(claims, sharedSecret);
-        return jwtToken;
+        return sign(claims, sharedSecret);
     }
 
     private static String sign(JwtClaims claims, String sharedSecret) throws InvalidKeyException, NoSuchAlgorithmException {
@@ -50,8 +50,7 @@ public class JwtBuilder {
         Gson gson = new Gson();
         String headerJsonString = gson.toJson(header);
         String claimsJsonString = gson.toJson(claims);
-        String signingInput = new String(encodeBase64(headerJsonString.getBytes())) + "." + new String(encodeBase64(claimsJsonString.getBytes()));
-        return signingInput;
+        return new String(encodeBase64(headerJsonString.getBytes())) + "." + new String(encodeBase64(claimsJsonString.getBytes()));
     }
 
     public static String signHmac256(String signingInput, String sharedSecret) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -65,7 +64,7 @@ public class JwtBuilder {
             hash = getHex(res);
             hash = Base64.encodeToString(hash.getBytes("UTF-8"), Base64.NO_WRAP);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return hash;
     }
@@ -87,8 +86,8 @@ public class JwtBuilder {
 
         //convert the byte to hex format method 2
         StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < byteData.length; i++) {
-            String hex = Integer.toHexString(0xff & byteData[i]);
+        for (byte aByteData : byteData) {
+            String hex = Integer.toHexString(0xff & aByteData);
             if (hex.length() == 1) hexString.append('0');
             hexString.append(hex);
         }

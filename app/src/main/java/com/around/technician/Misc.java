@@ -16,9 +16,6 @@ import android.text.style.ForegroundColorSpan;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by abhay on 28/12/17.
- */
 public class Misc {
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
@@ -117,18 +114,18 @@ public class Misc {
 
     }
 
-    public void showDialog(String title, String description) {
-        new android.support.v7.app.AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(description)
-                .setCancelable(false)
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Whatever...
-                    }
-                }).show();
-    }
+//    public void showDialog(String title, String description) {
+//        new android.support.v7.app.AlertDialog.Builder(context)
+//                .setTitle(title)
+//                .setMessage(description)
+//                .setCancelable(false)
+//                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        // Whatever...
+//                    }
+//                }).show();
+//    }
 
     public void showDialog(Integer title, Integer description) {
         new android.support.v7.app.AlertDialog.Builder(context)

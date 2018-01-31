@@ -33,7 +33,8 @@
                     android:hint="@string/search_booking_hint"
                     android:inputType="textNoSuggestions"
                     android:textCursorDrawable="@null"
-                    app:backgroundTint="#66009688" />
+                    app:backgroundTint="#66009688"
+                    tools:ignore="RtlHardcoded" />
 
             </RelativeLayout>
 

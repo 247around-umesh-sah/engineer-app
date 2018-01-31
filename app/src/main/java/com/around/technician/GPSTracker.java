@@ -1,9 +1,7 @@
 package com.around.technician;
 
-/**
- * Created by abhay on 7/11/17.
- */
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
@@ -22,12 +20,14 @@ import android.util.Log;
 import java.util.List;
 import java.util.Locale;
 
+@SuppressWarnings("ALL")
+@SuppressLint("Registered")
 public class GPSTracker extends Service implements LocationListener {
 
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60; // 1 minute
     private final Context mContext;
     // Declaring a Location Manager
     protected LocationManager locationManager;
@@ -37,7 +37,7 @@ public class GPSTracker extends Service implements LocationListener {
     boolean isNetworkEnabled = false;
     // flag for GPS status
     boolean canGetLocation = false;
-//    String pincode;
+    //    String pincode;
 //    String current_address;
 //    String city;
 //    String state;
@@ -154,41 +154,40 @@ public class GPSTracker extends Service implements LocationListener {
      * Stop using GPS listener
      * Calling this function will stop using GPS in your app
      */
-    public void stopUsingGPS() {
-
-        if (locationManager != null) {
-            try {
-                locationManager.removeUpdates(GPSTracker.this);
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    public void stopUsingGPS() {
+//
+//        if (locationManager != null) {
+//            try {
+//                locationManager.removeUpdates(GPSTracker.this);
+//            } catch (SecurityException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     /**
      * Function to get latitude
      */
-    public double getLatitude() {
-        if (location != null) {
-            latitude = location.getLatitude();
-        }
-
-        // return latitude
-        return latitude;
-    }
+//    public double getLatitude() {
+//        if (location != null) {
+//            latitude = location.getLatitude();
+//        }
+//
+//        // return latitude
+//        return latitude;
+//    }
 
     /**
      * Function to get longitude
      */
-    public double getLongitude() {
-        if (location != null) {
-            longitude = location.getLongitude();
-        }
-
-        // return longitude
-        return longitude;
-    }
-
+//    public double getLongitude() {
+//        if (location != null) {
+//            longitude = location.getLongitude();
+//        }
+//
+//        // return longitude
+//        return longitude;
+//    }
     public Address getAddress() {
         if (addressList != null && addressList.size() > 0) {
             address = addressList.get(0);

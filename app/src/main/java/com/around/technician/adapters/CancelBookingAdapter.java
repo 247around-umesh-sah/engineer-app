@@ -17,10 +17,10 @@ import java.util.List;
 /**
  * Created by abhay on 4/1/18.
  */
+@SuppressWarnings("ALL")
 public class CancelBookingAdapter extends RecyclerView.Adapter {
 
     private final int VIEW_ITEM = 1;
-    private final int VIEW_PROG = 0;
     public Context context;
     View v1;
     RecyclerView.ViewHolder vh;
@@ -37,7 +37,7 @@ public class CancelBookingAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
         if (holder instanceof ViewHolder) {
-            final BookingGetterSetter statusList = (BookingGetterSetter) list.get(position);
+            final BookingGetterSetter statusList = list.get(position);
             ((ViewHolder) holder).status.setText(statusList.getCancellationReason());
             if (statusList.getCheckedCancellationReason()) {
                 ((ViewHolder) holder).radioButton.setChecked(true);
@@ -95,6 +95,7 @@ public class CancelBookingAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
+        int VIEW_PROG = 0;
         return list.get(position) != null ? VIEW_ITEM : VIEW_PROG;
     }
 
@@ -104,8 +105,8 @@ public class CancelBookingAdapter extends RecyclerView.Adapter {
 
         public ViewHolder(View view) {
             super(view);
-            status = (TextView) view.findViewById(R.id.staus);
-            radioButton = (AppCompatRadioButton) view.findViewById(R.id.radioButton);
+            status = view.findViewById(R.id.staus);
+            radioButton = view.findViewById(R.id.radioButton);
 
         }
     }
@@ -116,7 +117,7 @@ public class CancelBookingAdapter extends RecyclerView.Adapter {
         public ProgressViewHolder(View v) {
             super(v);
 
-            progressBar = (ProgressBar) v.findViewById(R.id.progressBar1);
+            progressBar = v.findViewById(R.id.progressBar1);
         }
     }
 }

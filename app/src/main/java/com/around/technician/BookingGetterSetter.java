@@ -1,5 +1,6 @@
 package com.around.technician;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.graphics.Bitmap;
 
@@ -10,21 +11,34 @@ import java.util.List;
 /**
  * Created by abhay on 29/12/17.
  */
+@SuppressWarnings("ALL")
+@SuppressLint("Registered")
 public class BookingGetterSetter extends Application implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    String bookingID, services, customerName,
-            primaryContactNo, address,
-            current_status, amountDue;
-    List<BookingGetterSetter> unitList = new ArrayList<BookingGetterSetter>();
-
-    String brand, category, capacity, partnerID, serviceID, modelNumber, requestType;
-
-    String unitID, pod, priceTags, customerNetPayable, serialNo, serialNoUrl, cancellationReason;
-
-    Bitmap serialNoBitmap;
-
     boolean applianceBroken, isDelivered, checkedCancellationReason, repairBooking;
+    private String bookingID;
+    private String services;
+    private String customerName;
+    private String primaryContactNo;
+    private String address;
+    private String current_status;
+    private String amountDue;
+    private List<BookingGetterSetter> unitList = new ArrayList<BookingGetterSetter>();
+    private String brand;
+    private String category;
+    private String capacity;
+    private String partnerID;
+    private String serviceID;
+    private String modelNumber;
+    private String requestType;
+    private String unitID;
+    private String pod;
+    private String priceTags;
+    private String customerNetPayable;
+    private String serialNo;
+    private String serialNoUrl;
+    private String cancellationReason;
+    private Bitmap serialNoBitmap;
 
     public BookingGetterSetter(String bookingID,
                                String services,
@@ -211,7 +225,9 @@ public class BookingGetterSetter extends Application implements Serializable {
         return repairBooking;
     }
 
-    public String getCustomerNetPayable(){ return customerNetPayable;}
+    public String getCustomerNetPayable() {
+        return customerNetPayable;
+    }
 
 
 }
