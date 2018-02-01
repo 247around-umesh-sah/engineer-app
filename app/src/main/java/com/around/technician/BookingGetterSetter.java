@@ -14,31 +14,31 @@ import java.util.List;
 @SuppressWarnings("ALL")
 @SuppressLint("Registered")
 public class BookingGetterSetter extends Application implements Serializable {
-    private static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 1L;
     boolean applianceBroken, isDelivered, checkedCancellationReason, repairBooking;
-    private String bookingID;
-    private String services;
-    private String customerName;
-    private String primaryContactNo;
-    private String address;
-    private String current_status;
-    private String amountDue;
-    private List<BookingGetterSetter> unitList = new ArrayList<BookingGetterSetter>();
-    private String brand;
-    private String category;
-    private String capacity;
-    private String partnerID;
-    private String serviceID;
-    private String modelNumber;
-    private String requestType;
-    private String unitID;
-    private String pod;
-    private String priceTags;
-    private String customerNetPayable;
-    private String serialNo;
-    private String serialNoUrl;
-    private String cancellationReason;
-    private Bitmap serialNoBitmap;
+    public String bookingID;
+    public String services;
+    public String customerName;
+    public String primaryContactNo;
+    public String address;
+    public String current_status;
+    public String amountDue;
+    public List<BookingGetterSetter> unitList = new ArrayList<BookingGetterSetter>();
+    public String brand;
+    public String category;
+    public String capacity;
+    public String partnerID;
+    public String serviceID;
+    public String modelNumber;
+    public String requestType;
+    public String unitID;
+    public String pod;
+    public String priceTags;
+    public String customerNetPayable;
+    public String serialNo;
+    public String serialNoUrl;
+    public String cancellationReason;
+    public Bitmap serialNoBitmap;
 
     public BookingGetterSetter(String bookingID,
                                String services,

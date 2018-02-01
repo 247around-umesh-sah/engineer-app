@@ -14,6 +14,7 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +50,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-@SuppressWarnings("ALL")
+
 public class CompleteBookingActivity extends AppCompatActivity implements ApiResponse {
     ConnectionDetector cd;
     Misc misc;
@@ -84,7 +85,7 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_complete_booking);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Complete Booking");
@@ -98,18 +99,18 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
         amountDue = intent.getStringExtra("amountDue");
 
         customerName = intent.getStringExtra("customerName");
-        recyclerView = (RecyclerView) findViewById(R.id.appliance_list);
+        recyclerView = findViewById(R.id.appliance_list);
 
         gps = new GPSTracker(this);
 
 
-        TextView bookingIDText = (TextView) findViewById(R.id.bookingID);
-        TextView services = (TextView) findViewById(R.id.services);
-        TextView name = (TextView) findViewById(R.id.customerName);
-        TextView amountDueText = (TextView) findViewById(R.id.amountDue);
-        submit = (Button) findViewById(R.id.submit);
-        signatureButton = (Button) findViewById(R.id.signature);
-        amountPaidInput = (EditText) findViewById(R.id.amountPaidInput);
+        TextView bookingIDText = findViewById(R.id.bookingID);
+        TextView services = findViewById(R.id.services);
+        TextView name = findViewById(R.id.customerName);
+        TextView amountDueText = findViewById(R.id.amountDue);
+        submit = findViewById(R.id.submit);
+        signatureButton = findViewById(R.id.signature);
+        amountPaidInput = findViewById(R.id.amountPaidInput);
 
         bookingIDText.setText(bookingID);
         services.setText(appliance);
@@ -234,21 +235,6 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
         boolean validation = true;
         List<BookingGetterSetter> data = mAdapter.getUnitData();
 
-        if (Integer.parseInt(amountDue) > 0) {
-            String amountPaid = amountPaidInput.getText().toString();
-            if (amountPaid.isEmpty()) {
-                Snackbar.make(view, R.string.customerPaidAmountRequired, Snackbar.LENGTH_LONG).show();
-            } else if (Integer.parseInt(amountPaid) == 0) {
-                validation = false;
-                Snackbar.make(view, R.string.customerPaidAmountRequired, Snackbar.LENGTH_LONG).show();
-
-            }
-        }
-        if (StoredPath.equals("")) {
-            validation = false;
-            Snackbar.make(view, R.string.signatureRequired, Snackbar.LENGTH_LONG).show();
-
-        }
         if (validation) {
 
             for (int i = 0; i < data.size(); i++) {
@@ -259,10 +245,13 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
                         isDelivered = data.get(i).getUnitList().get(k).getDelivered();
                     }
                     if (data.get(i).getUnitList().get(k).getPod().equals("1")) {
-                        if (data.get(i).getSerialNo().isEmpty()) {
+
+                        if (data.get(i).getSerialNo().toString().isEmpty()) {
                             validation = false;
-                            Snackbar.make(view, R.string.serialNumberRequiredMsg, Snackbar.LENGTH_LONG).show();
+                            // IF Serial No is empty means pict is not set
+                            Snackbar.make(view, R.string.serialNumberPictureRequired, Snackbar.LENGTH_LONG).show();
                             break;
+
                         }
 
                         if (data.get(i).getSerialNoBitmap().equals(null)) {
@@ -284,52 +273,29 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
             }
         }
 
+        if(validation){
+            if (Integer.parseInt(amountDue) > 0) {
+                String amountPaid = amountPaidInput.getText().toString();
+                if (amountPaid.isEmpty()) {
+                    Snackbar.make(view, R.string.customerPaidAmountRequired, Snackbar.LENGTH_LONG).show();
+                } else if (Integer.parseInt(amountPaid) == 0) {
+                    validation = false;
+                    Snackbar.make(view, R.string.customerPaidAmountRequired, Snackbar.LENGTH_LONG).show();
+
+                }
+            }
+            if (StoredPath.equals("")) {
+                validation = false;
+                Snackbar.make(view, R.string.signatureRequired, Snackbar.LENGTH_LONG).show();
+
+            }
+        }
+
         if (validation) {
             if (cd.isConnectingToInternet()) {
                 if (misc.checkAndLocationRequestPermissions()) {
+                    sendDataToServer(data);
 
-
-                    @SuppressLint("UseSparseArrays") Map<Integer, Map<String, String>> unitParameter = new HashMap<>();
-                    int z = 0;
-                    for (int i = 0; i < data.size(); i++) {
-
-
-                        for (int k = 0; k < data.get(i).getUnitList().size(); k++) {
-                            Map<String, String> subParameter = new HashMap<>();
-                            List<String> list = new ArrayList<>();
-                            if (data.get(i).getUnitList().get(k).getPod().equals("1") ||
-                                    data.get(i).getSerialNoUrl().isEmpty()) {
-                                subParameter.put("serialNo", data.get(i).getSerialNo());
-                                subParameter.put("serialNoImage", data.get(i).getSerialNoUrl());
-
-                            }
-
-                            subParameter.put("bookingID", bookingID);
-                            subParameter.put("pod", data.get(i).getUnitList().get(k).getPod());
-                            subParameter.put("unitID", data.get(i).getUnitList().get(k).getUnitID());
-                            subParameter.put("applianceBroken", data.get(i).getUnitList().get(k).getApplianceBroken() + "");
-                            subParameter.put("isDelivered", data.get(i).getUnitList().get(k).getDelivered() + "");
-
-
-                            unitParameter.put(z, subParameter);
-
-                            z++;
-                        }
-                    }
-
-                    Gson gson = new Gson();
-                    String arrayString = gson.toJson(unitParameter);
-
-
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    //compress the image to PNG format
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 90, byteArrayOutputStream);
-                    String signatureURL = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-                    String location = getLocation();
-                    httpRequest = new HttpRequest(this, true);
-                    httpRequest.delegate = CompleteBookingActivity.this;
-                    httpRequest.execute("completeBookingByEngineer", amountDue, signatureURL,
-                            amountPaidInput.getText().toString(), arrayString, bookingID, location);
 
                 } else {
                     Toast.makeText(CompleteBookingActivity.this, R.string.askGPSPermission, Toast.LENGTH_SHORT).show();
@@ -341,33 +307,86 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
         }
     }
 
+    public boolean isNumeric(String s) {
+        return s != null && s.matches("[-+]?\\d*\\.?\\d+");
+    }
+
+    public void sendDataToServer(final List<BookingGetterSetter> data){
+        AlertDialog.Builder builder = new AlertDialog.Builder(CompleteBookingActivity.this);
+
+        builder.setTitle("Confirm");
+        builder.setMessage("Are you sure?");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+
+                // Do nothing, but close the dialog
+
+                @SuppressLint("UseSparseArrays") Map<Integer, Map<String, String>> unitParameter = new HashMap<>();
+                int z = 0;
+                for (int i = 0; i < data.size(); i++) {
+
+
+                    for (int k = 0; k < data.get(i).getUnitList().size(); k++) {
+                        Map<String, String> subParameter = new HashMap<>();
+                        List<String> list = new ArrayList<>();
+                        if (data.get(i).getUnitList().get(k).getPod().equals("1") ||
+                                data.get(i).getSerialNoUrl().isEmpty()) {
+                            subParameter.put("serialNo", data.get(i).getSerialNo());
+                            subParameter.put("serialNoImage", data.get(i).getSerialNoUrl());
+
+                        }
+
+                        subParameter.put("bookingID", bookingID);
+                        subParameter.put("pod", data.get(i).getUnitList().get(k).getPod());
+                        subParameter.put("unitID", data.get(i).getUnitList().get(k).getUnitID());
+                        subParameter.put("applianceBroken", data.get(i).getUnitList().get(k).getApplianceBroken() + "");
+                        subParameter.put("isDelivered", data.get(i).getUnitList().get(k).getDelivered() + "");
+
+
+                        unitParameter.put(z, subParameter);
+
+                        z++;
+                    }
+                }
+
+                Gson gson = new Gson();
+                String arrayString = gson.toJson(unitParameter);
+
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                //compress the image to PNG format
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, byteArrayOutputStream);
+                String signatureURL = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+                String location = getLocation();
+                httpRequest = new HttpRequest(CompleteBookingActivity.this, true);
+                httpRequest.delegate = CompleteBookingActivity.this;
+                httpRequest.execute("completeBookingByEngineer", amountDue, signatureURL,
+                        amountPaidInput.getText().toString(), arrayString, bookingID, location);
+
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // Do nothing
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         mAdapter.onActivityResult(requestCode, resultCode, data);
 
     }
-
-//    private void onSelectFromGalleryResult(Intent data) {
-//        Uri selectedImageUri = data.getData();
-//        String[] projection = { MediaStore.MediaColumns.DATA };
-//        Cursor cursor = managedQuery(selectedImageUri, projection, null, null,
-//                null);
-//        int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-//        cursor.moveToFirst();
-//        String selectedImagePath = cursor.getString(column_index);
-//        Bitmap thumbnail;
-//        BitmapFactory.Options options = new BitmapFactory.Options();
-//        options.inJustDecodeBounds = true;
-//        BitmapFactory.decodeFile(selectedImagePath, options);
-//        final int REQUIRED_SIZE = 200;
-//        int scale = 1;
-//        while (options.outWidth / scale / 2 >= REQUIRED_SIZE
-//                && options.outHeight / scale / 2 >= REQUIRED_SIZE)
-//            scale *= 2;
-//        options.inSampleSize = scale;
-//        options.inJustDecodeBounds = false;
-//        thumbnail = BitmapFactory.decodeFile(selectedImagePath, options);
-//
-//    }
 
 
     @Override
@@ -489,19 +508,17 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
      */
     public void dialog_action() {
 
-        mContent = (LinearLayout) dialog.findViewById(R.id.linearLayout);
-        customerPaid = (TextView) dialog.findViewById(R.id.customerPaid);
+        mContent = dialog.findViewById(R.id.linearLayout);
+        customerPaid = dialog.findViewById(R.id.customerPaid);
 
         mSignature = new signature(this, null);
         mSignature.setBackgroundColor(Color.WHITE);
         // Dynamically generating Layout through java code
         mContent.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        Window window = dialog.getWindow();
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        mClear = (Button) dialog.findViewById(R.id.clear);
-        save = (Button) dialog.findViewById(R.id.save);
+        mClear = dialog.findViewById(R.id.clear);
+        save = dialog.findViewById(R.id.save);
         save.setEnabled(false);
-        mCancel = (Button) dialog.findViewById(R.id.cancel);
+        mCancel = dialog.findViewById(R.id.cancel);
         view = mContent;
         String amountPaidTitle = getResources().getString(R.string.showAmountOnSigDialoag) + "\u20B9" + amountPaidInput.getText().toString();
         customerPaid.setText(amountPaidTitle);
