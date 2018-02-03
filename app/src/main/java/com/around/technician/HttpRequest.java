@@ -19,7 +19,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 @SuppressWarnings("ALL")
 public class HttpRequest extends AsyncTask<String, Void, String> {
-    public static String base_url = "https://aroundhomzapp.com/api";
+    public static String base_url = "http://stag.aroundhomzapp.com/api";
     public ApiResponse delegate = null;
     public ProgressDialog progress;
     public JSONObject postDataParams;

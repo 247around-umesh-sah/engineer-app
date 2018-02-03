@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.around.technician.adapters.SearchAdapter;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crash.FirebaseCrash;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +41,7 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        FirebaseCrash.log("Activity created");
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -64,6 +67,7 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
         });
 
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        assert inputMethodManager != null;
         inputMethodManager.showSoftInput(searchBooking, InputMethodManager.SHOW_IMPLICIT);
 
         try {
@@ -137,7 +141,7 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
 
     @Override
     public void processFinish(String httpReqResponse) {
-        //Log.w("Response", httpReqResponse);
+        Log.w("Response", httpReqResponse);
         if (httpReqResponse.contains("data")) {
             JSONObject jsonObjectHttpReq;
 

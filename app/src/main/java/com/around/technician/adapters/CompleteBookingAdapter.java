@@ -9,7 +9,9 @@ import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,11 +40,11 @@ import java.util.Locale;
 /**
  * Created by abhay on 2/1/18.
  */
-@SuppressWarnings("ALL")
+
 public class CompleteBookingAdapter extends RecyclerView.Adapter {
 
-    private final int VIEW_ITEM = 1;
-    private List<BookingGetterSetter> list;
+    public final int VIEW_ITEM = 1;
+    public List<BookingGetterSetter> list;
     public Context context;
     View v1;
     RecyclerView.ViewHolder vh;
@@ -68,7 +70,7 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
 
         if (holder instanceof ViewHolder) {
 
-            final BookingGetterSetter unitList = (BookingGetterSetter) list.get(position);
+            final BookingGetterSetter unitList = list.get(position);
 
             bookingID = unitList.getBookingID();
             ((ViewHolder) holder).brand.setText(unitList.getBrand());
@@ -97,7 +99,7 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
                 ((ViewHolder) holder).brokenRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        RadioButton rb = (RadioButton) group.findViewById(checkedId);
+                        RadioButton rb = group.findViewById(checkedId);
                         if (null != rb && checkedId > -1) {
                             //Toast.makeText(context, rb.getText() + "" +checkedId, Toast.LENGTH_SHORT).show();
                             if (rb.getText().equals("Yes")) {
@@ -134,19 +136,25 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
                 ((ViewHolder) holder).serialNo.setVisibility(View.VISIBLE);
                 ((ViewHolder) holder).SnText.setVisibility(View.VISIBLE);
                 ((ViewHolder) holder).SnPic.setVisibility(View.VISIBLE);
+
+
                 ((ViewHolder) holder).sNCamera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        if (((ViewHolder) holder).serialNo.getText().toString().equals("")) {
+                        if (((ViewHolder) holder).serialNo.getText().toString().isEmpty()) {
 
-                            Toast.makeText(context, "Please Enter Serial Number", Toast.LENGTH_SHORT).show();
-                            Snackbar.make(v, "Please Enter Serial Number", Snackbar.LENGTH_LONG).show();
+                            Toast.makeText(context, R.string.serialNumberRequiredMsg, Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, R.string.serialNumberRequiredMsg, Snackbar.LENGTH_LONG).show();
+                        } else if(TextUtils.isDigitsOnly(((ViewHolder) holder).serialNo.getText()) &&
+                                Double.parseDouble(((ViewHolder) holder).serialNo.getText().toString()) <= 0){
+                            Snackbar.make(v, R.string.validSerialNumberMsg, Snackbar.LENGTH_LONG).show();
                         } else {
 
-                            customUnitList = unitList;
+
                             viewHolder = ((ViewHolder) holder);
                             unitList.setSerialNo(((ViewHolder) holder).serialNo.getText().toString());
+                            customUnitList = unitList;
                             notifyDataSetChanged();
                             //Start Camera Activity
                             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -156,6 +164,7 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
                     }
                 });
             } else {
+
                 ((ViewHolder) holder).sNCamera.setVisibility(View.GONE);
                 ((ViewHolder) holder).serialNo.setVisibility(View.GONE);
                 ((ViewHolder) holder).SnText.setVisibility(View.GONE);
@@ -171,34 +180,6 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
     public List<BookingGetterSetter> getUnitData() {
         return list;
     }
-
-//    private void captureSerialNumber() {
-//        final CharSequence[] items = {"Take Photo",
-//                "Cancel"};
-//        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//        builder.setTitle("Select profile Photo!");
-//        builder.setItems(items, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int item) {
-//                if (items[item].equals("Take Photo")) {
-//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//
-//                    ((Activity) context).startActivityForResult(intent, REQUEST_CAMERA);
-//                } else if (items[item].equals("Choose from Library")) {
-////                    Intent intent = new Intent(
-////                            Intent.ACTION_PICK,
-////                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-////                    intent.setType("image/*");
-////                    ((Activity) context).startActivityForResult(
-////                            Intent.createChooser(intent, "Select File"),
-////                            SELECT_FILE);
-//                } else if (items[item].equals("Cancel")) {
-//                    dialog.dismiss();
-//                }
-//            }
-//        });
-//        builder.show();
-//    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
        // Log.d("MyAdapter", "onActivityResult");
@@ -216,7 +197,7 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
      * Capture Image from App
      * @param data
      */
-    private void onCaptureImageResult(Intent data) {
+    public void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.PNG, 90, bytes);
@@ -287,19 +268,19 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
 
         public ViewHolder(View view) {
             super(view);
-            brokenText = (TextView) view.findViewById(R.id.broken);
-            SnText = (TextView) view.findViewById(R.id.sN);
-            SnPic = (TextView) view.findViewById(R.id.sNPic);
-            bookingID = (TextView) view.findViewById(R.id.bookingID);
-            services = (TextView) view.findViewById(R.id.services);
-            bookingID = (TextView) view.findViewById(R.id.bookingID);
-            brand = (TextView) view.findViewById(R.id.brand);
-            category = (TextView) view.findViewById(R.id.category);
-            capacity = (TextView) view.findViewById(R.id.capacity);
-            recyclerview = (RecyclerView) view.findViewById(R.id.child_recyclerview);
-            brokenRadio = (RadioGroup) view.findViewById(R.id.brokenRadio);
-            sNCamera = (ImageView) view.findViewById(R.id.sNCamera);
-            serialNo = (EditText) view.findViewById(R.id.serialNo);
+            brokenText = view.findViewById(R.id.broken);
+            SnText = view.findViewById(R.id.sN);
+            SnPic = view.findViewById(R.id.sNPic);
+            bookingID = view.findViewById(R.id.bookingID);
+            services = view.findViewById(R.id.services);
+            bookingID = view.findViewById(R.id.bookingID);
+            brand = view.findViewById(R.id.brand);
+            category = view.findViewById(R.id.category);
+            capacity = view.findViewById(R.id.capacity);
+            recyclerview = view.findViewById(R.id.child_recyclerview);
+            brokenRadio = view.findViewById(R.id.brokenRadio);
+            sNCamera = view.findViewById(R.id.sNCamera);
+            serialNo = view.findViewById(R.id.serialNo);
         }
     }
 
@@ -309,7 +290,7 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
         public ProgressViewHolder(View v) {
             super(v);
 
-            progressBar = (ProgressBar) v.findViewById(R.id.progressBar1);
+            progressBar = v.findViewById(R.id.progressBar1);
         }
     }
 }

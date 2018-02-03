@@ -5,6 +5,7 @@
     <string name="askGPSPermission">Please Provide GPS Location Access</string>
     <string name="askPassword">Please Enter Password</string>
     <string name="phoneValidation">Please Enter Valid Mobile No</string>
+    <string name="passwordNotMatch">Password Not Match</string>
     <string name="loginFailedTitle">Login failed!</string>
     <string name="loginFailedMsg">Login failed!</string>
     <string name="serverConnectionFailedTitle">Opps!</string>
@@ -29,6 +30,7 @@
     <string name="signature_saved">Successfully Saved</string>
     <string name="showAmountOnSigDialoag">Amount Paid By Customer:</string>
     <string name="serialNumberRequiredMsg">Please Add Serial Number</string>
+    <string name="validSerialNumberMsg">Please Add Valid Serial Number</string>
     <string name="bookingUpdatedSuccessMsg">Booking Updated Successfully</string>
     <string name="customerPaidAmountRequired">Please Enter Customer Paid Amount</string>
     <string name="signatureRequired">Please Add Customer Signature</string>

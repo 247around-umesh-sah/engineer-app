@@ -6,15 +6,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 public class SplashActivity extends AppCompatActivity {
     public static final String MyPREFERENCES = "MyPrefs";
-    SharedPreferences sharedPrefs;
+    private SharedPreferences sharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        FirebaseCrash.log("Activity created");
         sharedPrefs = getSharedPreferences(SplashActivity.MyPREFERENCES,
                 Context.MODE_PRIVATE);
 
@@ -25,9 +27,7 @@ public class SplashActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    /**
-                     * IF user has logged in then we will open SearchActivity otherwise login page.
-                     */
+
                     if (sharedPrefs.contains("isLogin")) {
                         Intent search = new Intent(SplashActivity.this, SearchActivity.class);
                         startActivity(search);

@@ -9,10 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.around.technician.adapters.CancelBookingAdapter;
+import com.google.firebase.crash.FirebaseCrash;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,19 +22,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CancelBookingActivity extends AppCompatActivity implements ApiResponse {
-    String bookingID, appliance, customerName;
-    ConnectionDetector cd;
-    Misc misc;
-    RecyclerView recyclerView;
-    Button submit;
-    CancelBookingAdapter mAdapter;
-    private List<BookingGetterSetter> cancellationReason = new ArrayList<>();
+    private String bookingID;
+    private ConnectionDetector cd;
+    private Misc misc;
+    private CancelBookingAdapter mAdapter;
+    private final List<BookingGetterSetter> cancellationReason = new ArrayList<>();
     private HttpRequest httpRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cancel_booking);
+        FirebaseCrash.log("Activity created");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -46,10 +45,10 @@ public class CancelBookingActivity extends AppCompatActivity implements ApiRespo
 
         Intent intent = getIntent();
         bookingID = intent.getStringExtra("bookingID");
-        appliance = intent.getStringExtra("services");
-        customerName = intent.getStringExtra("customerName");
-        recyclerView = findViewById(R.id.recyclerview);
-        submit = findViewById(R.id.submit);
+        String appliance = intent.getStringExtra("services");
+        String customerName = intent.getStringExtra("customerName");
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        //Button submit = findViewById(R.id.submit);
 
         TextView bookingIDText = findViewById(R.id.bookingID);
         TextView services = findViewById(R.id.services);

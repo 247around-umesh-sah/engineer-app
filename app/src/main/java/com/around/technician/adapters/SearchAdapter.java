@@ -29,11 +29,9 @@ import java.util.List;
 public class SearchAdapter extends RecyclerView.Adapter {
 
     private final int VIEW_ITEM = 1;
-    public Context context;
-    View v1;
-    RecyclerView.ViewHolder vh;
-    Misc misc;
-    private List<BookingGetterSetter> list;
+    private Context context;
+    private final Misc misc;
+    private final List<BookingGetterSetter> list;
 
     public SearchAdapter(List<BookingGetterSetter> list, RecyclerView recyclerView) {
 
@@ -94,10 +92,11 @@ public class SearchAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     boolean per = misc.checkPhoneRequestPermissions();
                     if (per) {
-                        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bookingList.getPrimaryContactNo()));
+
                         try {
+                            Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bookingList.getPrimaryContactNo()));
                             context.startActivity(in);
-                        } catch (android.content.ActivityNotFoundException ex) {
+                        } catch (SecurityException ex) {
                             Toast.makeText(context, "Could not find an activity to place the call.", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -116,6 +115,8 @@ public class SearchAdapter extends RecyclerView.Adapter {
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
+        View v1;
+        RecyclerView.ViewHolder vh;
         if (viewType == VIEW_ITEM) {
 
             v1 = LayoutInflater.from(parent.getContext()).inflate(
@@ -141,9 +142,16 @@ public class SearchAdapter extends RecyclerView.Adapter {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView bookingID, services, customerName, primaryContactNo, address, current_status;
-        LinearLayout call, complete, cancel;
-        RelativeLayout buttonPanel;
+        final TextView bookingID;
+        final TextView services;
+        final TextView customerName;
+        final TextView primaryContactNo;
+        final TextView address;
+        final TextView current_status;
+        final LinearLayout call;
+        final LinearLayout complete;
+        final LinearLayout cancel;
+        final RelativeLayout buttonPanel;
 
         public ViewHolder(View view) {
             super(view);
@@ -161,7 +169,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
     }
 
     public static class ProgressViewHolder extends RecyclerView.ViewHolder {
-        public ProgressBar progressBar;
+        public final ProgressBar progressBar;
 
         public ProgressViewHolder(View v) {
             super(v);
