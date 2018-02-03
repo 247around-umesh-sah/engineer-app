@@ -107,7 +107,7 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
 
                                 for (int i = 0; i < unitList.getUnitList().size(); i++) {
                                     if(Float.parseFloat( unitList.getUnitList().get(i).getCustomerNetPayable()) == 0 &&
-                                            unitList.getUnitList().get(i).getPriceTags().equals("wall_mount_stand")    ){
+                                            unitList.getUnitList().get(i).getPriceTags().equals(context.getResources().getString(R.string.wall_mount_stand))    ){
                                         unitList.getUnitList().get(i).setApplianceBroken(true);
                                         unitList.getUnitList().get(i).setDelivered(false);
                                     }
