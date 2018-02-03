@@ -122,6 +122,7 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
         cd = new ConnectionDetector(this);
         misc = new Misc(this);
         misc.checkAndLocationRequestPermissions();
+        recyclerView.setNestedScrollingEnabled(false);
         try {
             recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
             mAdapter = new CompleteBookingAdapter(unitDetails, recyclerView);
