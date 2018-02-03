@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -163,7 +164,7 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
      */
     @Override
     public void processFinish(String httpReqResponse) {
-        // Log.w("LoginResponse", httpReqResponse);
+         Log.w("LoginResponse", httpReqResponse);
         if (httpReqResponse.contains("data")) {
             JSONObject jsonObjectHttpReq;
 
@@ -202,7 +203,7 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
 
                 } else {
 
-                    misc.showDialog(R.string.loginFailedTitle, R.string.loginFailedMsg);
+                    misc.showDialog(R.string.loginFailedTitle, R.string.passwordNotMatch);
                     httpRequest.progress.dismiss();
                 }
             } catch (JSONException e) {
