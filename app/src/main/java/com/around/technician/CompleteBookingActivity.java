@@ -59,7 +59,7 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
     String bookingID, appliance, amountDue, customerName;
     List<BookingGetterSetter> unitList;
     Button mClear, save, mCancel, signatureButton, submit;
-    TextView customerPaid;
+    TextView customerPaid, en_remarks;
     File file, serialFile;
     Dialog dialog;
     LinearLayout mContent;
@@ -97,6 +97,8 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
         bookingID = intent.getStringExtra("bookingID");
         appliance = intent.getStringExtra("services");
         amountDue = intent.getStringExtra("amountDue");
+
+        en_remarks = findViewById(R.id.enRemarks);
 
         customerName = intent.getStringExtra("customerName");
         recyclerView = findViewById(R.id.appliance_list);
@@ -192,42 +194,6 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
     }
 
     /**
-     * Get Current location of Mobile
-     *
-     * @return Address
-     */
-    public String getLocation() {
-        Gson gson = new Gson();
-        String arrayString = "";
-        if (cd.isConnectingToInternet()) {
-
-            if (misc.checkAndLocationRequestPermissions()) {
-                // create class object
-                gps = new GPSTracker(CompleteBookingActivity.this);
-
-                // check if GPS enabled
-                if (gps.canGetLocation()) {
-                    try {
-                        if (!gps.getAddress().getPostalCode().isEmpty()) {
-
-                            Map<String, String> address = new HashMap<>();
-
-                            address.put("pincode", gps.getAddress().getPostalCode());
-                            address.put("city", gps.getAddress().getLocality());
-                            address.put("address", gps.getAddress().getAddressLine(0));
-                            arrayString = gson.toJson(address);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-        }
-        return arrayString;
-    }
-
-    /**
      * This is used to check validation whatever Engineer done to completed booking.
      *
      * @param view View
@@ -235,6 +201,11 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
     public void submitProcess(View view) {
         boolean validation = true;
         List<BookingGetterSetter> data = mAdapter.getUnitData();
+        String enRemarks = en_remarks.getText().toString();
+        if(enRemarks.isEmpty()){
+            validation = false;
+            Snackbar.make(view, R.string.remarksRequired, Snackbar.LENGTH_LONG).show();
+        }
 
         if (validation) {
 
@@ -360,11 +331,12 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
                 //compress the image to PNG format
                 bitmap.compress(Bitmap.CompressFormat.PNG, 90, byteArrayOutputStream);
                 String signatureURL = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-                String location = getLocation();
+                String location = misc.getLocation();
                 httpRequest = new HttpRequest(CompleteBookingActivity.this, true);
                 httpRequest.delegate = CompleteBookingActivity.this;
                 httpRequest.execute("completeBookingByEngineer", amountDue, signatureURL,
-                        amountPaidInput.getText().toString(), arrayString, bookingID, location);
+                        amountPaidInput.getText().toString(), arrayString, bookingID, location,
+                        en_remarks.getText().toString());
 
                 dialog.dismiss();
             }

@@ -120,6 +120,7 @@ public class GetToken {
             urlParameters.put("UnitArray", params[4]);
             urlParameters.put("bookingID", params[5]);
             urlParameters.put("location", params[6]);
+            urlParameters.put("remarks", params[7]);
             urlParameters.put("service_center_id", sharedPrefs.getString("service_center_id", null));
             urlParameters.put("engineer_id", sharedPrefs.getString("engineerID", null));
             urlParameters.put("agent_id", sharedPrefs.getString("agentID", null));
@@ -138,6 +139,7 @@ public class GetToken {
         try {
             urlParameters.put("bookingID", params[1]);
             urlParameters.put("cancellationReason", params[2]);
+            urlParameters.put("location", params[3]);
             urlParameters.put("service_center_id", sharedPrefs.getString("service_center_id", null));
             urlParameters.put("engineer_id", sharedPrefs.getString("agentID", null));
             urlParameters.put("agent_id", sharedPrefs.getString("engineerID", null));

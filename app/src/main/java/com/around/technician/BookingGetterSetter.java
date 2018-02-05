@@ -39,6 +39,7 @@ public class BookingGetterSetter extends Application implements Serializable {
     public String serialNoUrl;
     public String cancellationReason;
     public Bitmap serialNoBitmap;
+    public String bookingRemarks;
 
     public BookingGetterSetter(String bookingID,
                                String services,
@@ -46,7 +47,8 @@ public class BookingGetterSetter extends Application implements Serializable {
                                String primaryContactNo,
                                String address,
                                String current_status,
-                               String amountDue) {
+                               String amountDue,
+                               String bookingRemarks) {
 
         this.bookingID = bookingID;
         this.services = services;
@@ -55,6 +57,7 @@ public class BookingGetterSetter extends Application implements Serializable {
         this.address = address;
         this.current_status = current_status;
         this.amountDue = amountDue;
+        this.bookingRemarks = bookingRemarks;
 
     }
 
@@ -228,6 +231,8 @@ public class BookingGetterSetter extends Application implements Serializable {
     public String getCustomerNetPayable() {
         return customerNetPayable;
     }
+
+    public String getBookingRemarks(){ return bookingRemarks;}
 
 
 }

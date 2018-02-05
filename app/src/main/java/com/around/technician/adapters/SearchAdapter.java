@@ -51,6 +51,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
             ((ViewHolder) holder).bookingID.setText(bookingList.getBookingID());
             ((ViewHolder) holder).services.setText(bookingList.getServices());
             ((ViewHolder) holder).customerName.setText(bookingList.getCustomerName());
+            ((ViewHolder) holder).remarks.setText(bookingList.getBookingRemarks());
             ((ViewHolder) holder).primaryContactNo.setText(bookingList.getPrimaryContactNo());
             // We will allow Engineer to take action when status has Pending Or Rescheduled
             if (bookingList.getCurrent_status().equals("Pending") ||
@@ -152,6 +153,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
         final LinearLayout complete;
         final LinearLayout cancel;
         final RelativeLayout buttonPanel;
+        final TextView remarks;
 
         public ViewHolder(View view) {
             super(view);
@@ -165,6 +167,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
             cancel = view.findViewById(R.id.cancel);
             current_status = view.findViewById(R.id.current_status);
             buttonPanel = view.findViewById(R.id.buttonPanel);
+            remarks = view.findViewById(R.id.remarks);
         }
     }
 

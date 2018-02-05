@@ -162,7 +162,8 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
                                 post.optString("booking_primary_contact_no"),
                                 post.optString("booking_address"),
                                 post.optString("current_status"),
-                                post.optString("amount_due")));
+                                post.optString("amount_due"),
+                                post.optString("booking_remarks")));
                     }
 
                     SearchActivity.this.runOnUiThread(new Runnable() {

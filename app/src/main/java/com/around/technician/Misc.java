@@ -13,19 +13,25 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Misc {
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     Activity activity;
     Context context;
+    ConnectionDetector cd;
 
     public Misc(Context context) {
 
         this.context = context;
         activity = (Activity) context;
+        cd = new ConnectionDetector(context);
 
     }
 
@@ -138,5 +144,43 @@ public class Misc {
                         // Whatever...
                     }
                 }).show();
+    }
+
+    /**
+     * Get Current location of Mobile
+     *
+     * @return Address
+     */
+    public String getLocation() {
+        Gson gson = new Gson();
+        String arrayString = "";
+        if (cd.isConnectingToInternet()) {
+
+            if (checkAndLocationRequestPermissions()) {
+                // create class object
+                GPSTracker gps = new GPSTracker(context);
+
+                // check if GPS enabled
+                if (gps.canGetLocation()) {
+                    try {
+                        if (!gps.getAddress().getPostalCode().isEmpty()) {
+
+                            Map<String, String> address = new HashMap<>();
+
+                            address.put("pincode", gps.getAddress().getPostalCode());
+                            address.put("city", gps.getAddress().getLocality());
+                            address.put("address", gps.getAddress().getAddressLine(0));
+                            address.put("latitude", gps.getLatitude()+"");
+                            address.put("longitude", gps.getLongitude()+"");
+                            arrayString = gson.toJson(address);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }
+        return arrayString;
     }
 }

@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/border"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="19dp"
                 android:layout_toRightOf="@+id/customerNameImage"
                 android:text=""
                 android:textSize="@dimen/text_size"
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/customerName"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="19dp"
                 android:layout_toRightOf="@+id/customerNameImage"
                 android:text=""
                 android:textSize="@dimen/text_size"
@@ -109,8 +109,32 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/phonenumber"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="19dp"
                 android:layout_toRightOf="@+id/locImage"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:text="A9-2nd"
+                android:textSize="@dimen/text_size"
+                tools:ignore="RtlHardcoded" />
+
+            <ImageView
+                android:id="@+id/remarksPic"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/icon_size"
+                android:layout_below="@+id/locImage"
+                android:layout_marginTop="13dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_comment" />
+
+            <TextView
+                android:id="@+id/remarks"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="19dp"
+                android:layout_toRightOf="@+id/remarksPic"
                 android:ellipsize="end"
                 android:maxLines="4"
                 android:text=""
@@ -121,9 +145,8 @@
                 android:id="@+id/current_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address"
+                android:layout_below="@+id/remarks"
                 android:layout_marginTop="25dp"
-                android:text=""
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold"
@@ -134,7 +157,7 @@
                 android:id="@+id/buttonPanel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address"
+                android:layout_below="@+id/remarks"
                 android:gravity="center">
 
                 <LinearLayout

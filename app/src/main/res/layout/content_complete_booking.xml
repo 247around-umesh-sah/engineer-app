@@ -133,11 +133,34 @@
             android:textSize="@dimen/text_size"
             tools:ignore="RtlHardcoded" />
 
+        <TextView
+            android:id="@+id/enRemarksText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/amountDueInputText"
+            android:layout_marginTop="23dp"
+            android:text="@string/remarks"
+            android:textSize="@dimen/text_size" />
+
+        <EditText
+            android:id="@+id/enRemarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/amountDueInputText"
+            android:layout_marginLeft="@dimen/input_padding"
+            android:layout_marginTop="@dimen/input_padding"
+            android:layout_toRightOf="@+id/amountDueInputText"
+            android:hint="@string/input_remarks_hint"
+            android:maxLines="8"
+            android:inputType="text"
+            android:textSize="@dimen/text_size"
+            tools:ignore="RtlHardcoded" />
+
         <Button
             android:id="@+id/signature"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_button_height"
-            android:layout_below="@+id/amountPaidInput"
+            android:layout_below="@+id/enRemarks"
             android:layout_marginTop="12dp"
             android:background="@color/orange"
             android:text="@string/add_signature"

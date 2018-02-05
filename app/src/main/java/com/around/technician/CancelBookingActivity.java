@@ -99,9 +99,10 @@ public class CancelBookingActivity extends AppCompatActivity implements ApiRespo
             Snackbar.make(view, R.string.cancellationReasonRequired, Snackbar.LENGTH_LONG).show();
         } else {
             if (cd.isConnectingToInternet()) {
+                String location = misc.getLocation();
                 httpRequest = new HttpRequest(this, true);
                 httpRequest.delegate = CancelBookingActivity.this;
-                httpRequest.execute("cancelBookingByEngineer", bookingID, selectedReason);
+                httpRequest.execute("cancelBookingByEngineer", bookingID, selectedReason, location);
             } else {
                 misc.NoConnection();
             }

@@ -37,6 +37,7 @@
     <string name="signatureRequired">Please Add Customer Signature</string>
     <string name="serialNumberPictureRequired">"Please Add Serial Picture</string>
     <string name="priceTagsCheckboxRequired">Please check Atleast one Checkbox</string>
+    <string name="remarksRequired">"Please Enter Remarks</string>
 
     <!-- Cancel Booking Activity Toast -->
     <string name="cancellationReasonRequired">Please Select Atleast One Reason</string>
@@ -56,8 +57,9 @@
     <!-- Content Complete booking -->
     <string name="amount_due_text">Amount Due: </string>
     <string name="amount_paid_text">Amount Paid</string>
+    <string name="remarks">Remarks </string>
     <string name="input_paid_amount_hint">Customer Paid Amount</string>
-
+    <string name="input_remarks_hint">Enter Your Remarks</string>
     <string name="cancellation_reason_title">Cancellation Reason</string>
 
 

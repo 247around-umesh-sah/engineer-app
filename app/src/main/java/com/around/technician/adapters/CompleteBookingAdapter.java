@@ -263,7 +263,6 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
         RecyclerView recyclerview;
         RadioGroup brokenRadio;
         EditText serialNo;
-
         ImageView sNCamera;
 
         public ViewHolder(View view) {
@@ -281,6 +280,7 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
             brokenRadio = view.findViewById(R.id.brokenRadio);
             sNCamera = view.findViewById(R.id.sNCamera);
             serialNo = view.findViewById(R.id.serialNo);
+
         }
     }
 
