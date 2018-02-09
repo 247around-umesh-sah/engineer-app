@@ -10,9 +10,22 @@
     tools:context="com.around.technician.SplashActivity">
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/logo_dimension"
         android:layout_centerInParent="true"
         android:src="@drawable/logo_transparent"
         tools:ignore="ContentDescription" />
+
+
+    <TextView
+        android:id="@+id/label_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:padding="?attr/dialogPreferredPadding"
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
 </RelativeLayout>
