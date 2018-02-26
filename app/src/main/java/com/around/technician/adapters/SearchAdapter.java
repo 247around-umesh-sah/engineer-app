@@ -53,6 +53,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
             ((ViewHolder) holder).customerName.setText(bookingList.getCustomerName());
             ((ViewHolder) holder).remarks.setText(bookingList.getBookingRemarks());
             ((ViewHolder) holder).primaryContactNo.setText(bookingList.getPrimaryContactNo());
+            ((ViewHolder) holder).amountDueText.setText(bookingList.getAmountDue());
             // We will allow Engineer to take action when status has Pending Or Rescheduled
             if (bookingList.getCurrent_status().equals("Pending") ||
                     bookingList.getCurrent_status().equals("Rescheduled")) {
@@ -71,7 +72,6 @@ public class SearchAdapter extends RecyclerView.Adapter {
                     intent.putExtra("bookingID", bookingList.getBookingID());
                     intent.putExtra("customerName", bookingList.getCustomerName());
                     intent.putExtra("services", bookingList.getServices());
-                    Log.e("Amount Due1",bookingList.getAmountDue());
                     intent.putExtra("amountDue", bookingList.getAmountDue());
                     context.startActivity(intent);
                 }
@@ -154,6 +154,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
         final LinearLayout cancel;
         final RelativeLayout buttonPanel;
         final TextView remarks;
+        final TextView amountDueText;
 
         public ViewHolder(View view) {
             super(view);
@@ -168,6 +169,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
             current_status = view.findViewById(R.id.current_status);
             buttonPanel = view.findViewById(R.id.buttonPanel);
             remarks = view.findViewById(R.id.remarks);
+            amountDueText = view.findViewById(R.id.amoundDueText);
         }
     }
 

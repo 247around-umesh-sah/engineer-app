@@ -110,50 +110,48 @@
 
         </RadioGroup>
 
-        <View
-            android:id="@+id/border2"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_below="@+id/brokenRadio"
-            android:layout_marginTop="8dp"
-            android:background="@color/colorPrimary" />
+        <!--<View-->
+            <!--android:id="@+id/border2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_below="@+id/brokenRadio"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:background="@color/colorPrimary" />-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/child_recyclerview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/border2"
+            android:layout_below="@+id/brokenRadio"
             android:layout_marginTop="@dimen/input_padding">
 
         </android.support.v7.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/sN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/child_recyclerview"
-            android:layout_marginTop="23dp"
-            android:text="@string/serial_number_text"
-            android:textSize="@dimen/text_size" />
 
-        <EditText
-            android:id="@+id/serialNo"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_below="@+id/child_recyclerview"
+            android:id="@+id/serialNoInput"
             android:layout_marginLeft="@dimen/input_padding"
-            android:layout_marginTop="@dimen/input_padding"
-            android:layout_toRightOf="@+id/sN"
-            android:hint="@string/input_serial_no_hint"
-            android:textSize="@dimen/text_size"
-            tools:ignore="RtlHardcoded" />
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/serialNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_serial_number"
+                android:textSize="@dimen/text_size" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:id="@+id/sNPic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sN"
-            android:layout_marginTop="27dp"
+            android:layout_below="@+id/serialNoInput"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/input_padding"
             android:text="@string/serial_no_pic_text"
             android:textSize="@dimen/text_size" />
 
@@ -161,9 +159,9 @@
             android:id="@+id/sNCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/sN"
+            android:layout_below="@+id/serialNoInput"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="13dp"
             android:layout_toRightOf="@+id/sNPic"
             android:contentDescription="@null"
             android:src="@drawable/ic_action_camera"

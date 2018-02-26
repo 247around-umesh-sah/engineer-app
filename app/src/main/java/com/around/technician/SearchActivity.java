@@ -1,5 +1,6 @@
 package com.around.technician;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -42,7 +43,7 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_search);
         FirebaseCrash.log("Activity created");
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -168,6 +169,7 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
                 final JSONObject jsonObject = jsonObjectHttpReq.getJSONObject("data");
                 String statusCode = jsonObject.getString("code");
                 if (statusCode.equals("0000")) {
+                    hideKeyboard();
 
                     JSONArray posts = jsonObject.optJSONArray("bookingDetails");
                     bookingList.clear();
@@ -199,6 +201,7 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
                         }
                     });
                 } else {
+                    hideKeyboard();
                     progressBar.setVisibility(View.GONE);
                     bookingNotFound.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -207,15 +210,24 @@ public class SearchActivity extends AppCompatActivity implements ApiResponse {
             } catch (JSONException e) {
 
                 e.printStackTrace();
-
+                hideKeyboard();
                 httpRequest.progress.dismiss();
             }
         } else {
+            hideKeyboard();
             progressBar.setVisibility(View.GONE);
             bookingNotFound.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             //misc.showDialog("OPPS!", "System Failure. Please try Again");
             httpRequest.progress.dismiss();
+        }
+    }
+
+    public void hideKeyboard() {
+        View view = getCurrentFocus();
+        if (view != null) {
+            ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
+                    hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 }

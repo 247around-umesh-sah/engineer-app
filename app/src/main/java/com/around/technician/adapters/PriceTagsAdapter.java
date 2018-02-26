@@ -50,7 +50,7 @@ public class PriceTagsAdapter extends RecyclerView.Adapter {
                 ((ViewHolder) holder).checkBox.setChecked(true);
             } else {
                 ((ViewHolder) holder).checkBox.setChecked(false);
-                if (unitList.getApplianceBroken()) {
+                if (unitList.getApplianceBroken() && unitList.getPriceTags().equals(context.getResources().getString(R.string.wall_mount_stand))) {
 
                     ((ViewHolder) holder).checkBox.setEnabled(false);
                 }

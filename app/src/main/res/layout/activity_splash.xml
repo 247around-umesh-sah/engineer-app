@@ -1,31 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.around.technician.SplashActivity">
+    android:orientation="vertical"
+    android:background="@drawable/background">
 
     <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/logo_dimension"
-        android:layout_centerInParent="true"
-        android:src="@drawable/logo_transparent"
-        tools:ignore="ContentDescription" />
-
-
-    <TextView
-        android:id="@+id/label_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/logo"
+        android:layout_width="@dimen/splash_logo_dimension"
+        android:layout_height="@dimen/splash_logo_height_dimension"
         android:layout_centerHorizontal="true"
-        android:padding="?attr/dialogPreferredPadding"
-        android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        android:layout_marginTop="150dp"
+        android:src="@drawable/logo"
+        android:id="@+id/logo"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:baselineAlignBottom="true"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/building">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:baselineAlignBottom="true"
+            android:layout_gravity="bottom"
+            android:src="@drawable/building"
+            android:id="@+id/building"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:baselineAlignBottom="true"
+            android:layout_gravity="bottom"
+            android:src="@drawable/poles2"
+            android:id="@+id/poles2"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:baselineAlignBottom="true"
+            android:layout_gravity="bottom"
+            android:src="@drawable/poles"
+            android:id="@+id/poles"/>
+
+        <ImageView
+            android:id="@+id/scooter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:baselineAlignBottom="true"
+            android:src="@drawable/scooter"/>
+
+
+    </FrameLayout>
+
 
 </RelativeLayout>

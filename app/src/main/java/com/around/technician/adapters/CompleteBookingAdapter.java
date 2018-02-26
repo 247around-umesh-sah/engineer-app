@@ -108,9 +108,10 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
                                 for (int i = 0; i < unitList.getUnitList().size(); i++) {
                                     if(Float.parseFloat( unitList.getUnitList().get(i).getCustomerNetPayable()) == 0 &&
                                             unitList.getUnitList().get(i).getPriceTags().equals(context.getResources().getString(R.string.wall_mount_stand))    ){
-                                        unitList.getUnitList().get(i).setApplianceBroken(true);
+                                        //unitList.getUnitList().get(i).setApplianceBroken(true);
                                         unitList.getUnitList().get(i).setDelivered(false);
                                     }
+                                    unitList.getUnitList().get(i).setApplianceBroken(true);
 
                                 }
 
@@ -134,7 +135,6 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
 
                 ((ViewHolder) holder).sNCamera.setVisibility(View.VISIBLE);
                 ((ViewHolder) holder).serialNo.setVisibility(View.VISIBLE);
-                ((ViewHolder) holder).SnText.setVisibility(View.VISIBLE);
                 ((ViewHolder) holder).SnPic.setVisibility(View.VISIBLE);
 
 
@@ -167,7 +167,6 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
 
                 ((ViewHolder) holder).sNCamera.setVisibility(View.GONE);
                 ((ViewHolder) holder).serialNo.setVisibility(View.GONE);
-                ((ViewHolder) holder).SnText.setVisibility(View.GONE);
                 ((ViewHolder) holder).SnPic.setVisibility(View.GONE);
             }
 
@@ -259,7 +258,7 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView bookingID, services, brand, category, capacity, brokenText, SnText, SnPic;
+        TextView bookingID, services, brand, category, capacity, brokenText, SnPic;
         RecyclerView recyclerview;
         RadioGroup brokenRadio;
         EditText serialNo;
@@ -268,7 +267,6 @@ public class CompleteBookingAdapter extends RecyclerView.Adapter {
         public ViewHolder(View view) {
             super(view);
             brokenText = view.findViewById(R.id.broken);
-            SnText = view.findViewById(R.id.sN);
             SnPic = view.findViewById(R.id.sNPic);
             bookingID = view.findViewById(R.id.bookingID);
             services = view.findViewById(R.id.services);

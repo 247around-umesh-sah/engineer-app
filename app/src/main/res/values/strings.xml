@@ -27,7 +27,8 @@
     <string name="save">Submit</string>
     <string name="hint_cancel">Cancel</string>
     <string name="hint_clear">Clear</string>
-    <string name="hint_save">Save</string>
+    <string name="hint_save">Submit</string>
+    <string name="hint_serial_number">Enter Serial Number</string>
     <string name="signature_saved">Successfully Saved</string>
     <string name="showAmountOnSigDialoag">Amount Paid By Customer:</string>
     <string name="serialNumberRequiredMsg">Please Add Serial Number</string>
@@ -61,6 +62,13 @@
     <string name="input_paid_amount_hint">Customer Paid Amount</string>
     <string name="input_remarks_hint">Enter Your Remarks</string>
     <string name="cancellation_reason_title">Cancellation Reason</string>
+    <string name="title_activity_amount_paid">AmountPaidActivity</string>
+    <string name="procceed">Procceed</string>
+    <string name="title_activity_digital_signature">DigitalSignatureActivity</string>
+
+
+    <string name="customer_signataure_toolbar">Customer Signature</string>
+    <string name="add_amount_toolbar">Add Amount</string>
 
 
 </resources>

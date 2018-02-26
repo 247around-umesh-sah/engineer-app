@@ -3,6 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="logo_dimension">50dp</dimen>
+    <dimen name="splash_logo_dimension">150dp</dimen>
+    <dimen name="splash_logo_height_dimension">100dp</dimen>
     <item name="visible" type="id" />
     <item name="masked" type="id" />
     <dimen name="text_size">12sp</dimen>
@@ -17,4 +19,5 @@
 
     <!-- Search Activity -->
     <dimen name="icon_size">25dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
