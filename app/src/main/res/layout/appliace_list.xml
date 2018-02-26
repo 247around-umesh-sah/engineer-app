@@ -110,19 +110,29 @@
 
         </RadioGroup>
 
-        <!--<View-->
-            <!--android:id="@+id/border2"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_below="@+id/brokenRadio"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--android:background="@color/colorPrimary" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/serviceCategoryText"
+            android:layout_marginTop="@dimen/input_padding"
+            android:layout_below="@+id/brokenRadio"
+            android:text="@string/service_category"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold"/>
+
+        <View
+            android:id="@+id/border2"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_below="@+id/serviceCategoryText"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorPrimary" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/child_recyclerview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/brokenRadio"
+            android:layout_below="@+id/border2"
             android:layout_marginTop="@dimen/input_padding">
 
         </android.support.v7.widget.RecyclerView>
@@ -132,7 +142,6 @@
             android:layout_width="match_parent"
             android:layout_below="@+id/child_recyclerview"
             android:id="@+id/serialNoInput"
-            android:layout_marginLeft="@dimen/input_padding"
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content">
 
@@ -151,7 +160,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/serialNoInput"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="@dimen/input_padding"
             android:text="@string/serial_no_pic_text"
             android:textSize="@dimen/text_size" />
 

@@ -60,6 +60,7 @@
     <string name="amount_paid_text">Amount Paid</string>
     <string name="remarks">Remarks </string>
     <string name="input_paid_amount_hint">Customer Paid Amount</string>
+    <string name="input_due_amount_hint">Customer Due Amount</string>
     <string name="input_remarks_hint">Enter Your Remarks</string>
     <string name="cancellation_reason_title">Cancellation Reason</string>
     <string name="title_activity_amount_paid">AmountPaidActivity</string>
@@ -69,6 +70,8 @@
 
     <string name="customer_signataure_toolbar">Customer Signature</string>
     <string name="add_amount_toolbar">Add Amount</string>
+    <string name="rupee">\u20A8</string>
+    <string name="service_category">Service Category</string>
 
 
 </resources>

@@ -54,7 +54,7 @@ public class AmountPaidActivity extends AppCompatActivity {
     String bookingID;
     String amountDue;
     String formData;
-    EditText amountPaidInput;
+    EditText amountPaidInput, amountDueInput;
     EditText remarks;
     String amountPaid ="", enRemarks = "";
 
@@ -75,7 +75,11 @@ public class AmountPaidActivity extends AppCompatActivity {
         formData = intent.getStringExtra("formData");
         amountDue = intent.getStringExtra("amountDue");
         amountPaidInput = findViewById(R.id.amountPaid);
+        amountDueInput = findViewById(R.id.amountDue);
         remarks = findViewById(R.id.remarks);
+
+        amountDueInput.setText(amountDue);
+        amountDueInput.setFocusable(false);
 
         RadioGroup paymentGroup = findViewById(R.id.paymentGroup);
         RadioButton paymentcash = findViewById(R.id.cash);

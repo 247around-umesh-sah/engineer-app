@@ -34,6 +34,21 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/amountDue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:hint="@string/input_due_amount_hint"
+                        android:inputType="numberDecimal" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
                         android:id="@+id/amountPaid"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
