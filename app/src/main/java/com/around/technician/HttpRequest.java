@@ -59,8 +59,8 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
             postDataParams.put("request", requestData);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(25000 /* milliseconds */);
-            conn.setConnectTimeout(25000 /* milliseconds */);
+            conn.setReadTimeout(50000 /* milliseconds */);
+            conn.setConnectTimeout(50000 /* milliseconds */);
             conn.setRequestMethod("POST");
             conn.setDoInput(true);
             conn.setDoOutput(true);
