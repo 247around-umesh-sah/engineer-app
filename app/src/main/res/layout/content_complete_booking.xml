@@ -36,7 +36,7 @@
             android:layout_marginTop="@dimen/submit_button"
             android:background="@color/colorPrimary"
             android:onClick="submitProcess"
-            android:text="@string/procceed"
+            android:text="@string/proceed"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size" />
 

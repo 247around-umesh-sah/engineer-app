@@ -37,19 +37,21 @@
     <string name="customerPaidAmountRequired">Please Enter Customer Paid Amount</string>
     <string name="signatureRequired">Please Add Customer Signature</string>
     <string name="serialNumberPictureRequired">"Please Add Serial Picture</string>
-    <string name="priceTagsCheckboxRequired">Please check Atleast one Checkbox</string>
+    <string name="priceTagsCheckboxRequired">Please Select Service</string>
     <string name="remarksRequired">"Please Enter Remarks</string>
 
     <!-- Cancel Booking Activity Toast -->
-    <string name="cancellationReasonRequired">Please Select Atleast One Reason</string>
+    <string name="cancellationReasonRequired">Please Select Reason</string>
 
     <!--Appliance List -->
     <string name="brand_text">Brand: </string>
     <string name="category_text">Category: </string>
     <string name="capacity_text">Capacity: </string>
-    <string name="appliance_broken_text">Appliance Broken </string>
+    <string name="appliance_broken_text">Appliance Broken: </string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="select_service">Select Service: </string>
+
     <string name="input_serial_no_hint">Enter Serial No</string>
     <string name="serial_number_text">Serial No</string>
     <string name="serial_no_pic_text">Serial No Pic</string>
@@ -63,7 +65,7 @@
     <string name="input_remarks_hint">Enter Your Remarks</string>
     <string name="cancellation_reason_title">Cancellation Reason</string>
     <string name="title_activity_amount_paid">AmountPaidActivity</string>
-    <string name="procceed">Procceed</string>
+    <string name="proceed">Proceed</string>
     <string name="title_activity_digital_signature">DigitalSignatureActivity</string>
 
 
