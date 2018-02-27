@@ -300,6 +300,7 @@ public class CompleteBookingActivity extends AppCompatActivity implements ApiRes
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             Intent intent = new Intent(CompleteBookingActivity.this, SearchActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
                                         }
                                     }).show();
