@@ -141,8 +141,8 @@ public class GetToken {
             urlParameters.put("cancellationReason", params[2]);
             urlParameters.put("location", params[3]);
             urlParameters.put("service_center_id", sharedPrefs.getString("service_center_id", null));
-            urlParameters.put("engineer_id", sharedPrefs.getString("agentID", null));
-            urlParameters.put("agent_id", sharedPrefs.getString("engineerID", null));
+            urlParameters.put("engineer_id", sharedPrefs.getString("engineerID", null));
+            urlParameters.put("agent_id", sharedPrefs.getString("agentID", null));
             urlParameters.put("sc_agent_id", sharedPrefs.getString("scAgentID", null));
 
         } catch (Exception e) {
