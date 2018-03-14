@@ -73,6 +73,9 @@ public class GetToken {
             case "cancelBookingByEngineer":
                 processCancelBooking(urlParameters, params);
                 break;
+            case "getCustomerQrCode":
+                getCustomerQrCode(urlParameters, params);
+                break;
         }
 
         String token = generateToken(urlParameters, subUrl);
@@ -87,6 +90,20 @@ public class GetToken {
         jsonData.put("deviceId", deviceId);
 
         return new Gson().toJson(jsonData);
+    }
+
+    public Map<String, String> getCustomerQrCode(Map<String, String> urlParameters,
+                                                    String[] params) {
+        try {
+            urlParameters.put("bookingID", params[1]);
+            urlParameters.put("amountPaid", params[2]);
+            urlParameters.put("engineerNo", sharedPrefs.getString("phoneNumber", null));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
     }
 
     public String generateToken(Map<String, String> urlParameters, String subUrl) {

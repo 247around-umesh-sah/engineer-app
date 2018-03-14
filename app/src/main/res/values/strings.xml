@@ -56,6 +56,11 @@
     <string name="serial_number_text">Serial No</string>
     <string name="serial_no_pic_text">Serial No Pic</string>
 
+    <!--Add Amount Activity -->
+    <string name="payment_method_cash">Cash</string>
+    <string name="payment_method_paytm">Paytm</string>
+    <string name="choose_payment_method">Choose Payment Method</string>
+
 
     <!-- Content Complete booking -->
     <string name="amount_due_text">Amount Due: </string>
@@ -74,6 +79,7 @@
     <string name="add_amount_toolbar">Add Amount</string>
     <string name="rupee">\u20A8</string>
     <string name="service_category">Service Category</string>
+    <string name="title_activity_paytm_qr">PaytmQrActivity</string>
 
 
 </resources>

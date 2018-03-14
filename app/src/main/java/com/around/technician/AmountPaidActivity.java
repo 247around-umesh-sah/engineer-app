@@ -45,10 +45,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class AmountPaidActivity extends AppCompatActivity {
+public class AmountPaidActivity extends AppCompatActivity implements ApiResponse {
 
-    // GPSTracker class
-
+    private HttpRequest httpRequest;
     ConnectionDetector cd;
     Misc misc;
     String bookingID;
@@ -57,6 +56,7 @@ public class AmountPaidActivity extends AppCompatActivity {
     EditText amountPaidInput, amountDueInput;
     EditText remarks;
     String amountPaid ="", enRemarks = "";
+    RadioGroup paymentGroup;
 
 
     @Override
@@ -81,10 +81,7 @@ public class AmountPaidActivity extends AppCompatActivity {
         amountDueInput.setText(amountDue);
         amountDueInput.setFocusable(false);
 
-        RadioGroup paymentGroup = findViewById(R.id.paymentGroup);
-        RadioButton paymentcash = findViewById(R.id.cash);
-
-        paymentGroup.check(paymentcash.getId());
+        paymentGroup = findViewById(R.id.paymentGroup);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -100,12 +97,6 @@ public class AmountPaidActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
-        RadioButton cashButton = findViewById(R.id.cash);
-        RadioButton paytmButton = findViewById(R.id.paytm);
-        cashButton.setEnabled(false);
-        paytmButton.setEnabled(false);
-
     }
 
     public void submitProcess(View view) {
@@ -128,15 +119,97 @@ public class AmountPaidActivity extends AppCompatActivity {
             Snackbar.make(view, R.string.remarksRequired, Snackbar.LENGTH_LONG).show();
         }
 
-        if(validation){
-            Intent intent = new Intent(AmountPaidActivity.this, DigitalSignatureActivity.class);
-            intent.putExtra("formData", formData);
-            intent.putExtra("amountDue", amountDue);
-            intent.putExtra("bookingID", bookingID);
-            intent.putExtra("amountPaid", amountPaid);
-            intent.putExtra("remarks", enRemarks);
-            startActivity(intent);
+        if (paymentGroup.getCheckedRadioButtonId() == -1) {
+            validation = false;
+            Snackbar.make(view, R.string.choose_payment_method, Snackbar.LENGTH_LONG).show();
+
+        } else {
+            // one of the radio buttons is checked
+            RadioButton rb = (RadioButton) paymentGroup.findViewById(paymentGroup.getCheckedRadioButtonId());
+
+            if (rb.getText().toString().equals(getResources().getString(R.string.payment_method_cash))) {
+                if(validation){
+                    cashOnDelivery();
+                }
+
+            } else if (rb.getText().toString().equals(getResources().getString(R.string.payment_method_paytm))) {
+
+                if(validation){
+                    paymentThroughPaytm();
+                }
+            } else {
+                validation = false;
+                Snackbar.make(view, R.string.choose_payment_method, Snackbar.LENGTH_LONG).show();
+            }
         }
 
+
+
+    }
+
+    public void cashOnDelivery() {
+        Intent intent = new Intent(AmountPaidActivity.this, DigitalSignatureActivity.class);
+        intent.putExtra("formData", formData);
+        intent.putExtra("amountDue", amountDue);
+        intent.putExtra("bookingID", bookingID);
+        intent.putExtra("amountPaid", amountPaid);
+        intent.putExtra("remarks", enRemarks);
+        intent.putExtra("paymentMethod", getResources().getString(R.string.payment_method_cash));
+        startActivity(intent);
+    }
+
+    public void paymentThroughPaytm() {
+        if (cd.isConnectingToInternet()) {
+            httpRequest = new HttpRequest(this, true);
+            httpRequest.delegate = AmountPaidActivity.this;
+            httpRequest.execute("getCustomerQrCode", bookingID, amountPaid);
+
+        } else {
+            misc.NoConnection();
+        }
+    }
+
+    @Override
+    public void processFinish(String httpReqResponse) {
+        Log.w("AmountResponse", httpReqResponse);
+        if (httpReqResponse.contains("data")) {
+            JSONObject jsonObjectHttpReq;
+
+            try {
+                jsonObjectHttpReq = new JSONObject(httpReqResponse);
+
+                final JSONObject jsonObject = jsonObjectHttpReq.getJSONObject("data");
+                String statusCode = jsonObject.getString("code");
+                switch (statusCode) {
+                    case "0000":
+                        httpRequest.progress.dismiss();
+                        Intent intent = new Intent(AmountPaidActivity.this, PaytmQrActivity.class);
+                        intent.putExtra("formData", formData);
+                        intent.putExtra("amountDue", amountDue);
+                        intent.putExtra("bookingID", bookingID);
+                        intent.putExtra("amountPaid", amountPaid);
+                        intent.putExtra("remarks", enRemarks);
+                        intent.putExtra("qrUrl",jsonObject.getString("QrImageUrl"));
+                        intent.putExtra("paymentMethod", getResources().getString(R.string.payment_method_paytm));
+                        startActivity(intent);
+
+
+                        break;
+                    default:
+                        misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serverConnectionFailedMsg);
+                        httpRequest.progress.dismiss();
+                        break;
+                }
+            } catch (JSONException e) {
+                misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serverConnectionFailedMsg);
+                e.printStackTrace();
+
+                httpRequest.progress.dismiss();
+            }
+        } else {
+
+            misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serverConnectionFailedMsg);
+            httpRequest.progress.dismiss();
+        }
     }
 }
