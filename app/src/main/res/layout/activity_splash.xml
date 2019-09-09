@@ -6,16 +6,16 @@
     android:background="@drawable/background">
 
     <ImageView
-        android:layout_width="@dimen/splash_logo_dimension"
-        android:layout_height="@dimen/splash_logo_height_dimension"
+        android:layout_width="@dimen/_250dp"
+        android:layout_height="@dimen/_225dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:src="@drawable/logo"
+        android:layout_marginTop="@dimen/_150dp"
+        android:background="@drawable/splash_app_logo"
         android:id="@+id/logo"/>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/_200dp"
         android:layout_alignParentBottom="true"
         android:baselineAlignBottom="true"
         android:layout_marginBottom="0dp"

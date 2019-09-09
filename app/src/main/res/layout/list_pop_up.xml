@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/DialogLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/_80dp"
+    android:layout_marginBottom="@dimen/_80dp"
+    android:background="@android:color/transparent"
+    android:dividerPadding="@dimen/_10dp"
+    android:minHeight="@dimen/_50dp"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/noDataToDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/_20dp"
+        android:text="No data to display"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/_5dp"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/appTheamColor"
+        android:textSize="@dimen/_24dp" />
+
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+        android:minHeight="@dimen/_35dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/serachBox"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp"
+            android:paddingLeft="@dimen/_5dp"
+            android:textSize="@dimen/_16dp"
+            android:hint="search"
+            />
+
+
+    </LinearLayout>
+
+    <!--<ListView-->
+    <!--android:id="@+id/popupList"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_marginBottom="@dimen/_15dp"-->
+    <!--android:layout_marginTop="@dimen/_15dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:divider="@android:color/transparent"-->
+    <!--android:dividerHeight="@dimen/_2dp"-->
+    <!--android:fadeScrollbars="false"-->
+    <!--android:layoutAnimation="@anim/list_layout_controller"-->
+    <!--android:persistentDrawingCache="animation|scrolling" />-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/popupRecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_15dp"
+        android:layout_marginBottom="@dimen/_15dp"
+        android:layout_weight="1"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="@dimen/_2dp"
+        android:fadeScrollbars="false">
+        <!--android:layoutAnimation="@anim/list_layout_controller"-->
+        <!--android:persistentDrawingCache="animation|scrolling">-->
+
+    </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/noRecord"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:minHeight="@dimen/_100dp"
+        android:textColor="@color/noRecord"
+        android:textSize="@dimen/_16dp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/pop_up_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <include layout="@layout/fn_alert_footer_n" />
+    </LinearLayout>
+
+</LinearLayout>

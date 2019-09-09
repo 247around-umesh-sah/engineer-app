@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/card_gradient_color"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/edit_request_Type_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/_10dp"
+        android:layout_marginRight="@dimen/_10dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+        <TextView
+            android:id="@+id/callTypeText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_16dp"
+            android:layout_weight="6.5"
+            android:paddingRight="@dimen/_5dp"
+            android:text="Edit Call Type"/>
+        <TextView
+            android:id="@+id/callTypeCustomerCharges"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_16dp"
+            android:layout_weight="2"
+            android:layout_marginLeft="@dimen/_5dp"
+            android:text="400.00 rs"/>
+        <CheckBox
+            android:id="@+id/editTypeCheckBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp"
+            android:paddingLeft="@dimen/_20dp"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:textSize="@dimen/_16dp" />
+
+    </LinearLayout>
+    <View
+        android:id="@+id/headerDevider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_5dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"></View>
+
+</LinearLayout>

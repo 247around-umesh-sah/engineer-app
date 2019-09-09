@@ -20,4 +20,6 @@
     <!-- Search Activity -->
     <dimen name="icon_size">25dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">146dp</dimen>
 </resources>

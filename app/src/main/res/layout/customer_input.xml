@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/customerDetailLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
+    <android.support.v7.widget.CardView
+        android:id="@+id/signatureLayoutCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/missedBookingcolor"
+        android:layout_marginTop="@dimen/_7dp"
+        android:padding="@dimen/_5dp"
+
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="@dimen/_5dp">
+    <LinearLayout
+        android:id="@+id/signatureLayout"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+       android:layout_margin="@dimen/_3dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:id="@+id/confirmationSignatureCardView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_10dp"
+        app:cardBackgroundColor="@color/missedBookingcolor"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_3dp"
+            android:background="@drawable/card_gradient_color">
+            <LinearLayout
+                android:id="@+id/confirmationSignatureLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/clearIconLayout"
+                android:layout_width="@dimen/_55dp"
+                android:layout_height="@dimen/_70dp"
+                android:background="@color/missedBookingcolor"
+                android:gravity="center"
+                >
+            <ImageView
+                android:id="@+id/clearIcon"
+                android:layout_width="@dimen/_50dp"
+                android:layout_height="@dimen/_50dp"
+                android:padding="@dimen/_7dp"
+
+                android:src="@drawable/clear_icon"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/okLayout"
+                android:layout_width="@dimen/_55dp"
+                android:layout_height="@dimen/_70dp"
+                android:background="@color/missedBookingcolor"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                >
+            <TextView
+                android:id="@+id/ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_22dp"
+                android:background="@color/missedBookingcolor"
+                android:textColor="#FFFFFF"
+                android:rotation="-90"
+                android:textStyle="bold"
+                android:text="OK"/>
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_weight="1">
+
+        <include layout="@layout/footer"></include>
+    </LinearLayout>
+
+
+</LinearLayout>

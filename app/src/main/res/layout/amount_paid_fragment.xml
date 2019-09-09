@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+    android:orientation="vertical">
+    <com.around.engineerbuddy.component.BMACardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="20dp"
+            app:cardPreventCornerOverlap="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="?attr/dialogPreferredPadding"
+                tools:ignore="UselessParent">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/amountDue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:hint="@string/input_due_amount_hint"
+                        android:inputType="numberDecimal" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/amountPaid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:hint="@string/input_paid_amount_hint"
+                        android:inputType="numberDecimal" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/remarks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:hint="@string/input_remarks_hint"
+                        android:inputType="text" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardview1"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="10dp"
+            app:cardPreventCornerOverlap="false">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/paymentType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:text="Choose Your Payment Method"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+
+                    android:id="@+id/paymentGroup"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/paymentType"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/cash"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/payment_method_cash"
+                        android:textSize="15dp" />
+
+                    <RadioButton
+                        android:id="@+id/paytm"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/payment_method_paytm"
+                        android:textSize="15dp" />
+
+                </RadioGroup>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+
+    </LinearLayout>
+    </com.around.engineerbuddy.component.BMACardView>
+
+    <include layout="@layout/footer"></include>
+
+</LinearLayout>

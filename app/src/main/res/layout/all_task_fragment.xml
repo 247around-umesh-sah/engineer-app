@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/allTaskfragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.35"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".75"
+                android:gravity="center_vertical|bottom"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.1"
+                    android:gravity="bottom|center_horizontal"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_height="wrap_content">
+
+                        <ProgressBar
+                            android:id="@+id/closureProgressBar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="@dimen/_75dp"
+                            android:layout_height="@dimen/_80dp"
+                            android:layout_centerInParent="true"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressDrawable="@drawable/dayclosure_progress"
+                            android:secondaryProgress="0" />
+
+
+                        <TextView
+                            android:id="@+id/closureTxtProgress"
+                            android:layout_width="@dimen/_50dp"
+                            android:layout_height="@dimen/_30dp"
+                            android:layout_centerInParent="true"
+                            android:textSize="@dimen/_17dp"
+                            android:gravity="center"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_height="wrap_content">
+
+                        <ProgressBar
+                            android:id="@+id/incentiveProgressBar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="@dimen/_100dp"
+                            android:layout_height="@dimen/_100dp"
+                            android:layout_centerInParent="true"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressDrawable="@drawable/incentive_progress"
+                            android:secondaryProgress="0" />
+
+
+                        <TextView
+                            android:id="@+id/incentiveProgress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/incentiveProgressBar"
+                            android:layout_centerInParent="true"
+                            android:textSize="@dimen/_8dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_weight="0.1"
+                    android:gravity="bottom|center_horizontal"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_height="wrap_content">
+
+                        <ProgressBar
+                            android:id="@+id/feedBackProgressBar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="@dimen/_75dp"
+                            android:layout_height="@dimen/_75dp"
+                            android:layout_centerInParent="true"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressDrawable="@drawable/feedback_progress"
+                            android:secondaryProgress="0" />
+
+
+                        <TextView
+                            android:id="@+id/feedbackText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/feedBackProgressBar"
+                            android:layout_centerInParent="true"
+                            android:textSize="@dimen/_17dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".25"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_weight=".33"
+                    android:gravity="center"
+                    android:textColor="#505050"
+                    android:text="Same Day Closure" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:gravity="center"
+                    android:layout_weight=".33"
+                    android:textColor="#505050"
+                    android:text="Incentive Earning" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:gravity="center"
+                    android:layout_weight=".33"
+                    android:textColor="#505050"
+                    android:text="Feedback Rating" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_66dp"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:background="@color/devider">
+
+            </View>
+
+            <LinearLayout
+                android:id="@+id/missedLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.075"
+                android:background="@color/missedBookingcolor"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.045"
+                    android:gravity="center"
+
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:text="Missed"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_20dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:text="Bookings"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_15dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/missedBookingCount"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.030"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center"
+                    android:text="00"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_40dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/_10dp"
+                android:layout_height="match_parent"
+                android:background="@color/devider">
+
+            </View>
+
+            <LinearLayout
+                android:id="@+id/tomorroBookingLayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.074"
+                android:background="@color/missedBookingcolor"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.045"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:text="Tomorrow"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/_20dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:text="Bookings"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_15dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tomorrowBookingCount"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.030"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center"
+                    android:text="00"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_40dp" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/_10dp"
+                android:layout_height="match_parent"
+                android:background="@color/devider" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".65"
+            android:orientation="vertical">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+            <com.around.engineerbuddy.component.BMACardView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_85dp"
+                android:layout_marginTop="@dimen/_6dp"
+                android:padding="@dimen/_10dp"
+                android:background="@drawable/card_gradient_color">
+
+                <LinearLayout
+                    android:id="@+id/morningLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/card_gradient_color"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_20dp"
+                    android:paddingRight="@dimen/_20dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/_73dp"
+                            android:layout_height="@dimen/_43dp"
+                            android:background="@drawable/color_morning" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_12dp"
+                            android:gravity="center"
+                            android:text="10:00-01:00" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_3dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginRight="@dimen/_10dp"
+                        android:layout_weight=".09"
+                        android:background="@color/login_button"></View>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/morningBookingCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:gravity="center"
+                            android:text="00"
+                            android:textSize="@dimen/_40dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:layout_marginTop="@dimen/_5dp"
+                            android:gravity="center"
+                            android:text="Bookings" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.around.engineerbuddy.component.BMACardView>
+
+            <com.around.engineerbuddy.component.BMACardView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_85dp"
+                android:layout_marginTop="@dimen/_6dp"
+                android:padding="@dimen/_10dp"
+                android:background="@drawable/card_gradient_color">
+                <LinearLayout
+                    android:id="@+id/afternoonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/card_gradient_color"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_20dp"
+                    android:paddingRight="@dimen/_20dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/_53dp"
+                            android:layout_height="@dimen/_51dp"
+                            android:background="@drawable/color_afternoon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="01:00-04:00" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_3dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginRight="@dimen/_10dp"
+                        android:layout_weight=".09"
+                        android:background="@color/afternoon_color"></View>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/afternoonBookingCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:text="00"
+                            android:textSize="@dimen/_40dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:layout_marginTop="@dimen/_7dp"
+                            android:gravity="center"
+                            android:text="Bookings" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.around.engineerbuddy.component.BMACardView>
+
+            <com.around.engineerbuddy.component.BMACardView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_85dp"
+                android:layout_marginTop="@dimen/_6dp"
+                android:layout_marginBottom="@dimen/_10dp"
+                android:padding="@dimen/_10dp"
+                android:background="@drawable/card_gradient_color">
+
+                <LinearLayout
+                    android:id="@+id/eveningLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/card_gradient_color"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_20dp"
+                    android:paddingRight="@dimen/_20dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/_62dp"
+                            android:layout_height="@dimen/_48dp"
+                            android:background="@drawable/color_evening" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginTop="@dimen/_10dp"
+                            android:text="04:00-07:00" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_3dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginRight="@dimen/_10dp"
+                        android:layout_weight=".09"
+                        android:background="@color/orange_color_evening"></View>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/eveningBookingCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:text="00"
+                            android:textSize="@dimen/_40dp" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_7dp"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:text="Bookings" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.around.engineerbuddy.component.BMACardView>
+                </LinearLayout>
+            </ScrollView>>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

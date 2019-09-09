@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    android:padding="@dimen/_2dp">
+    <TextView
+        android:id="@+id/noDataToDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="No data to display"
+        android:visibility="gone"/>
+
+    <ScrollView
+        android:id="@+id/scroolView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <com.around.engineerbuddy.component.BMACardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_5dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/productHeaderLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/darkNavy"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/customerDetailLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/_18dp"
+                                android:fontFamily="@font/sourcesanspro_regular"
+                                android:layout_marginLeft="@dimen/_2dp"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/white"/>
+
+
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/applianceBrandLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/_4dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="@dimen/_4dp"
+                                android:layout_weight=".5"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:layout_width="@dimen/_15dp"
+                                    android:layout_height="@dimen/_15dp"
+                                    android:background="@drawable/appliance_name"
+                                    android:gravity="center"
+                                    android:textSize="@dimen/_20dp"/>
+                                <TextView
+                                    android:id="@+id/applianceName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10dp"
+                                    android:textSize="@dimen/_16dp"
+                                    android:gravity="center_vertical"
+                                    android:textColor="@color/white"
+                                    android:fontFamily="@font/sourcesanspro_regular" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="@dimen/_4dp"
+                                android:layout_weight=".5"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/brandIcon"
+                                    android:layout_width="@dimen/_15dp"
+                                    android:layout_height="@dimen/_15dp"
+                                    android:background="@drawable/brand_name"
+                                    android:gravity="center"
+                                    android:textSize="@dimen/_18dp" />
+                                <TextView
+                                    android:id="@+id/brandName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10dp"
+                                    android:textSize="@dimen/_16dp"
+                                    android:gravity="center_vertical"
+                                    android:textColor="@color/white"
+                                    android:fontFamily="@font/sourcesanspro_regular"
+                                    />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/brandlayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/_4dp"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/_4dp">
+
+
+                                <TextView
+                                    android:id="@+id/appliancerequesttype"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="@dimen/_5dp"
+                                    android:fontFamily="@font/sourcesanspro_regular"
+                                    android:gravity="center_vertical"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_16dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+
+                        <LinearLayout
+                            android:id="@+id/chargeLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/_4dp"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/_4dp">
+
+                                <TextView
+                                    android:id="@+id/basicCharge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/sourcesanspro_regular"
+                                    android:gravity="center_vertical"
+                                    android:text="Basic Charge"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_16dp" />
+
+
+                                <TextView
+                                    android:id="@+id/basicChargeAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/sourcesanspro_regular"
+                                    android:gravity="center_vertical"
+                                    android:text="₹ 100.00"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_16dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/_4dp">
+
+                                <TextView
+                                    android:id="@+id/additionalCharge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/sourcesanspro_regular"
+                                    android:gravity="center_vertical"
+                                    android:text="Additional Charge"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_16dp" />
+
+                                <TextView
+                                    android:id="@+id/additionalChargeAmount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/sourcesanspro_regular"
+                                    android:gravity="center_vertical"
+                                    android:text="₹ 100.00"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_16dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+                lerisnfc//kska;dgznvckljn
+
+                <LinearLayout
+                    android:id="@+id/serviceCategoryCapacityLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:paddingTop="@dimen/_4dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/_4dp">
+
+                        <!--<com.around.engineerbuddy.component.BMAFontViewField-->
+                            <!--android:id="@+id/categoryIcon"-->
+                            <!--android:layout_width="@dimen/_20dp"-->
+                            <!--android:layout_height="@dimen/_20dp"-->
+                            <!--android:text="@string/brand_name_archive"-->
+                            <!--android:textSize="@dimen/_18dp" />-->
+                        <ImageView
+                            android:layout_width="@dimen/_20dp"
+                            android:layout_height="@dimen/_20dp"
+                            android:background="@drawable/appliance_category"
+                            android:gravity="center"
+                            android:textSize="@dimen/_20dp"/>
+
+                        <TextView
+                            android:id="@+id/categoryName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_2dp"
+                            android:layout_weight=".6"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:gravity="center_vertical"
+
+                            android:textSize="@dimen/_16dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".5"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/_4dp">
+
+                        <ImageView
+                            android:id="@+id/serviceIcon"
+                            android:layout_width="@dimen/_18dp"
+                            android:layout_height="@dimen/_18dp"
+                            android:background="@drawable/category"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/serviceCapacityType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/_10dp"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:gravity="center_vertical"
+
+                            android:textSize="@dimen/_16dp" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/addressLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:orientation="horizontal">
+                    <com.around.engineerbuddy.component.BMAFontViewField
+                        android:id="@+id/addressIcon"
+                        android:layout_width="@dimen/_22dp"
+                        android:layout_height="@dimen/_23dp"
+                        android:text="@string/icon_store"
+                        android:gravity="center"
+                        android:textSize="@dimen/_20dp"/>
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/_16dp"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        />
+                </LinearLayout>
+                <CheckBox
+                    android:id="@+id/productBorkencheckbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:text="Product Found Broken"
+                    android:textSize="@dimen/_16dp" />
+
+                <LinearLayout
+                    android:id="@+id/dateLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:background="@drawable/rect_drawable"
+                    android:minHeight="@dimen/_40dp"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/purchaseDate"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_weight=".4"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:text="Purchase Date"
+                        android:textColor="#38445E"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/selectpurchaseDate"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".9"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:text="Select Puchase Date"
+                        android:textColor="#8C8C8C"
+                        android:textSize="@dimen/_15dp" />
+
+                    <com.around.engineerbuddy.component.BMAFontViewField
+                        android:id="@+id/selectPurchaseDateIcon"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".1"
+                        android:background="#FFFFFF"
+                        android:gravity="center"
+                        android:text="@string/icon_calendar"
+                        android:textColor="#2A3F54"
+                        android:textSize="@dimen/_25dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/addServicePartLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10dp"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+                <!--<engineerbuddyddy.component.BMACardView-->
+                <!--android:id="@+id/ProblemdescriptionCardView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/_12dp"-->
+                <!--android:layout_marginRight="@dimen/_12dp"-->
+                <!--android:layout_marginTop="@dimen/_15dp"-->
+                <!--android:visibility="invisible">-->
+                <EditText
+                    android:id="@+id/Problemdescriptionedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8dp"
+                    android:background="@color/transparentWhite"
+                    android:gravity="top|left"
+                    android:hint="Problem Description"
+                    android:minHeight="@dimen/_100dp"
+                    android:paddingLeft="@dimen/_3dp"
+                    android:visibility="invisible" />
+                <!--</engineerbuddyddy.component.BMACardView>-->
+            </LinearLayout>
+
+            <!--</LinearLayout>-->
+        </com.around.engineerbuddy.component.BMACardView>
+    </ScrollView>
+
+    <include
+        android:id="@+id/footerLayout"
+        layout="@layout/footer"></include>
+    <!--<Button-->
+    <!--android:id="@+id/submitButton"-->
+    <!--android:layout_width="@dimen/_158dp"-->
+    <!--android:layout_height="@dimen/_40dp"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_marginLeft="15dp"-->
+    <!--android:layout_marginTop="@dimen/_10dp"-->
+    <!--android:layout_marginRight="@dimen/_15dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:background="@drawable/submitbutton"-->
+    <!--android:fontFamily="@font/sourcesanspro_regular"-->
+    <!--android:gravity="center"-->
+    <!--android:text="Submit"-->
+    <!--android:textAllCaps="false"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:textSize="@dimen/_18dp"-->
+    <!--android:textStyle="bold"-->
+    <!--android:visibility="visible" />-->
+
+</LinearLayout>

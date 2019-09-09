@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/productLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_8dp"
+    android:background="#F2F2F2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/numberHeaderLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_10dp"
+            android:layout_marginBottom="@dimen/_10dp"
+            android:visibility="gone"
+            android:background="#2A3F54">
+            <LinearLayout
+                android:id="@+id/spareNumberLayout"
+                android:layout_width="@dimen/_110dp"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/_10dp"
+                android:background="@color/missedBookingcolor"
+                android:gravity="center_vertical">
+                <com.around.engineerbuddy.component.BMAFontViewField
+                    android:id="@+id/expandArrowIcon"
+                    android:layout_width="@dimen/_20dp"
+                    android:layout_height="@dimen/_20dp"
+                    android:text="@string/icon_down"
+                    android:gravity="center"
+                    android:textSize="@dimen/_18dp"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/rowPartNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_30dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_20dp"
+                    android:textStyle="bold"
+                    android:text="1"/>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16dp"
+                android:visibility="invisible"
+                android:text="₹ 100.00"/>
+            <com.around.engineerbuddy.component.BMAFontViewField
+                android:id="@+id/deleteIcon"
+                android:layout_width="@dimen/_40dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_30dp"
+                android:gravity="center"
+                android:visibility="invisible"
+                android:text="@string/icon_delete_circle"
+                />
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/_3dp"-->
+            <!--android:background="#05B3B9"></View>-->
+            <!--</LinearLayout>-->
+            <!--<ImageView-->
+            <!--android:layout_width="@dimen/_40dp"-->
+            <!--android:layout_height="@dimen/_40dp"-->
+            <!--android:layout_marginLeft="@dimen/_20dp"-->
+            <!--android:background="@drawable/circle"/>-->
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/partNumber"-->
+            <!--android:layout_width="@dimen/_40dp"-->
+            <!--android:layout_height="@dimen/_40dp"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_marginLeft="@dimen/_20dp"-->
+            <!--android:textSize="@dimen/_17dp"-->
+            <!--android:text="1"/>-->
+            <!--</RelativeLayout>-->
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/productPartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+
+            <LinearLayout
+                android:id="@+id/modelLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/rect_drawable"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal">
+
+                <!--<TextView-->
+                    <!--android:id="@+id/model"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginLeft="@dimen/_5dp"-->
+                    <!--android:layout_weight=".3"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:paddingLeft="@dimen/_10dp"-->
+                    <!--android:text="Model"-->
+                    <!--android:textColor="#38445E" />-->
+
+                <EditText
+                    android:id="@+id/selectModel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".9"
+                    android:gravity="center"
+                    android:hint="Select Model Number"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textColor="#8C8C8C"
+                    android:enabled="false"
+                    android:background="@color/transparentWhite"
+                    android:textSize="@dimen/_15dp" />
+
+                <com.around.engineerbuddy.component.BMAFontViewField
+                    android:id="@+id/modeldropDownIcon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:text="@string/icon_sort_down"
+                    android:layout_marginLeft="@dimen/_2dp"
+                    android:textColor="#2A3F54"
+                    android:textSize="@dimen/_25dp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/dateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:visibility="gone"
+                android:background="@drawable/rect_drawable"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/purchaseDate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Purchase Date"
+                    android:textColor="#38445E"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/selectpurchaseDate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".9"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Select Puchase Date"
+                    android:textColor="#8C8C8C"
+                    android:textSize="@dimen/_15dp" />
+
+                <com.around.engineerbuddy.component.BMAFontViewField
+                    android:id="@+id/selectPurchaseDateIcon"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".1"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:text="@string/icon_calendar"
+                    android:textColor="#2A3F54"
+                    android:textSize="@dimen/_25dp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/enterSerialNoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/_10dp"
+                android:paddingLeft="@dimen/_10dp"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Serial No."
+                    android:layout_weight=".5"/>
+            <EditText
+                android:id="@+id/enterSerialNumber"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center"
+                android:hint="Enter Serial Number"
+                android:paddingLeft="@dimen/_10dp"
+                android:textColor="#8C8C8C"
+                android:background="@drawable/rect_drawable"
+                android:textSize="@dimen/_15dp" />
+            </LinearLayout>
+
+            <!--<android.support.v7.widget.CardView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:cardCornerRadius="@dimen/_5dp"-->
+                <!--android:layout_marginTop="@dimen/_10dp"-->
+                <!--&gt;-->
+                <LinearLayout
+                    android:id="@+id/serialNumberPhotoLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:paddingTop="@dimen/_5dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/_5dp"
+
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/serialNoPhoto"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".5"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="16dp"
+                        android:text="Serial No. Photo"/>
+                    <LinearLayout
+                        android:id="@+id/serialPhotoLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rect_drawable"
+                        android:layout_weight=".5"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:id="@+id/serialNoPicLink"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Take Photo"
+                            android:gravity="center"
+                            android:padding="@dimen/_2dp"
+                            android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/serialNoPic"
+                        android:layout_width="@dimen/_35dp"
+                        android:layout_height="@dimen/_35dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:padding="@dimen/_5dp"
+                        android:src="@drawable/sparepic"
+                        android:background="#D8D8D8"/>
+                    </LinearLayout>
+                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/serviceCatgLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rect_drawable"
+                android:minHeight="@dimen/_40dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:visibility="visible"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/serivceCatg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Serivce Category"
+                    android:visibility="gone"
+                    android:textColor="#38445E" />
+
+                <TextView
+                    android:id="@+id/selectServiceCatg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="Service Category"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textColor="#8C8C8C"
+                    android:textSize="@dimen/_15dp" />
+
+                <com.around.engineerbuddy.component.BMAFontViewField
+                    android:id="@+id/ServiceCatgdropDownIcon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:text="@string/icon_sort_down"
+                    android:visibility="gone"
+                    android:textColor="#2A3F54"
+                    android:textSize="@dimen/_25dp" />
+
+            </LinearLayout>
+
+            <!--</android.support.v7.widget.CardView>-->
+            <!--<LinearLayout-->
+                <!--android:id="@+id/serialnumberLayout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/_10dp"-->
+                <!--android:background="@drawable/rect_drawable"-->
+                <!--android:minHeight="@dimen/_40dp"-->
+                <!---->
+                <!--android:orientation="horizontal">-->
+
+                <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:id="@+id/serialno"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_marginLeft="@dimen/_5dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_weight=".3"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:gravity="center_vertical"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:paddingLeft="@dimen/_10dp"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:text="Serial No."&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:textColor="#38445E" />&ndash;&gt;-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/serialNumber"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight=".9"-->
+                    <!--android:background="#F2F2F2"-->
+                    <!--android:gravity="center"-->
+                    <!--android:hint="Upload serial Number Pic"-->
+                    <!--android:paddingLeft="@dimen/_10dp"-->
+                    <!--android:textColor="#8C8C8C"-->
+                    <!--android:textSize="@dimen/_15dp" />-->
+
+                <!--<engineerbuddyddy.component.BMAFontViewField-->
+                    <!--android:id="@+id/serialNodropDownIcon"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight=".1"-->
+                    <!--android:background="#FFFFFF"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/icon_camera"-->
+                    <!--android:textColor="#2A3F54"-->
+                    <!--android:textSize="@dimen/_25dp" />-->
+
+            <!--</LinearLayout>-->
+
+
+
+            <LinearLayout
+                android:id="@+id/basicChargeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/basichCharges"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_weight=".5"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Basic Charges"
+                   />
+
+                <EditText
+                    android:id="@+id/basichChargeEdittext"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:gravity="center"
+                    android:hint="Enter Basic Charges"
+                    android:background="@drawable/rect_drawable"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textColor="#38445E"
+                    android:inputType="numberDecimal"
+                    android:textSize="@dimen/_15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/additionalChargeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/additionalCharges"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_weight=".5"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Additional Charges"
+                    />
+
+                <EditText
+                    android:id="@+id/additionalChargeEdittext"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:gravity="center"
+                    android:background="@drawable/rect_drawable"
+                    android:hint="Enter Additional Charges"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textColor="#38445E"
+                    android:inputType="numberDecimal"
+                    android:textSize="@dimen/_15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/partsChargeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/partsCostTaken"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_weight=".5"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Part Charges"
+                    />
+
+                <EditText
+                    android:id="@+id/partsCostEdittext"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:background="@drawable/rect_drawable"
+                    android:gravity="center"
+                    android:hint="Enter Parts Charge"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textColor="#38445E"
+                    android:inputType="numberDecimal"
+                    android:textSize="@dimen/_15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:paddingRight="@dimen/_5dp"
+                    android:textSize="@dimen/_16dp"
+                    android:textColor="@color/blackMedium"
+                    android:text="Status" />
+
+                <RadioGroup
+                    android:id="@+id/radioStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <RadioButton
+                        android:id="@+id/radioComplete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/_5dp"
+                        android:textSize="@dimen/_12dp"
+                        android:text="Completed" />
+
+                    <RadioButton
+                        android:id="@+id/radioNotComplete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_12dp"
+                        android:text="Not Completed" />
+
+                </RadioGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/blackMedium"
+                    android:text="Amount Due : "
+                    android:textSize="@dimen/_18dp" />
+
+                <TextView
+                    android:id="@+id/amountDue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_2dp"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:paddingLeft="@dimen/_20dp"
+                    android:textColor="@color/blackMedium"
+                    android:textSize="@dimen/_17dp" />
+            </LinearLayout>
+
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/closingremarks"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/_10dp"-->
+            <!--android:fontFamily="@font/sourcesanspro_regular"-->
+            <!--android:text="Closing Remarks"-->
+            <!--android:textColor="#383838"-->
+            <!--android:textSize="@dimen/_14dp"-->
+            <!--android:visibility="gone" />-->
+
+            <com.around.engineerbuddy.component.BMACardView
+                android:id="@+id/ProblemdescriptionCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/Problemdescriptionedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/transparentWhite"
+                    android:gravity="top|left"
+                    android:hint="Closing Remarks"
+                    android:minHeight="@dimen/_120dp"
+                    android:paddingLeft="3dp" />
+            </com.around.engineerbuddy.component.BMACardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/tipLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/_6dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#05B3B9"
+                        android:gravity="center"
+                        android:padding="@dimen/_5dp"
+                        android:text="Ask For Tip"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/_16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_10dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".33"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <com.around.engineerbuddy.component.BMAFontViewField
+                                android:id="@+id/firstStarImage"
+                                android:layout_width="@dimen/_25dp"
+                                android:layout_height="@dimen/_30dp"
+                                android:layout_marginLeft="@dimen/_5dp"
+                                android:gravity="center"
+                                android:text="@string/star_icon"
+                                android:textColor="#F4C914"
+                                android:textSize="@dimen/_25dp" />
+
+                            <TextView
+                                android:id="@+id/tenAmount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="6dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/sourcesanspro_regular"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="₹ 10"
+                                android:textColor="#505050"
+                                android:textSize="@dimen/_17dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="@dimen/_2dp"
+                            android:layout_height="match_parent"
+                            android:background="#05B3B9"></View>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".33"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <com.around.engineerbuddy.component.BMAFontViewField
+                                    android:id="@+id/secondStarImage"
+                                    android:layout_width="@dimen/_25dp"
+                                    android:layout_height="@dimen/_30dp"
+                                    android:layout_marginLeft="@dimen/_5dp"
+                                    android:gravity="center"
+                                    android:text="@string/star_icon"
+                                    android:textColor="#F4C914"
+                                    android:textSize="@dimen/_25dp" />
+
+
+                                <com.around.engineerbuddy.component.BMAFontViewField
+                                    android:layout_width="@dimen/_25dp"
+                                    android:layout_height="@dimen/_30dp"
+                                    android:layout_marginLeft="@dimen/_5dp"
+                                    android:gravity="center"
+                                    android:text="@string/star_icon"
+                                    android:textColor="#F4C914"
+                                    android:textSize="@dimen/_25dp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/twentyAmount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="6dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/sourcesanspro_regular"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="₹ 20"
+                                android:textColor="#505050"
+                                android:textSize="@dimen/_17dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="@dimen/_2dp"
+                            android:layout_height="match_parent"
+                            android:background="#05B3B9"></View>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".33"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <com.around.engineerbuddy.component.BMAFontViewField
+                                    android:id="@+id/thirdstarimage"
+                                    android:layout_width="@dimen/_25dp"
+                                    android:layout_height="@dimen/_30dp"
+                                    android:layout_marginLeft="@dimen/_5dp"
+                                    android:gravity="center"
+                                    android:text="@string/star_icon"
+                                    android:textColor="#F4C914"
+                                    android:textSize="@dimen/_25dp" />
+
+                                <com.around.engineerbuddy.component.BMAFontViewField
+                                    android:layout_width="@dimen/_25dp"
+                                    android:layout_height="@dimen/_30dp"
+                                    android:layout_marginLeft="@dimen/_5dp"
+                                    android:gravity="center"
+                                    android:text="@string/star_icon"
+                                    android:textColor="#F4C914"
+                                    android:textSize="@dimen/_25dp" />
+
+                                <com.around.engineerbuddy.component.BMAFontViewField
+                                    android:layout_width="@dimen/_25dp"
+                                    android:layout_height="@dimen/_30dp"
+                                    android:layout_marginLeft="@dimen/_5dp"
+                                    android:gravity="center"
+                                    android:text="@string/star_icon"
+                                    android:textColor="#F4C914"
+                                    android:textSize="@dimen/_25dp" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/thirtyAmount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="6dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/sourcesanspro_regular"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="₹ 30"
+                                android:textColor="#505050"
+                                android:textSize="@dimen/_17dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+        <View
+            android:id="@+id/symptonDeviderLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:background="@color/darkNavy"></View>
+        <LinearLayout
+            android:id="@+id/addServicePartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10dp"
+            android:orientation="vertical"></LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

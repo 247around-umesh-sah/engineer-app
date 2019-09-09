@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_gravity="bottom">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:weightSum="3">
+        <com.around.engineerbuddy.component.BMATileView
+            android:id="@+id/tile1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:minHeight="135dp"
+            app:imgHeight="40dp"
+            app:imgWidth="40dp">
+
+        </com.around.engineerbuddy.component.BMATileView>
+        <com.around.engineerbuddy.component.BMATileView
+            android:id="@+id/tile2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:minHeight="135dp"
+            app:imgHeight="40dp"
+            app:imgWidth="40dp">
+
+        </com.around.engineerbuddy.component.BMATileView>
+        <com.around.engineerbuddy.component.BMATileView
+            android:id="@+id/tile3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:minHeight="135dp"
+            app:imgHeight="40dp"
+            app:imgWidth="40dp">
+
+        </com.around.engineerbuddy.component.BMATileView>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/tileLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_4dp"
+        android:visibility="gone"
+        android:weightSum="3">
+        <com.around.engineerbuddy.component.BMATileView
+            android:id="@+id/tile4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:minHeight="135dp"
+            app:imgHeight="40dp"
+            app:imgWidth="40dp">
+
+        </com.around.engineerbuddy.component.BMATileView>
+        <com.around.engineerbuddy.component.BMATileView
+            android:id="@+id/tile5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:minHeight="135dp"
+            app:imgHeight="40dp"
+            app:imgWidth="40dp">
+
+        </com.around.engineerbuddy.component.BMATileView>
+        <com.around.engineerbuddy.component.BMATileView
+            android:id="@+id/tile6"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:minHeight="135dp"
+            app:imgHeight="40dp"
+            app:imgWidth="40dp">
+        </com.around.engineerbuddy.component.BMATileView>
+
+    </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/footer"
+        android:id="@+id/footerLayout"
+        android:visibility="gone"/>
+
+</LinearLayout>

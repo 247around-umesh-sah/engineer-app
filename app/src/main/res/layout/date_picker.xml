@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/startDateContainer"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <com.around.engineerbuddy.component.BMACardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/imageButton1"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/calender"
+                        android:contentDescription="@string/app_name" />
+
+                    <TextView
+                        android:id="@+id/txtStartDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:hint="Select Date"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/startDateView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|left"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="center_vertical|left"
+                    android:textColor="@color/text_color"
+                    android:textSize="12dp" />
+            </LinearLayout>
+        </com.around.engineerbuddy.component.BMACardView>
+    </LinearLayout>
+
+</LinearLayout>

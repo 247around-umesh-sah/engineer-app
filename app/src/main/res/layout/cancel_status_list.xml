@@ -4,23 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="2dp"
+    android:id="@+id/radioButtonLayout"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.around.technician.CompleteBookingActivity">
+    >
 
     <android.support.v7.widget.AppCompatRadioButton
         android:id="@+id/radioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/RadioButtonStyle"
+        android:buttonTint="@color/colorPrimary"
         android:layout_marginTop="@dimen/input_padding" />
 
     <TextView
         android:id="@+id/staus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/_13dp"
+        android:paddingLeft="@dimen/_10dp"
+
         android:layout_toRightOf="@+id/radioButton"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size"
+        android:textSize="@dimen/_15dp"
         tools:ignore="RtlHardcoded" />
 
 </RelativeLayout>

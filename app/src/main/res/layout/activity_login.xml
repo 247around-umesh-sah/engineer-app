@@ -1,4 +1,5 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,31 +12,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:gravity="bottom|center_horizontal"
+            android:layout_marginBottom="20dp"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/label_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:padding="?attr/dialogPreferredPadding"
-                android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/logo_dimension"
-                android:layout_above="@id/label_name"
+                android:layout_width="@dimen/_250dp"
+                android:layout_height="@dimen/_230dp"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/logo_transparent" />
+                android:background="@drawable/login_app_logo" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/loginLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -45,46 +38,98 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="?attr/dialogPreferredPadding"
+                android:gravity="center_horizontal"
                 tools:ignore="UselessParent">
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="@dimen/_270dp"
+                    android:layout_height="@dimen/_40dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <com.around.engineerbuddy.component.BMAFontViewField
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/icon_user"
+                        android:textSize="@dimen/_23dp"
+                        android:textColor="#3EC7B8"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="@dimen/_15dp"
+                      android:background="@drawable/login_rounded_drawable"
+                        >
 
                     <EditText
                         android:id="@+id/phonenumber"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:hint="User Id"
+                        android:background="@color/transparentWhite"
+                        android:inputType="phone"
+                        android:layout_marginLeft="@dimen/_15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="@dimen/_270dp"
+                    android:layout_height="@dimen/_40dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:orientation="horizontal">
+                    <com.around.engineerbuddy.component.BMAFontViewField
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/icon_password"
+                        android:gravity="center"
+                     android:textSize="@dimen/_23dp"
+                        android:textColor="#3EC7B8"/>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_phone"
-                        android:inputType="phone" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="@dimen/_15dp"
+                        android:background="@drawable/login_rounded_drawable"
+                        >
 
                     <EditText
                         android:id="@+id/password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:hint="@string/prompt_password"
-                        android:inputType="textPassword" />
-
-                </android.support.design.widget.TextInputLayout>
+                        android:inputType="textPassword"
+                        android:layout_marginLeft="@dimen/_15dp"
+                        android:background="@color/transparentWhite"
+                        android:layout_weight="1"/>
+                    </LinearLayout>
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/login_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/login_button_height"
-                    android:layout_marginTop="10dp"
-                    android:enabled="false"
+                    android:layout_width="@dimen/_158dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20dp"
                     android:onClick="loginProcess"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/_18dp"
+                    android:gravity="center"
                     android:text="@string/action_sign_in" />
 
             </LinearLayout>
 
         </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_40dp"
+            android:layout_marginRight="@dimen/_40dp"
+            android:layout_marginBottom="@dimen/_30dp"
+            android:gravity="center"
+            android:text="Forgot the password.Contact the SF of your area."/>
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
+

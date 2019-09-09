@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/noDataToDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/_18dp"
+        android:visibility="gone"
+        android:text="No Data Display"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/bannerrela"
+            android:padding="?attr/dialogPreferredPadding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+            <TextView
+                android:id="@+id/paytmInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_18dp"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:text="Customer can pay directly from Paytm by scanning QR-Code"/>
+
+            <ImageView
+                android:id="@+id/banner"
+                android:layout_width="wrap_content"
+                android:layout_height="175dp"
+                android:visibility="gone"
+                android:src="@drawable/paytmcashback" />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@+id/bannerrela"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:padding="?attr/dialogPreferredPadding"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/qrImage"
+                android:layout_width="@dimen/_250dp"
+                android:layout_height="@dimen/_250dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                />
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:background="#fff" />
+
+            <!--<Button-->
+
+                <!--android:id="@+id/submit"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/login_button_height"-->
+                <!--android:layout_marginTop="@dimen/submit_button"-->
+                <!--android:background="@color/colorPrimary"-->
+                <!--android:text="@string/proceed"-->
+                <!--android:onClick="submitProcess"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:textSize="@dimen/text_size" />-->
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/modelLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_drawable"
+        android:layout_marginTop="@dimen/_15dp"
+        android:layout_marginLeft="@dimen/_12dp"
+        android:layout_marginRight="@dimen/_12dp"
+        android:minHeight="@dimen/_40dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/paymentReceive"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".58"
+            android:gravity="center_vertical"
+            android:textColor="#38445E"
+            android:layout_marginLeft="@dimen/_5dp"
+            android:paddingLeft="@dimen/_10dp"
+            android:text="Check Amount"/>
+        <EditText
+            android:id="@+id/receiveAmount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".4"
+            android:background="#F2F2F2"
+            android:paddingLeft="@dimen/_10dp"
+            android:gravity="center"
+            android:textColor="#8C8C8C"
+            android:text="0.00"
+            android:textSize="@dimen/_15dp" />
+        <com.around.engineerbuddy.component.BMAFontViewField
+            android:id="@+id/checkAmountDropDownIcon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight=".12"
+            android:text="@string/icon_refresh"
+            android:background="#FFFFFF"
+            android:textColor="#2A3F54"
+            android:textSize="@dimen/_30dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom">
+    <include layout="@layout/footer"/>
+    </LinearLayout>
+
+</LinearLayout>

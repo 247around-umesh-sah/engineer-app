@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/tomorrowgradient"
+    android:id="@+id/rowLayout"
+    android:orientation="vertical">
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/card_gradient_color">-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_13dp">
+
+    <com.around.engineerbuddy.component.BMACardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingBottom="@dimen/_8dp"
+        android:layout_marginBottom="@dimen/_3dp"
+        app:cardElevation="@dimen/_5dp"
+        android:elevation="@dimen/_10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_gradient_color">
+
+            <LinearLayout
+                android:id="@+id/dateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#4BC5FC"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:text="05-03-2019"
+                    android:padding="@dimen/_2dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14dp" />
+
+                <TextView
+                    android:id="@+id/chargableservice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Chargeable price ~ ₹"
+                    android:layout_marginLeft="@dimen/_30dp"
+                    android:padding="@dimen/_2dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14dp" />
+                <TextView
+                    android:id="@+id/chargeableAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_2dp"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16dp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/mainLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".57"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:paddingTop="@dimen/_15dp"
+                    android:paddingBottom="@dimen/_8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_2dp"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:textColor="#505050"
+                            android:textSize="@dimen/_18dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.around.engineerbuddy.component.BMAFontViewField
+                                android:id="@+id/addressIcon"
+                                android:layout_width="@dimen/_22dp"
+                                android:layout_height="@dimen/_23dp"
+                                android:gravity="center"
+                                android:text="@string/icon_store"
+                                android:textSize="@dimen/_20dp" />
+
+                            <TextView
+                                android:id="@+id/address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10dp"
+                                android:fontFamily="@font/sourcesanspro_regular"
+
+                                android:textSize="@dimen/_16dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/brandlayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingTop="@dimen/_4dp">
+
+                            <ImageView
+                                android:id="@+id/brandIcon"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_15dp"
+                                android:background="@drawable/brand_name"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:id="@+id/brandName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10dp"
+                                android:fontFamily="@font/sourcesanspro_regular"
+                                android:textSize="@dimen/_16dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/serviceLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/_4dp">
+
+                            <com.around.engineerbuddy.component.BMAFontViewField
+                                android:id="@+id/serviceIcon"
+                                android:layout_width="@dimen/_20dp"
+                                android:layout_height="@dimen/_20dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/icon_settiing"
+                                android:textSize="@dimen/_18dp" />
+
+                            <TextView
+                                android:id="@+id/serviceName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10dp"
+                                android:fontFamily="@font/sourcesanspro_regular"
+                                android:gravity="center_vertical"
+                                android:textSize="@dimen/_16dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingRight="@dimen/_8dp">
+
+                    <View
+                        android:layout_width="@dimen/_5dp"
+                        android:layout_height="@dimen/_48dp"
+                        android:layout_marginTop="@dimen/_15dp"
+                        android:background="@color/gray3"></View>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".43">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/_5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/distance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sourcesanspro_regular"
+                                android:textColor="#505050"
+                                android:textSize="@dimen/_40dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_30dp"
+                                android:layout_marginLeft="@dimen/_9dp"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_15dp"
+                                android:text="Km"
+                                android:textSize="@dimen/_25dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="@dimen/_10dp"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <ImageView
+                                android:id="@+id/phone"
+                                android:layout_width="@dimen/_50dp"
+                                android:layout_height="@dimen/_50dp"
+                                android:background="@drawable/mobile"
+                                android:gravity="center" />
+
+                            <ImageView
+                                android:id="@+id/mapLocArrow"
+                                android:layout_width="@dimen/_50dp"
+                                android:layout_height="@dimen/_50dp"
+                                android:layout_marginLeft="@dimen/_17dp"
+                                android:background="@drawable/loc_map_arrow"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/_3dp"
+                android:background="@color/orange2"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:gravity="center"
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingRight="@dimen/_5dp"
+                android:text="₹ 50"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20dp"
+                android:visibility="gone">
+
+            </TextView>
+        </RelativeLayout>
+    </com.around.engineerbuddy.component.BMACardView>
+        </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+   >
+    <com.around.engineerbuddy.component.BMAFontViewField
+        android:id="@+id/tagIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/icon_sort_left"
+        android:gravity="right"
+        android:textSize="@dimen/_20dp"
+        android:layout_marginTop="@dimen/_2dp"
+        android:textColor="#E88300"/>
+        <TextView
+            android:id="@+id/amountView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₹ 00"
+            android:gravity="center"
+            android:textSize="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_6dp"
+            android:layout_marginRight="@dimen/_7dp"
+            android:layout_toRightOf="@id/tagIcon"
+            android:padding="@dimen/_4dp"
+            android:textColor="#FFFFFF"
+
+            android:background="@drawable/bottom_rounded"/></RelativeLayout>
+
+    <!--</RelativeLayout>-->
+
+</RelativeLayout>

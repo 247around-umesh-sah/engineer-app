@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/DialogNLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:minHeight="60dp">
+
+        <ImageView
+            android:id="@+id/titleIcon"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:contentDescription="@string/app_name"
+            android:gravity="center" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="8dp"
+        android:divider="@android:color/black"
+        android:dividerPadding="10dp"
+        android:minHeight="70dp"
+        android:showDividers="beginning">
+
+
+        <TextView
+            android:id="@+id/txt_alert_message"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/reallyExit"
+            android:textColor="@color/lightBlack"
+            android:textSize="18dp"
+            android:textStyle="normal" />
+    </TableRow>
+    <TableRow
+        android:id="@+id/tableInputRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="@dimen/_10dp"
+        android:layout_marginRight="@dimen/_10dp"
+        android:layout_marginTop="@dimen/_8dp"
+        android:minHeight="@dimen/_50dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@drawable/rect_drawable">
+
+
+        <EditText
+            android:id="@+id/txt_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/lightBlack"
+            android:background="@color/transparentWhite"
+            android:textSize="18dp"
+            android:inputType="numberDecimal"
+            android:textStyle="normal" />
+    </TableRow>
+
+    <LinearLayout
+        android:id="@+id/pop_up_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/fn_alert_footer_n" />
+    </LinearLayout>
+
+
+</LinearLayout>

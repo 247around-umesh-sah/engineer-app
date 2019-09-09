@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/home_slider"
+            android:title="Home" />
+        <item
+            android:id="@+id/complete_booking"
+            android:icon="@drawable/completed_icon"
+            android:title="Completed Bookings" />
+
+        <item
+            android:id="@+id/cancelled_booking"
+            android:icon="@drawable/cancelled_profile_icon"
+            android:title="Cancelled Bookings" />
+
+        <item
+            android:id="@+id/profile"
+            android:icon="@drawable/profile_icon"
+            android:title="Profile" />
+
+    </group>
+
+    <!--<item android:title="Communicate">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/nav_share"-->
+                <!--android:icon="@drawable/ic_menu_share"-->
+                <!--android:title="Share" />-->
+            <!--<item-->
+                <!--android:id="@+id/nav_send"-->
+                <!--android:icon="@drawable/ic_menu_send"-->
+                <!--android:title="Send" />-->
+        <!--</menu>-->
+    <!--</item>-->
+    <item
+    android:id="@+id/nav_logout"
+    android:icon="@drawable/logout_icon"
+    android:title="Log Out" />
+</menu>

@@ -1,8 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#32475A</color>
-    <color name="colorPrimaryDark">#3F4955</color>
-    <color name="colorAccent">#32475A</color>
-    <color name="orange">#E96226</color>
+    <color name="colorPrimary1">#32475A</color>
+    <color name="colorPrimaryDark1">#3F4955</color>
+    <color name="colorAccent1">#32475A</color>
+
+    <color name="loginButtonColor">#00A3D6</color>
+
+    <!--383F4F-->
+
+    <!--<color name="colorPrimary">#06969B</color>-->
+    <color name="colorPrimary">#05B3B9</color>
+    <!--<color name="colorPrimaryDark">#383F4F</color>-->
+    <color name="colorPrimaryDark">#098387</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+
     <color name="white">#FFFFFFFF</color>
+    <color name="default_back">#EF240C</color>
+    <color name="sky_color">#4890B2</color>
+    <color name="gray_color">#9B9B9B</color>
+
+
+    <color name="skybluegreen">#3EC7B8</color>
+
+        <color name="bg_color">#F4F4F4</color>
+        <color name="actionButtonColor">#1F497D</color>
+        <color name="notifIconColor">@color/actionButtonColor</color>
+        <color name="appTheamColor">@color/colorPrimary</color>
+        <color name="appTheamColorLight">@color/colorPrimaryLight</color>
+        <color name="searchPressedBtnColor">#AFC1D1</color>
+
+        <!--will overide-->
+        <color name="colorPrimaryLight">#383F4F</color>
+        <color name="altaProgressBar">#343434</color>
+        <color name="login_button">#31B2F7</color>
+        <color name="headerTextColor">#9599A1</color>
+        <!--end overide-->
+
+
+        <!--Button Color-->
+        <color name="submitButtonPressed">@color/status_completed</color>
+        <color name="submitButtonColor">@color/new_green_color</color>
+        <color name="disableSubmitButtonColor">@color/disable_submit_color</color>
+        <color name="cancelButtonPresses">#EC7D7D</color>
+        <color name="cancelButtonColor">@color/red_color</color>
+        <color name="cancelButtonDisable">@color/disable_cancel_color</color>
+        <!--End OF Action Button Color-->
+
+        <!--Binded Color-->
+        <color name="approveTimeOFFColor">@color/new_green_color</color>
+        <color name="defaultJobCode">@color/text_color</color>
+        <color name="noRecord">@color/lighterGrey</color>
+        <color name="menu_row_background_color">@color/lightRed2</color>
+        <color name="wiz_page_indicator_selected_color">@color/login_button</color>
+        <color name="wiz_page_indicator_non_selected_color">@color/blue3</color>
+        <color name="wiz_background">#F9F9F9</color>
+
+        <!--New Design Color-->
+        <color name="tile_bg_color">#F8F9F9</color>
+
+
+        <color name="yellow">#FFFF00</color>
+        <color name="gray7">#CCC1D9</color>
+
+        <color name="orangeLight1">#fac08f</color>
+        <color name="darkSlateGray">#153D46</color>
+        <color name="lightSkyBlue">#E8EDF3</color>
+        <color name="red4">#FF8000</color>
+        <color name="blue_default">#DCE6F1</color>
+        <color name="gray2">#1a000000</color>
+
+
+        <color name="gray3">#77000000</color>
+        <color name="blueMedium">#316BE2</color>
+        <color name="skyBlue">#0000FF</color>
+        <color name="blue6">#236FAD</color>
+        <color name="blue7">#656CBA</color>
+        <color name="blue8">#6E78B4</color>
+        <color name="blue9">#5869BB</color>
+        <color name="lightBlue1">#8793C8</color>
+        <color name="lightBlue2">#E4E7F9</color>
+        <color name="lightBlue3">#ECEFF6</color>
+
+        <color name="cyan2">#79B3D7</color>
+        <color name="lightBlue5">#E5E6FA</color>
+
+        <color name="Slaty">#545454</color>
+        <color name="Slaty1">#545756</color>
+        <color name="lightCyan2">#E6E6FA</color>
+        <color name="darkGray5">#B0B4AF</color>
+        <color name="darkCyan1">#4D94D9</color>
+        <color name="task_info_icons_color">#7D7D7D</color>
+        <color name="gray5">#D7D7D7</color>
+        <color name="cyan1">#0CA3D1</color>
+        <color name="lightCyan3">#E8EDFF</color>
+        <color name="red5">#E1584B</color>
+        <color name="red6">#E17842</color>
+        <color name="green3">#36B39B</color>
+        <color name="orange1">#F3AB4B</color>
+        <color name="orange2">#FD7B22</color>
+        <color name="orange3">#FEA400</color>
+        <color name="blue4">#258fb5</color>
+        <color name="red3">#DD5050</color>
+        <color name="blue5">#215E8F</color>
+        <color name="greenSlate">#9cb071</color>
+        <color name="blue10">#1176BA</color>
+        <color name="blue">#4F81BD</color>
+        <color name="darkGray1">#AAA8A8</color>
+        <color name="lightGreen">#bce3bc</color>
+        <color name="lightGreen1">#CBECB0</color>
+        <color name="lightGreen2">#301FA665</color>
+        <color name="lightGreen3">#DCE6F2</color>
+        <color name="lightGreen4">#401FA665</color>
+        <color name="red2">#EC4758</color>
+        <color name="popupBtnTxtColor">@color/skyBlue</color>
+        <color name="crop__selector_pressed">@color/gray2</color>
+        <color name="crop__selector_focused">@color/gray3</color>
+
+        <color name="light_green_color">#a2cf6e</color>
+        <color name="violet_color">#8e88ff</color>
+        <color name="violet2_color">#a767dd</color>
+        <color name="darkBlack_color">#575a60</color>
+        <color name="steel_gray_color">#818387</color>
+        <color name="light_orange_color">#ff9834</color>
+        <color name="black_alpha_50">#80000000</color>
+        <color name="light_blue_color">#70c1f0</color>
+        <color name="lightCyan1">#E3EAF8</color>
+        <color name="silver1">#DADCE9</color>
+        <color name="lightBlue4">#DEE1E6</color>
+        <color name="order_history_headers">#35C4FF</color>
+        <color name="status_cancelled">#FD5969</color>
+        <color name="status_received">#FF984C</color>
+        <color name="disable_color">@color/gray</color>
+        <color name="rowDisableleDark">@color/gray1</color>
+        <color name="gray1">#CDCDCD</color>
+        <color name="light_steelGray_color">#a0a0a0</color>
+        <color name="dark_gray_color">#838588</color>
+        <!-- CropImageView Colors -->
+        <color name="windowBackground">#1C1C1C</color>
+        <color name="overlay">#AA1C1C1C</color>
+        <color name="divider">#333333</color>
+
+        <color name="status_completed">#45DD8F</color>
+        <color name="red_dark_color">#d33434</color>
+        <color name="red_color">#fd5969</color>
+        <color name="darkRed">#CE2E22</color>
+        <color name="dark_gray">#A9A9A9</color>
+        <color name="green1">#3CBEA4</color>
+        <color name="transparentWhite">#0000ffff</color>
+        <color name="blackMedium">#2B2B2B</color>
+        <color name="gray">#D3D3D3</color>
+        <color name="orange">#FF6600</color>
+        <color name="orangeLight">#F79646</color>
+        <color name="orange_color">#ff9416</color>
+        <color name="lighterGrey">#D9D9D9</color>
+        <color name="lightRed2">#FFFCF2F2</color>
+        <color name="lightBlack">#808080</color>
+        <color name="darkGray2">#BDBDBD</color>
+        <color name="blue3">#68BEE1</color>
+        <color name="silver">#e0e0e0</color>
+        <color name="green_color">#4ccb8a</color>
+        <color name="green2">#42C47D</color>
+        <color name="red">#f07063</color>
+        <color name="mediumBlack">#645e56</color>
+        <color name="blue11">#188FD1</color>
+        <color name="light_gray_color">#d2d5d9</color>
+
+        <color name="darkRed2">#F18080</color>
+
+        <color name="black_med_color">#6e7480</color>
+        <color name="lightGray2">#F0F0F0</color>
+        <color name="cyan">#00B0F0</color>
+        <color name="blue2">#627fa4</color>
+        <color name="translucentWhite">#66FFFFFF</color>
+        <color name="gray6">#EDEDED</color>
+
+        <color name="blue_lightSteel">#B0C4DE</color>
+        <color name="grayisWhite">#FAFAFA</color>
+        <color name="mediumRed">#DF7778</color>
+        <color name="lightRed">#f4b7be</color>
+        <color name="black_color">#636976</color>
+        <color name="gray_default">#cccccc</color>
+        <color name="darkGray4">#7F7F7F</color>
+        <color name="darkGray3">#9D9D9D</color>
+        <color name="white_zeroAlpha">#00ffffff</color>
+        <color name="gray4">#EEEEEE</color>
+        <color name="lightBlue">#ADD8E6</color>
+        <color name="darkCyan">#0099FF</color>
+        <color name="lightCyan">#9DC3E6</color>
+        <color name="darkBlue2">#1F497D</color>
+        <color name="SilverWhite">#F2F2F2</color>
+        <color name="blueDark">#0867CB</color>
+        <color name="saddleBrown">#C09853</color>
+        <color name="blue1">#0066CC</color>
+        <color name="red1">#E66454</color>
+        <color name="darkRed1">#BE241F</color>
+        <color name="silver3">#EBECEE</color>
+        <color name="text_color">#737680</color>
+        <color name="disable_cancel_color">#FCACB4</color>
+        <color name="greenDark">#198719</color>
+        <color name="green">#006600</color>
+        <color name="darkGreen">#006400</color>
+        <color name="new_green_color">#5cc890</color>
+        <color name="disable_submit_color">#AEE2C8</color>
+        <color name="greenLight">#b7f4b8</color>
+        <color name="new_orange_color">#FF984C</color>
+        <color name="header_gray">#E9EBED</color>
+        <color name="new_gray_button">#F0F0F0</color>
+        <color name="new_gray_row">#F0F0F0</color>
+
+        <color name="button_bg">#DDEEFF</color>
+        <color name="status_submitted">#6BBBFF</color>
+        <!-- <color name="blue4">#4ACADB</color>-->
+        <color name="blue_colornew">#4ACADB</color>
+        <color name="cyan3">#a7d2e1</color>
+        <color name="cyan4">#C1EFF9</color>
+        <color name="silver2">#ECEFF5</color>
+        <color name="blue_color">#0abed5</color>
+        <color name="edittext_readonly">#E2E3E3</color>
+        <color name="voilete3_color">#B17EDF</color>
+        <color name="filtercolor">#F8F9FA</color>
+        <color name="lighter_red">#FFE5E7</color>
+        <color name="light_red">#FF818D</color>
+        <color name="msg_selected">#d1eefb</color>
+        <color name="blue_color_new">#4ac1ff</color>
+        <color name="gray_new">#757b86</color>
+        <color name="select_color">#3e4656</color>
+        <color name="table_row_color">#f9fafb</color>
+        <color name="dark_yellow">#FFd54f</color>
+        <color name="chat_green_color">#B5E8D8</color>
+        <color name="light_green">#a9d864</color>
+        <color name="violet1">#8781bd</color>
+        <color name="translucentBlack">#c6050505</color>
+        <!-- Colors for FNTable-->
+        <color name="shadow_start">#80000000</color>
+        <color name="shadow_end">#00000000</color>
+    <color name="skybluecolor">#009688</color>
+    <color name="lightgreen">#4DB6AC</color>
+    <color name="darkgreen">#00695C</color>
+    <color name="missedBookingColor">#FF3B30</color>
+    <color name="missedBookingDarkRedColor">#D50303</color>
+    <color name="missedBookingcolor">#05B3B9</color>
+    <color name="devider">#06969B</color>
+    <color name="devidercolor">#D8D8D8</color>
+    <color name="tile_title_color">#505050</color>
+    <color name="orange_color_evening">#FF9500</color>
+    <color name="afternoon_color">#FFCC00</color>
+    <color name="violate">#6B3E3E</color>
+    <color name="pathdraw">#4BC5FC</color>
+
+
+  <!--  ////Mapbox-->
+    <color name="mapboxWhite">#ffffff</color>
+    <color name="mapboxBlue">#4264fb</color>
+    <color name="mapboxGrayLight">#c6d2e1</color>
+    <color name="mapboxPink">#ee4e8b</color>
+    <color name="mapboxYellow">#d9d838</color>
+    <color name="mapboxRed">#b43b71</color>
+    <color name="blue_black">#383838</color>
+    <color name="dayclosure_progress">#2BD1BE</color>
+    <color name="feedback_progress">#29D846</color>
+    <color name="green_tile">#2DDB4A</color>
+    <color name="darkNavy">#38445E</color>
+    <color name="darkBlueGreen">#2C9D9C</color>
+    <color name="lightSkyColor">#bce8f1</color>
+
+
+
+
+
+
 </resources>

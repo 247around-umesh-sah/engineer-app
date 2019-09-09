@@ -1,39 +1,37 @@
 {
   "project_info": {
-    "project_number": "355794247811",
-    "firebase_url": "https://around-technician-app-c1906.firebaseio.com",
-    "project_id": "around-technician-app-c1906",
-    "storage_bucket": "around-technician-app-c1906.appspot.com"
+    "project_number": "971548479296",
+    "firebase_url": "https://engineerbuddy-67944.firebaseio.com",
+    "project_id": "engineerbuddy-67944",
+    "storage_bucket": "engineerbuddy-67944.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:355794247811:android:807b9efc1c39419a",
+        "mobilesdk_app_id": "1:971548479296:android:cb5627b70acc3d24",
         "android_client_info": {
-          "package_name": "com.around.technician"
+          "package_name": "com.around.engineerbuddy"
         }
       },
       "oauth_client": [
         {
-          "client_id": "355794247811-rhm3rk6d7lsvqis0hiak7vg962cdt2hs.apps.googleusercontent.com",
+          "client_id": "971548479296-tjbe797vjbcd48li4ebjqu0t5jbofl42.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyACbv-T6clsQDbQNfY87qOXeFZxH2Ql4x0"
+          "current_key": "AIzaSyAsdnqcyEsB0JiFQR96XAjreycPvp7Te6o"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971548479296-tjbe797vjbcd48li4ebjqu0t5jbofl42.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

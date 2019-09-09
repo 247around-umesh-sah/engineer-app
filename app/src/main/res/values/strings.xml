@@ -1,17 +1,17 @@
 <resources>
-    <string name="app_name">247Around Technician</string>
+    <string name="app_name">Engineer Buddy</string>
     <string name="wall_mount_stand">Wall Mount Stand</string>
 
     <!-- Strings related to login -->
     <string name="askGPSPermission">Please Provide GPS Location Access</string>
     <string name="askPassword">Please Enter Password</string>
-    <string name="phoneValidation">Please Enter Valid Mobile No</string>
+    <string name="phoneValidation">Please Enter Valid User Id</string>
     <string name="passwordNotMatch">Password Not Match</string>
     <string name="loginFailedTitle">Login failed!</string>
     <string name="loginFailedMsg">Login failed!</string>
     <string name="serverConnectionFailedTitle">Opps!</string>
     <string name="serverConnectionFailedMsg">Server Connection Failed</string>
-    <string name="prompt_phone">Mobile Number</string>
+    <string name="prompt_phone">User Id / Mobile Number</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Login</string>
 
@@ -38,10 +38,13 @@
     <string name="signatureRequired">Please Add Customer Signature</string>
     <string name="serialNumberPictureRequired">"Please Add Serial Picture</string>
     <string name="priceTagsCheckboxRequired">Please Select Service</string>
-    <string name="remarksRequired">"Please Enter Remarks</string>
+    <string name="remarksRequired">Please Enter Remarks</string>
 
     <!-- Cancel Booking Activity Toast -->
     <string name="cancellationReasonRequired">Please Select Reason</string>
+    <string name="rasonForCancel">Please submit Reason</string>
+    <string name="selectReason">Select Reason</string>
+
 
     <!--Appliance List -->
     <string name="brand_text">Brand: </string>
@@ -80,6 +83,162 @@
     <string name="rupee">\u20A8</string>
     <string name="service_category">Service Category</string>
     <string name="title_activity_paytm_qr">PaytmQrActivity</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">247Around</string>
+    <string name="nav_header_subtitle">247Around</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="reallyExit">Do you really want to exit?</string>
+    <string name="bookingdetail">Booking Details</string>
+    <string name="appliancedetail">Appliance Details</string>
+    <string name="spareparts">Spare Parts</string>
+    <string name="bookingHistory">Booking History</string>
+    <string name="transaction">Transactions</string>
+    <string name="qrcode">QR-Code</string>
+    <string name="downloads">Downloads</string>
+    <string name="techsupport">Tech Support</string>
+    <string name="cancel_booking">Cancel</string>
+    <string name="update_booking">Update</string>
+    <string name="complete_booking">Complete</string>
+    <string name="navigation">Navigation</string>
+    <string name="customercall">Customer</string>
+    <string name="reschedule">Reschedule</string>
+    <string name="sparepart">Spare Part</string>
+    <string name="document">Documents</string>
+    <string name="crm">CRM</string>
+    <string name="partner">Partner</string>
+    <string name="sf">SF</string>
+    <string name="product">Product</string>
+    <string name="payment">Payments</string>
+    <string name="customer">Customer</string>
+    <string name="artificial">Artificial</string>
+    <string name="accessories">Accessories</string>
+    <string name="symptoms">Symptoms</string>
+    <string name="New">New</string>
+    <string name="bookingCancelSuccessMsg">Booking Cancel Successfully</string>
+    <string name="selectFromList">Select from List</string>
+    <string name="nothing_to_select">No %1$s to select</string>
+    <string name="comingSoon"> </string>
+    <string name="noNoonBooking">There is No Noon Booking </string>
+    <string name="noMorningBooking"> There is No Morning Booking</string>
+    <string name="selectPartName">Select Part Name</string>
+
+    <string name="checkAllFieldsValidation">Please Fill all fields</string>
+    <string name="checkSelectedFieldsValidation">Please fill Selected field</string>
+
+    <string name="selectModelNumber">Select Model Number</string>
+    <string name="selectPartType">Select Part Type</string>
+    <string name="enableCallFeatureValiadtion">Enable phone call feature</string>
+    <string name="callConfirmationMessage">Are you sure you want to call ?</string>
+    <string name="selectAllFieldsValidation">Please select all fields</string>
+    <string name="enterModelNumber">Enter model number</string>
+    <string name="addMorePart">Add More Part</string>
+    <string name="submit">Submit</string>
+    <string name="tomorrowBooking">Tomorrow Booking</string>
+    <string name="missedBooking">Missed Booking</string>
+
+    <string name="noTomorrowBookingValidation">There is No Tomorrow Booking</string>
+    <string name="missedBookingValidation">There is No Missed Booking</string>
+    <string name="noEveningBookingValidation">There is No Evening Booking</string>
+    <string name="payThroughPaytm">Pay Through Paytm</string>
+    <string name="enableLocation">Enable Location</string>
+    <string name="cancelBooking">Cancel Booking</string>
+    <string name="requestPartValidation">You can not request spare part for installation booking</string>
+    <string name="spareParts">Spare Part</string>
+    <string name="completeBooking">Complete Booking</string>
+    <string name="newAppointment">New Appointment</string>
+    <string name="techSupport">Tech Support</string>
+    <string name="Documents">Documents</string>
+    <string name="customerCall">Customer Call</string>
+    <string name="details">Detail</string>
+    <string name="input">Input</string>
+    <string name="intelligence">Intelligence</string>
+    <string name="store">Store</string>
+    <string name="fillProductDetailvalidation">Please complete first Product Detail Tile</string>
+    <string name="paytm">Paytm</string>
+    <string name="video">Videos</string>
+    <string name="software">Software</string>
+    <string name="appointment">Appointment</string>
+    <string name="Order">Order</string>
+    <string name="somethingWentWrong">Something went wrong</string>
+    <string name="selectDefective">Select Defective</string>
+    <string name="selectSolution">Select Solution</string>
+    <string name="addProduct">Add Product</string>
+    <string name="addMore">Add More</string>
+    <string name="fileExistValidation">File does not exist</string>
+    <string name="videoExistValidation">Video does not exist</string>
+    <string name="appointmentReasonValidation">Please Select Appointment Reason</string>
+    <string name="ramarksValidation">Remarks can not be empty</string>
+    <string name="apppintmentDateValidation">Please Select Appointment Date</string>
+    <string name="transctionCompletevalidation">Transaction not compelted Please recheck</string>
+    <string name="selectTime">Select Time</string>
+    <string name="sparePartsOrder">Spare Parts Order</string>
+    <string name="exitConfirmInfo">Press back again to exit</string>
+    <string name="cancelledbooking">Cancelled Booking</string>
+    <string name="completedbooking">Completed Booking</string>
+    <string name="profile">Profile</string>
+    <string name="enterAmount">Enter Amount</string>
+    <string name="enterPartName">Enter part name</string>
+    <string name="customerChargesValidation">Sum of charges should not less then amount due </string>
+    <string name="selectCompleteOnce">Please select complete one item</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </resources>
