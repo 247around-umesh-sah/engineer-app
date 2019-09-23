@@ -56,9 +56,9 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
     ;
     TextView noDataToDisplay, categoryName, amountDue, applianceRequesttype, brandName, serviceCapacityType, selectDate, selectServiceCatg, name, applianceName, address;
     CheckBox productBorkenStatus;
-    LinearLayout productHeaderLayout, addServicePartLayout;
+    LinearLayout productHeaderLayout, addServicePartLayout,invoicePhotoLayout;
     // BMAFontViewField modelDropDownIcon;
-    ImageView serialNoPic;
+    ImageView serialNoPic,invoiceNoPic;
     ScrollView scrollView;
     EOBooking eoBooking;
     int counter = 0;
@@ -72,7 +72,8 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
     //JSONObject selectJsonObject;
     EOCompleteProductdetail selectedCompleteDetail;//= new EOCompleteProductdetail();
 
-
+    EOModelNumber modelNumber;
+    String selectPOD;
     LayoutInflater inflater;
 
     @Override
@@ -81,6 +82,8 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         this.eoBooking = getArguments().getParcelable("eoBooking");
         //selectedObject = getArguments().getString("productDetail");
         selectedCompleteDetail = getArguments().getParcelable("productDetail");
+        modelNumber = getArguments().getParcelable("modelNumber");
+        selectPOD = getArguments().getString("pod");
 
     }
 
@@ -113,6 +116,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         this.applianceRequesttype = this.view.findViewById(R.id.appliancerequesttype);
         this.addServicePartLayout = this.view.findViewById(R.id.addServicePartLayout);
         this.serviceCapacityType = this.view.findViewById(R.id.serviceCapacityType);
+
         //this.selectDate = this.view.findViewById(R.id.selectpurchaseDate);
         this.productBorkenStatus = this.view.findViewById(R.id.productBorkencheckbox);
 
@@ -120,8 +124,8 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 
         // this.serialNoPic = this.view.findViewById(R.id.serialNoPic);
         this.submit.setText("Submit");
-        this.submit.setVisibility(View.GONE);
-       // this.addMoreProduct.setVisibility(View.GONE);
+        //this.submit.setVisibility(View.GONE);
+        this.addMoreProduct.setVisibility(View.GONE);
         this.addMoreProduct.setText("Next");
         //this.dataToView();
         this.name.setText(eoBooking.name);
@@ -135,8 +139,8 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 
         //addMoreProductLayout(inflater);
 
-        this.addMoreProduct.setOnClickListener(this);
-        //this.submit.setOnClickListener(this);
+        //this.addMoreProduct.setOnClickListener(this);
+        this.submit.setOnClickListener(this);
         float dialogRadius = getResources().getDimension(R.dimen._20dp);
         BMAUIUtil.setBackgroundRound(this.submit, BMAUIUtil.getColor(R.color.missedBookingcolor), new float[]{dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius});
         BMAUIUtil.setBackgroundRound(this.addMoreProduct, BMAUIUtil.getColor(R.color.missedBookingcolor), new float[]{dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius});
@@ -181,7 +185,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
             EOCompleteProductQuantity selectCompleteProduct = selectedCompleteDetail.getbookingProductUnit().quantity.get(counter);
             // partsObject.get(counter).put("unit_id", eoCompleteProductQuantity.unit_id);
             selectCompleteProduct.unit_id = eoCompleteProductQuantity.unit_id;
-            selectCompleteProduct.selectedPOD = eoCompleteProductQuantity.pod;
+            selectCompleteProduct.selectedPOD = selectPOD;//eoCompleteProductQuantity.pod;
             addMoreProductLayout(inflater, eoCompleteProductQuantity, selectCompleteProduct);
 
         }
@@ -192,6 +196,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 
         EditText selectModel = childView.findViewById(R.id.selectModel);
         BMAFontViewField modelDropDownIcon = childView.findViewById(R.id.modeldropDownIcon);
+        modelDropDownIcon.setVisibility(View.INVISIBLE);
         LinearLayout modelLayout = childView.findViewById(R.id.modelLayout);
         EditText enterSerialNumber = childView.findViewById(R.id.enterSerialNumber);
         enterSerialNumber.setTag(counter);
@@ -199,51 +204,62 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         LinearLayout serialNumberPhotoLayout = childView.findViewById(R.id.serialNumberPhotoLayout);
         LinearLayout datePurchaseLayout = childView.findViewById(R.id.dateLayout);
         childView.findViewById(R.id.modelLayout).setVisibility(counter == 0 ? View.VISIBLE : View.GONE);
-        if (counter == 0) {
+        childView.findViewById(R.id.invoiceNumberPhotoLayout).setVisibility(counter == 0 ? View.VISIBLE : View.GONE);
+            if (counter == 0) {
             this.selectDate = childView.findViewById(R.id.selectpurchaseDate);
             datePurchaseLayout.setVisibility(View.VISIBLE);
             if (selectedCompleteDetail != null && this.selectedCompleteDetail.getbookingProductUnit().purchase_date != null) {
                 this.selectDate.setText(this.selectedCompleteDetail.getbookingProductUnit().purchase_date);
             }
-            if(this.eoCompleteProductdetail!=null && this.eoCompleteProductdetail.eoSpareParts!=null && this.eoCompleteProductdetail.eoSpareParts.date_of_purchase!=null){
+          //  if(this.eoCompleteProductdetail!=null && this.eoCompleteProductdetail.eoSpareParts!=null && this.eoCompleteProductdetail.eoSpareParts.date_of_purchase!=null){
+              if(selectPOD!=null){
+                  datePurchaseLayout.setEnabled(false);
                 selectDate.setEnabled(false);
-                selectDate.setText(this.eoCompleteProductdetail.eoSpareParts.date_of_purchase);
-                this.selectedCompleteDetail.getbookingProductUnit().purchase_date=this.eoCompleteProductdetail.eoSpareParts.date_of_purchase;
+                selectDate.setText(selectPOD);//(this.eoCompleteProductdetail.eoSpareParts.date_of_purchase);
+                this.selectedCompleteDetail.getbookingProductUnit().purchase_date=selectPOD;//this.eoCompleteProductdetail.eoSpareParts.date_of_purchase;
 
                 datePurchaseLayout.setEnabled(false);
             }else {
-                childView.findViewById(R.id.dateLayout).setOnClickListener(this);
+              //  childView.findViewById(R.id.dateLayout).setOnClickListener(this);
             }
-            if (this.eoCompleteProductdetail != null && this.eoCompleteProductdetail.modelList.size() == 0) {
-                selectModel.setEnabled(true);
-                selectModel.setTag(counter);
-                selectModel.setHint("Enter model number");
-                selectModel.addTextChangedListener(new CustomeTextWatcher(selectModel, "selectModel"));
-                modelDropDownIcon.setVisibility(View.INVISIBLE);
-            } else if (this.eoCompleteProductdetail != null) {
-                modelLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        openModelSelectionPopUp(selectModel, v);
-                    }
-                });
-            }
-            if(this.eoCompleteProductdetail!=null && this.eoCompleteProductdetail.eoSpareParts!=null && this.eoCompleteProductdetail.eoSpareParts.model_number!=null){
-
-                        for(EOModelNumber eoModelNumber:this.eoCompleteProductdetail.modelList) {
-                            if(eoModelNumber.modelNumber.equalsIgnoreCase( this.eoCompleteProductdetail.eoSpareParts.model_number)) {
-                                selectedCompleteDetail.getbookingProductUnit().quantity.get(0).model_number =  this.eoCompleteProductdetail.eoSpareParts.model_number;
-                                selectedCompleteDetail.getbookingProductUnit().quantity.get(0).model_number_id = eoModelNumber.id;
-                                selectModel.setTag(eoModelNumber);
-                                selectModel.setText( this.eoCompleteProductdetail.eoSpareParts.model_number);
-                                selectModel.setEnabled(false);
-                                modelDropDownIcon.setEnabled(false);
-                                break;
-                            }
-                        }
-            }
-            enterSerialNoLayout.setVisibility(eoCompleteProductQuantity.pod.equalsIgnoreCase("1") ? View.VISIBLE : View.GONE);
-            serialNumberPhotoLayout.setVisibility(eoCompleteProductQuantity.pod.equalsIgnoreCase("1") ? View.VISIBLE : View.GONE);
+//            if (this.eoCompleteProductdetail != null && this.eoCompleteProductdetail.modelList.size() == 0) {
+//                selectModel.setEnabled(true);
+//                selectModel.setTag(counter);
+//                selectModel.setHint("Enter model number");
+//                selectModel.addTextChangedListener(new CustomeTextWatcher(selectModel, "selectModel"));
+//                modelDropDownIcon.setVisibility(View.INVISIBLE);
+//            } else if (this.eoCompleteProductdetail != null) {
+//                modelLayout.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        openModelSelectionPopUp(selectModel, v);
+//                    }
+//                });
+//            }
+//            if(this.eoCompleteProductdetail!=null && this.eoCompleteProductdetail.eoSpareParts!=null && this.eoCompleteProductdetail.eoSpareParts.model_number!=null){
+//
+//                        for(EOModelNumber eoModelNumber:this.eoCompleteProductdetail.modelList) {
+//                            if(eoModelNumber.modelNumber.equalsIgnoreCase( this.eoCompleteProductdetail.eoSpareParts.model_number)) {
+//                                selectedCompleteDetail.getbookingProductUnit().quantity.get(0).model_number =  this.eoCompleteProductdetail.eoSpareParts.model_number;
+//                                selectedCompleteDetail.getbookingProductUnit().quantity.get(0).model_number_id = eoModelNumber.id;
+//                                selectModel.setTag(eoModelNumber);
+//                                selectModel.setText( this.eoCompleteProductdetail.eoSpareParts.model_number);
+//                                selectModel.setEnabled(false);
+//                                modelDropDownIcon.setEnabled(false);
+//                                break;
+//                            }
+//                        }
+//            }
+                if(modelNumber!=null){
+                    selectedCompleteDetail.getbookingProductUnit().quantity.get(0).model_number =  modelNumber.modelNumber;
+                    selectedCompleteDetail.getbookingProductUnit().quantity.get(0).model_number_id = modelNumber.id;
+                    selectModel.setTag(modelNumber);
+                    selectModel.setText(this.modelNumber.modelNumber);//( this.eoCompleteProductdetail.eoSpareParts.model_number);
+                    selectModel.setEnabled(false);
+                    modelDropDownIcon.setEnabled(false);
+                }
+//            enterSerialNoLayout.setVisibility(eoCompleteProductQuantity.pod.equalsIgnoreCase("1") ? View.VISIBLE : View.GONE);
+//            serialNumberPhotoLayout.setVisibility(eoCompleteProductQuantity.pod.equalsIgnoreCase("1") ? View.VISIBLE : View.GONE);
 
 
         } else {
@@ -262,14 +278,25 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         TextView serialNoPicLink = childView.findViewById(R.id.serialNoPicLink);
         if (counter == 0) {
             serialNoPic = childView.findViewById(R.id.serialNoPic);
+            invoiceNoPic = childView.findViewById(R.id.invoiceNoPic);
+            eselectedCompleteProductQuantity.invoice_pod= "1";//eoCompleteProductQuantity.invoice_pod;
 //            Log.d("aaaaaa","serialNoPIC= "+eselectedCompleteProductQuantity.serial_number_pic);
             if (eselectedCompleteProductQuantity.serialNoPic != null) {
                 serialNoPic.setImageBitmap(eselectedCompleteProductQuantity.serialNoPic);
+            }
+            if(eselectedCompleteProductQuantity.invoicePic != null){
+                invoiceNoPic.setImageBitmap(eselectedCompleteProductQuantity.invoicePic);
             }
             childView.findViewById(R.id.serialPhotoLayout).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     selectPic(1, serialNoPic);
+                }
+            });
+            childView.findViewById(R.id.invoicePhotoLayout).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectPic(2, invoiceNoPic);
                 }
             });
         }
@@ -291,6 +318,9 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         radioGroup.setTag(counter);
         complete.setChecked(eselectedCompleteProductQuantity.isComplete);
         notComplete.setChecked(eselectedCompleteProductQuantity.isNotComplete);
+        if(this.eoCompleteProductdetail.bookingUnitDetails.quantity.size()==1){
+            notComplete.setVisibility(View.INVISIBLE);
+        }
 
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -317,7 +347,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         //  EditText enterSerialNumber= childView.findViewById(R.id.enterSerialNumber);
         // childView.findViewById(R.id.productHeaderLayout).setVisibility(counter==0 ? View.VISIBLE : View.GONE);
         //childView.findViewById(R.id.footerLayout).setVisibility(counter==0 ? View.VISIBLE :View.GONE);
-        childView.findViewById(R.id.symptonDeviderLayout).setVisibility(this.eoCompleteProductdetail.bookingUnitDetails.quantity.size() > 1 ? View.VISIBLE : View.GONE);
+        childView.findViewById(R.id.symptonDeviderLayout).setVisibility(this.eoCompleteProductdetail.bookingUnitDetails.quantity.size() > 1 && counter==this.eoCompleteProductdetail.bookingUnitDetails.quantity.size() ? View.VISIBLE : View.GONE);
         enterSerialNumber.setTag(counter);
         selectServiceCatg = childView.findViewById(R.id.selectServiceCatg);
        // if (counter == 0) {
@@ -359,8 +389,29 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 
 
         childView.findViewById(R.id.basicChargeLayout).setVisibility(this.isShowBasicCharge(eoCompleteProductQuantity) ? View.VISIBLE : View.GONE);
-        childView.findViewById(R.id.partsChargeLayout).setVisibility(this.isShowAdditionalCharge(eoCompleteProductQuantity) ? View.VISIBLE : View.GONE);
-        childView.findViewById(R.id.additionalChargeLayout).setVisibility(this.isShowPartsCharge(eoCompleteProductQuantity) ? View.VISIBLE : View.GONE);
+        childView.findViewById(R.id.partsChargeLayout).setVisibility(this.isShowPartsCharge(eoCompleteProductQuantity) ? View.VISIBLE : View.GONE);
+        childView.findViewById(R.id.additionalChargeLayout).setVisibility(this.isShowAdditionalCharge(eoCompleteProductQuantity) ? View.VISIBLE : View.GONE);
+
+        eselectedCompleteProductQuantity.product_or_services=eoCompleteProductQuantity.product_or_services;
+        Log.d("aaaaaa","productServicePRODUCTDETAil "+counter+"    = "+ eselectedCompleteProductQuantity.product_or_services);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         int dialogRadius = 40;
@@ -516,9 +567,14 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
     }
 
     ImageView serialNuberPic;
+    ImageView inVoicePic;
 
     private void selectPic(int requestCode, ImageView seraialNumPic) {
-        serialNuberPic = seraialNumPic;
+        if(requestCode==1) {
+            serialNuberPic = seraialNumPic;
+        }else if(requestCode==2){
+            inVoicePic=seraialNumPic;
+        }
         Intent galleryIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 //        = new Intent(Intent.ACTION_PICK,
 //                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -588,7 +644,10 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
                 serialNuberPic.setImageBitmap(imageBitmap);
 
                 break;
-
+            case 2:
+                selectedCompleteDetail.getbookingProductUnit().quantity.get(0).invoicePic = imageBitmap;
+                inVoicePic.setImageBitmap(imageBitmap);
+                break;
         }
     }
 
@@ -777,8 +836,8 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         for (EOCompleteProductQuantity eoCompleteProductQuantity : selectedCompleteDetail.getbookingProductUnit().quantity) {
 
             EOCompleteProductQuantity completeProductQnty = this.eoCompleteProductdetail.getbookingProductUnit().quantity.get(count);
-            if ((count >= 1 || eoCompleteProductQuantity.model_number != null) &&
-                    (eoCompleteProductQuantity.pod.equalsIgnoreCase("0") || ((counter >= 1 || eoCompleteProductQuantity.serialNumber != null && eoCompleteProductQuantity.serialNumber.length() > 0) &&
+            if((completeProductQnty.invoice_pod.equalsIgnoreCase("0") || eoCompleteProductQuantity.isNotComplete ||(eoCompleteProductQuantity.isComplete && selectedCompleteDetail.getbookingProductUnit().quantity.get(0).invoicePic != null)) &&
+                    (eoCompleteProductQuantity.pod.equalsIgnoreCase("0") || ((count >= 1 || eoCompleteProductQuantity.serialNumber != null && eoCompleteProductQuantity.serialNumber.length() > 0) &&
                             (count >= 1 || eoCompleteProductQuantity.serialNoPic != null))) &&
                     (!isShowBasicCharge(completeProductQnty) || (eoCompleteProductQuantity.customerBasicharge != null && eoCompleteProductQuantity.customerBasicharge.length() != 0)) &&
 
@@ -795,6 +854,17 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 
     }
 
+    private boolean isInvoicePicMandatory(EOCompleteProductQuantity eoCompleteProductQuantity ){
+        if(eoCompleteProductQuantity.invoice_pod==null ||  eoCompleteProductQuantity==null){
+            return false;
+        }
+        if(eoCompleteProductQuantity.invoice_pod.equalsIgnoreCase("1")){
+            return true;
+        }
+        return false;
+
+
+    }
     public boolean checkChargeAmount() {
         for (EOCompleteProductQuantity eoCompleteProductQuantity : selectedCompleteDetail.getbookingProductUnit().quantity) {
             Double charges = 0.00;
@@ -807,7 +877,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
             if (eoCompleteProductQuantity.customerPartharge != null && eoCompleteProductQuantity.customerPartharge.length() != 0) {
                 charges += Double.valueOf(eoCompleteProductQuantity.customerPartharge);
             }
-            if (eoCompleteProductQuantity.amountDue != null) {
+            if (eoCompleteProductQuantity.amountDue != null && eoCompleteProductQuantity.isComplete) {
 
                 if (charges < Double.valueOf(eoCompleteProductQuantity.amountDue)) {
                     return false;
@@ -828,8 +898,8 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 
     private boolean isShowPartsCharge(EOCompleteProductQuantity eoCompleteProductQuantity) {
         return !eoCompleteProductQuantity.product_or_services.equalsIgnoreCase("service") ?
-                eoCompleteProductQuantity.product_or_services.equalsIgnoreCase("product") && eoCompleteProductQuantity.amountDue.equalsIgnoreCase("0.00")
-                : true;
+                eoCompleteProductQuantity.product_or_services.equalsIgnoreCase("product"):true;// && Double.valueOf(eoCompleteProductQuantity.amountDue)==0//!eoCompleteProductQuantity.amountDue.equalsIgnoreCase("0.00")
+              //  : false;
         //  return (eoCompleteProductQuantity.product_or_services.equalsIgnoreCase("service") && eoCompleteProductQuantity.amountDue.equalsIgnoreCase("0.00"));
 
     }
@@ -850,6 +920,8 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         //  intent.putExtra("purchaseDate", this.selectDate.getText().toString());
         // intent.putExtra("isBrokenProduct", this.productBorkenStatus.isChecked());
         intent.putExtra("completeCatogryPageName", "productDetail");
+        intent.putExtra("pod",selectPOD);
+        intent.putExtra("modelNumber",modelNumber);
         getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
         getFragmentManager().popBackStack();
 //        } else {

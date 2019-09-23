@@ -22,8 +22,8 @@ import org.json.JSONObject;
 
 public class ProfileFragment extends BMAFragment {
     HttpRequest httpRequest;
-    TextView profileName, appliance, idType, idNumber, otherID, mobile;
-    LinearLayout otherIdLayout, adharLayout, mobileNumberLayout;
+    TextView profileName, appliance, idType, idNumber, otherID, mobile,serviceCenterName,cityName;
+    LinearLayout otherIdLayout, adharLayout, mobileNumberLayout,serviceCenterLayout,cityLayout;
     //    LinearLayout
     EOProfile eoProfile;
 
@@ -40,6 +40,10 @@ public class ProfileFragment extends BMAFragment {
         this.otherIdLayout= this.view.findViewById(R.id.otherIdLayout);
         this.adharLayout= this.view.findViewById(R.id.adharLayout);
         this.mobileNumberLayout= this.view.findViewById(R.id.mobileNumberLayout);
+        this.serviceCenterName=this.view.findViewById(R.id.servicecenterName);
+        this.cityName=this.view.findViewById(R.id.cityName);
+        this.serviceCenterLayout=this.view.findViewById(R.id.serviceCenterLayout);
+        this.cityLayout=this.view.findViewById(R.id.cityLayout);
         this.loadData();
         return this.view;
     }
@@ -47,8 +51,24 @@ public class ProfileFragment extends BMAFragment {
     private void dataToView() {
         this.profileName.setText(this.eoProfile.name);
         this.appliance.setText(this.eoProfile.appliances);
+        if(this.eoProfile.serviceCenterName==null) {
+            this.serviceCenterLayout.setVisibility(View.GONE );
+        }else {
+            this.serviceCenterLayout.setVisibility( View.VISIBLE);
+            this.serviceCenterName.setText(this.eoProfile.serviceCenterName);
+        }
+        if(this.eoProfile.district==null) {
+            this.cityLayout.setVisibility(View.GONE );
+        }else {
+            this.cityLayout.setVisibility( View.VISIBLE);
+            this.cityName.setText(this.eoProfile.district);
+        }
+
+
         if(!this.eoProfile.identityProofType.equalsIgnoreCase("0")) {
             this.idType.setText(this.eoProfile.identityProofType);
+        }else{
+            this.adharLayout.setVisibility(View.GONE);
         }
         this.idNumber.setText(this.eoProfile.identityProofNumber);
 

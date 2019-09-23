@@ -131,10 +131,14 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
      * @param view View
      */
     public void loginProcess(View view) {
-        if (phone_number.getText().toString().trim().length() == 0 || password.getText().toString().trim().length() == 0) {
-            Toast.makeText(LoginActivity.this, "UserID or Password can not be blank", Toast.LENGTH_SHORT).show();
+        if (phone_number.getText().toString().trim().length() == 0 ) {
+            Toast.makeText(LoginActivity.this, getString(R.string.userIDValidation), Toast.LENGTH_SHORT).show();
             return;
 
+        }
+        if(password.getText().toString().trim().length() == 0){
+            Toast.makeText(LoginActivity.this, getString(R.string.passwordValidation), Toast.LENGTH_SHORT).show();
+            return;
         }
         if (isValidPhone(phone_number.getText().toString())) {
             String passwordText = password.getText().toString();

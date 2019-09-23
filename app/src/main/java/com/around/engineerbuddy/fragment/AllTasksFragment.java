@@ -26,6 +26,9 @@ import com.around.engineerbuddy.util.BMAConstants;
 
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class AllTasksFragment extends BMAFragment implements ApiResponse, View.OnClickListener {
 
     LinearLayout missedBookingLayout,tomorrowBookingLayout,morningLayout,afternoonLayout,evenningLayout;
@@ -125,6 +128,8 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
     public void processFinish(String response) {
        // super.processFinish(response);
         Log.d("bbbbbbb","response  = "+response);
+
+
         httpRequest.progress.dismiss();
         if (response.contains("data")) {
             JSONObject jsonObjectHttpReq;
@@ -157,6 +162,7 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
     public void onClick(View v) {
         int id=v.getId();
         Bundle bundle=new Bundle();
+
         switch (id){
             case R.id.missedLayout:
                 if(this.eoAllBookingTask==null || this.eoAllBookingTask.missedBookingsCount==0){

@@ -60,6 +60,16 @@ public class EveningTasksFragment extends BMAFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if(isVisibleToUser){
            // this.updateDistance();
+            if (getMainActivity().todayEveningBooking.size() == 0) {
+                if(nodataToDisplayLayout!=null)
+                nodataToDisplayLayout.setVisibility(View.VISIBLE);
+            }else if(recyclerView!=null) {
+                bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), getBookingArray(), recyclerView, this, R.layout.tomorrow_item_row);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(bmaRecyclerAdapter);
+                //this.updateDistance();
+            }
         }
     }
 

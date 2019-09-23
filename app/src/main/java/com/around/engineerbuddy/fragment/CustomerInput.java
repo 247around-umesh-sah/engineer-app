@@ -167,6 +167,7 @@ public class CustomerInput extends BMAFragment implements View.OnClickListener {
             case R.id.clearIconLayout:
                 mSignature.clear();
                 okLayout.setEnabled(false);
+                okLayout.setAlpha(.5f);
 
                 break;
             case R.id.submitButton:
@@ -201,6 +202,7 @@ public class CustomerInput extends BMAFragment implements View.OnClickListener {
         mSignature.setBackgroundColor(Color.WHITE);
         confirmationSignature.addView(mSignature, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         okLayout.setEnabled(false);
+        okLayout.setAlpha(.5f);
 
         drawView = confirmationSignature;
 
@@ -260,6 +262,7 @@ public class CustomerInput extends BMAFragment implements View.OnClickListener {
             float eventX = event.getX();
             float eventY = event.getY();
             okLayout.setEnabled(true);
+            okLayout.setAlpha(1);
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:

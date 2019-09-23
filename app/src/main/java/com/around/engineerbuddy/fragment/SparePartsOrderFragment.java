@@ -1,13 +1,20 @@
 package com.around.engineerbuddy.fragment;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -86,14 +93,14 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
     EOModelNumber modelNumber;
     LinearLayout selectModelLayout;
     //   boolean isCheckedSpareWarranty;
-    String selectModelNumberCallType;
+    // String selectModelNumberCallType;
     String selectPOD;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.eoBooking = getArguments().getParcelable("eoBooking");
-        selectModelNumberCallType = getArguments().getString("modelNo");
+        //  selectModelNumberCallType = getArguments().getString("modelNo");
         selectPOD = getArguments().getString("pod");
         modelNumber = getArguments().getParcelable("modelNumber");
     }
@@ -157,8 +164,8 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 //        this.checkOut.setText("Check Warranty");
 //        this.parentLayout.setVisibility(View.GONE);
 
-        if (selectModelNumberCallType != null) {
-            selectModel.setText(selectModelNumberCallType);
+        if (this.modelNumber != null && this.modelNumber.modelNumber != null) {
+            selectModel.setText(this.modelNumber.modelNumber);
             modelDropDownIcon.setEnabled(false);
             selectModel.setEnabled(false);
         }
@@ -251,6 +258,12 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 //                                this.modelDropDownIcon.setVisibility(View.INVISIBLE);
 //                            }
                             if (this.eoSparePartsOrder.getPartOnModel) {
+                                for (EOModelNumber eoModelNumber : this.eoSparePartsOrder.modelNumberList) {
+                                    if (modelNumber.modelNumber.equalsIgnoreCase(eoModelNumber.modelNumber)) {
+                                        modelNumber.id = eoModelNumber.id;
+                                        break;
+                                    }
+                                }
                                 getPartTypeData();
 //                                this.modelDropDownIcon.setEnabled(true);
 //                                selectModel.setEnabled(true);
@@ -361,7 +374,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             @Override
             public void onClick(View v) {
                 parentLayout.removeView(childView);
-                int partKey= (int) deleteIcon.getTag();
+                int partKey = (int) deleteIcon.getTag();
                 partsObject.remove(partKey);
             }
         });
@@ -407,7 +420,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                 }
                 partsMap.put("part_warranty_status", 1);
                 partsMap.put("quantity", 1);
-                HashMap<String,Object>partsMapObj=partsMap;
+                HashMap<String, Object> partsMapObj = partsMap;
                 partsObject.put(partNumberCounter, BMAGson.store().toJson(partsMapObj));
                 frontDefectiveBitmap = null;
                 backDefectiveBitmap = null;
@@ -590,9 +603,10 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             case 2:
                 this.invoicePicBitmap = imageBitmap;
                 invoicePic.setImageBitmap(imageBitmap);
+
                 break;
             case 3:
-
+                Log.d("aaaaaa", "defective_front_parts = " + onCaptureImageResult(imageBitmap));
                 partsMap.put("defective_front_parts", onCaptureImageResult(imageBitmap));
 
                 frontDefectiveBitmap = imageBitmap;
@@ -603,6 +617,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 
                 backDefectiveBitmap = imageBitmap;
                 partsMap.put("defective_back_parts", onCaptureImageResult(imageBitmap));
+                Log.d("aaaaaa", "defective_back_parts = " + onCaptureImageResult(imageBitmap));
 
                 backDefectivePart.setImageBitmap(imageBitmap);
 
@@ -614,19 +629,23 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
     public String onCaptureImageResult(Bitmap thumbnail) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.PNG, 90, bytes);
-
         String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
 
         String serialNoPath = eoBooking.bookingID + "_" + pic_name + ".png";
         File destination = new File(SN_DIRECTORY, serialNoPath);
-        FileOutputStream fo;
+      //  FileOutputStream fo;
         try {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
-            fo.write(bytes.toByteArray());
-            fo.close();
-            String encodeImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
-            return encodeImage;
+
+               boolean isFile=destination.createNewFile();
+               if(!isFile){
+                   destination.mkdirs();
+               }
+                FileOutputStream fo = new FileOutputStream(destination);
+                fo.write(bytes.toByteArray());
+                fo.close();
+                String encodeImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
+                return encodeImage;
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -636,10 +655,47 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        boolean canUseExternalStorage = false;
+
+//        switch (requestCode) {
+//            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    canUseExternalStorage = true;
+                }
+
+                if (!canUseExternalStorage) {
+                    Toast.makeText(getActivity(), "Cannot use this feature without requested permission", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent galleryIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(galleryIntent, requestCode);
+                    // user now provided permission
+                    // perform function for what you want to achieve
+//                }
+//            }
+        }
+    }
+
 
     private void selectPic(int requestCode) {
-        Intent galleryIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(galleryIntent, requestCode);
+
+        if ((ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
+
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    requestCode);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
+        } else {
+            Log.d("aaaaaa","requestCODE = "+requestCode);
+            Intent galleryIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(galleryIntent, requestCode);
+            // user already provided permission
+            // perform function for what you want to achieve
+        }
+
+
     }
 
     Calendar mcalendar;
@@ -690,13 +746,13 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         requestData.put("serial_number", enterSerialNo.getText().toString().trim());
         requestData.put("serial_number_pic_exist", onCaptureImageResult(this.serialNoPicBitmap));
         requestData.put("invoice_number_pic_exist", onCaptureImageResult(this.invoicePicBitmap));
-        for (Map.Entry<Integer,String> entry : partsObject.entrySet()) {
-            partList.add(BMAGson.store().getObject(HashMap.class,entry.getValue()));
+        for (Map.Entry<Integer, String> entry : partsObject.entrySet()) {
+            partList.add(BMAGson.store().getObject(HashMap.class, entry.getValue()));
             //   Log.d("aaaaaa", "partListGetvALUE  = " + entry.getValue());
         }
         //   Log.d("aaaaaa","partsname  = "+partsMap.get("parts_name"));
 
-        Log.d("aaaaaa","partList = "+BMAGson.store().toJson(partList));
+        Log.d("aaaaaa", "partList = " + BMAGson.store().toJson(partList));
 
         requestData.put("part", partList);
         httpRequest = new HttpRequest(getMainActivity(), true);

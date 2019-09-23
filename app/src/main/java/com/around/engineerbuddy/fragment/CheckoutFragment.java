@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class CheckoutFragment extends BMAFragment {
     EOBooking eoBooking;
     TextView applianceName, brandName, serviceType,name;
     EOCompleteProductdetail selectedProductDetail;
+    double totalAmount;
 
     @Override
     public void onAttach(Context context) {
@@ -85,20 +87,22 @@ public class CheckoutFragment extends BMAFragment {
                     @Override
                     public void onConfirmation(String inputValue) {
                         super.onConfirmation(inputValue);
-                        if(inputValue.length()==0){
+                        if(inputValue.trim().length()==0){
                             Toast.makeText(getContext(),"Please enter amount",Toast.LENGTH_SHORT).show();
                             return;
-                        }else {
-                            Intent intent = new Intent();
-                            intent.putExtra("completeCatogryPageName", "paymentDetail");
-                            intent.putExtra("paymentsAmount", inputValue);
-                            intent.putExtra("isCash", selectedProductDetail != null);
-                            getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
-                            getFragmentManager().popBackStack();
+                        }else if(Double.valueOf(inputValue)==0 && totalAmount>0){
+                            Toast.makeText(getContext(),"You entered invalid amount",Toast.LENGTH_SHORT).show();
+                        } else if(Double.valueOf(inputValue)<totalAmount){
+                            showValidationMessage(inputValue);
+                            return;
+                        }
+                        else {
+                           backScreen(inputValue);
                         }
                     }
                 };
                 bmaAlertDialog.show();
+                bmaAlertDialog.fillInputField(totalAmount+"");
                 bmaAlertDialog.showInputField();
 
             }
@@ -115,6 +119,7 @@ public class CheckoutFragment extends BMAFragment {
                     additionalCharge.setText("₹ " + eoCompleteProductQuantity.customerExtraharge);
                     TextView partsCharge = childView.findViewById(R.id.partsCharge);
                     partsCharge.setText("₹ " + eoCompleteProductQuantity.customerPartharge);
+                    totalAmount=totalAmount+Double.valueOf(eoCompleteProductQuantity.customerBasicharge)+Double.valueOf(eoCompleteProductQuantity.customerExtraharge)+Double.valueOf(eoCompleteProductQuantity.customerPartharge);
                     addserviceLayout.addView(childView);
                 }
             }
@@ -144,4 +149,27 @@ public class CheckoutFragment extends BMAFragment {
         getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
         getFragmentManager().popBackStack();
     }
-}
+    private void showValidationMessage(String amount) {
+        BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), true, false) {
+
+            @Override
+            public void onConfirmation() {
+               // super.onConfirmation(inputValue);
+
+                Log.d("aaaaa","input valu= "+amount);
+                backScreen(amount);
+            }
+        };
+        bmaAlertDialog.show("You have entered less amount then actual amount");
+       // bmaAlertDialog.showInputField();
+    }
+    private void backScreen(String inputValue){
+        Intent intent = new Intent();
+        intent.putExtra("completeCatogryPageName", "paymentDetail");
+        intent.putExtra("paymentsAmount", inputValue);
+        intent.putExtra("isCash", selectedProductDetail != null);
+        getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
+        getFragmentManager().popBackStack();
+
+    }
+    }

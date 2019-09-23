@@ -72,9 +72,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         BMAmplitude.initializeAmplitude(this, getApplication());
         //  Amplitude.getInstance().initialize(this, "918de58d720e22307e6021fb157c964e").enableForegroundTracking(getApplication());
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
 
         MainActivityHelper.setApplicationObj(this);
         this.engineerID = getIntent().getStringExtra("engineerID");
@@ -188,6 +189,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 }
             };
             dialog.show(getString(R.string.enableLocation));
+        }
+        if(mLocationManager==null){
+            mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         }
        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 20000, 10, this);
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 10, this);

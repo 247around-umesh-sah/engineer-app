@@ -10,4 +10,7 @@ public class EOSparePartWarrantyChecker extends BMAObject {
 
     @SerializedName("booking_details")
     public EOWarrantyCheckerBookingDetail eoWarrantyCheckerBookingDetail;
+
+    @SerializedName("spare_parts")
+    public EOSpareParts eoSpareParts;
 }

@@ -25,6 +25,7 @@ import com.around.engineerbuddy.HttpRequest;
 import com.around.engineerbuddy.Misc;
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.adapters.CancelBookingAdapter;
+import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.database.DataBaseClient;
 import com.around.engineerbuddy.database.EOEngineerBookingInfo;
 import com.around.engineerbuddy.database.EngineerBookingDao;
@@ -198,10 +199,14 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
                             }
                         });
                     } else {
+//                        String rsult= jsonObject.getString("result");
+//                        if(rsult==null){
+//                            rsult="Booking Cancel Successfully";
+//                        }
                         httpRequest.progress.dismiss();
                         new android.support.v7.app.AlertDialog.Builder(getContext())
 
-                                .setMessage(R.string.bookingCancelSuccessMsg)
+                                .setMessage("Booking Cancel Successfully")
                                 .setCancelable(false)
                                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                     @Override
@@ -219,7 +224,21 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
                                 }).show();
                     }
 
-                } else {
+                }else if(statusCode.equalsIgnoreCase("0019")){
+                    httpRequest.progress.dismiss();
+                    String rsult= jsonObject.getString("result");
+                    if(rsult==null){
+                        rsult="Booking can't be cancel";
+                    }
+                    BMAAlertDialog bmaAlertDialog=new BMAAlertDialog(getContext(),false,true){
+                        @Override
+                        public void onCancelConfirmation() {
+                            super.onCancelConfirmation();
+                        }
+                    };
+                    bmaAlertDialog.show(rsult);
+
+                }else {
                     misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serverConnectionFailedMsg);
                     httpRequest.progress.dismiss();
                 }

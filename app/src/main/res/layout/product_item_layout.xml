@@ -276,6 +276,53 @@
                     </LinearLayout>
                 </LinearLayout>
             <LinearLayout
+                android:id="@+id/invoiceNumberPhotoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_10dp"
+                android:paddingTop="@dimen/_5dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:gravity="center"
+                android:paddingBottom="@dimen/_5dp"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/invoiceNoPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:textSize="16dp"
+                    android:text="Invoice Photo"/>
+                <LinearLayout
+                    android:id="@+id/invoicePhotoLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rect_drawable"
+                    android:layout_weight=".5"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:id="@+id/invoiceNoPicLink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Take Photo"
+                        android:gravity="center"
+                        android:padding="@dimen/_2dp"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/invoiceNoPic"
+                        android:layout_width="@dimen/_35dp"
+                        android:layout_height="@dimen/_35dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:padding="@dimen/_5dp"
+                        android:src="@drawable/sparepic"
+                        android:background="#D8D8D8"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
                 android:id="@+id/serviceCatgLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

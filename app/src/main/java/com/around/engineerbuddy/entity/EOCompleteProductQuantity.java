@@ -33,6 +33,7 @@ public class EOCompleteProductQuantity extends BMAObject {
 
     public boolean isNotComplete;
     public Bitmap serialNoPic;
+    public Bitmap invoicePic;
     public EOModelNumber selectedModel;
     public String model_number;
     public String model_number_id;

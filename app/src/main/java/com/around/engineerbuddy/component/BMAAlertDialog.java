@@ -177,6 +177,9 @@ public class BMAAlertDialog  extends Dialog implements View.OnClickListener {
         alertTextView.setText(getContext().getResources().getString(R.string.enterAmount));
         this.tableInputRow.setVisibility(View.VISIBLE);
     }
+    public void fillInputField(String amount){
+        txt_input.setText(amount);
+    }
 
     @Override
     public void onClick(View v) {

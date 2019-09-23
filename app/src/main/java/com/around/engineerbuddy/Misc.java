@@ -48,6 +48,8 @@ public class Misc {
         int wifiState = ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.ACCESS_WIFI_STATE);
 
+        int readStorage = ContextCompat.checkSelfPermission(activity,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
         int writeStorage = ContextCompat.checkSelfPermission(activity,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
@@ -69,6 +71,9 @@ public class Misc {
 
         if (writeStorage != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (readStorage != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
 
         if (accessFineLocation != PackageManager.PERMISSION_GRANTED) {

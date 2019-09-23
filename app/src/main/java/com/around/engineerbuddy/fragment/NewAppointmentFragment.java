@@ -235,6 +235,8 @@ public class NewAppointmentFragment extends BMAFragment implements View.OnClickL
                     selectAppointmentReason.setTag(eoBookingUpdateReason);
                     if(eoBookingUpdateReason.calender_flag==1){
                         dateLayout.setVisibility(View.VISIBLE);
+                    }else {
+                        dateLayout.setVisibility(View.GONE);
                     }
 
                 }

@@ -73,7 +73,7 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
             public void onClick(View v) {
                 String remarks=closingRemarks.getText().toString().trim();
                 if(remarks==null || remarks.length()==0){
-                    Toast.makeText(getContext(), "Please Enter remarks", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please enter closing remarks", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(!isSelectAllField()){
@@ -208,6 +208,7 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
                     EOSymptomDefect symptom= (EOSymptomDefect) selectedItems.tag;
                     selectSympton.setTag(symptom);
                     selectedEOSymptomDefect.symptom=selectedItems.getDetail1();
+                    selectedEOSymptomDefect.id=symptom.id;
 //                    selectPartType.setText(selectedItems.getDetail1());
 //                    selectPartType.setTag(selectedItems.tag);
 //                    selectedPartType = (EOPartType) selectedItems.tag;
@@ -219,6 +220,7 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
                     EOSymptomDefect symptom= (EOSymptomDefect) bmaUiEntity.tag;
                     selectSympton.setTag(symptom);
                     selectedEOSymptomDefect.symptom=bmaUiEntity.getDetail1();
+                    selectedEOSymptomDefect.id=symptom.id;
                     getdefectCompleteBookingRequest(symptom.id);
                 }
 
@@ -252,12 +254,14 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
                     EOSymptomDefect eoSymptom=((EOSymptomDefect)selectedItems.tag);
                     selectDefect.setTag(eoSymptom);
                     selectedEOSymptomDefect.defect=selectedItems.getDetail1();
+                    selectedEOSymptomDefect.defect_id=eoSymptom.defect_id;
                     getsolutionCompleteBookingRequest(((EOSymptomDefect)selectSympton.getTag()).id,eoSymptom.defect_id);
                 } else if(getDefectPartList().size()==1){
                     BMAUiEntity bmaUiEntity=getDefectPartList().get(0);
                     selectDefect.setText(bmaUiEntity.getDetail1());
                     EOSymptomDefect symptom= (EOSymptomDefect) bmaUiEntity.tag;
                     selectDefect.setTag(symptom);
+                    selectedEOSymptomDefect.defect_id=symptom.defect_id;
                     selectedEOSymptomDefect.defect=bmaUiEntity.getDetail1();
                     getsolutionCompleteBookingRequest(symptom.id,symptom.defect_id);
                 }
@@ -292,6 +296,8 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
                     selectSolution.setText(selectedItems.getDetail1());
                     selectSolution.setTag(selectedItems.tag);
                     selectedEOSymptomDefect.technical_solution=selectedItems.getDetail1();
+                    selectedEOSymptomDefect.solution_id=((EOSymptomDefect)selectedItems.tag).solution_id;
+
 //                    selectPartType.setText(selectedItems.getDetail1());
 //                    selectPartType.setTag(selectedItems.tag);
 //                    selectedPartType = (EOPartType) selectedItems.tag;
@@ -302,6 +308,7 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
                     selectSolution.setText(bmaUiEntity.getDetail1());
                     selectSolution.setTag(bmaUiEntity.tag);
                     selectedEOSymptomDefect.technical_solution=bmaUiEntity.getDetail1();
+                    selectedEOSymptomDefect.solution_id=((EOSymptomDefect)bmaUiEntity.tag).solution_id;
                 }
 
 

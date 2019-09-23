@@ -33,6 +33,7 @@ import com.around.engineerbuddy.database.SaveEngineerBookingAction;
 import com.around.engineerbuddy.entity.EOBooking;
 import com.around.engineerbuddy.entity.EOCompleteProductQuantity;
 import com.around.engineerbuddy.entity.EOCompleteProductdetail;
+import com.around.engineerbuddy.entity.EOModelNumber;
 import com.around.engineerbuddy.entity.EOSymptomDefect;
 import com.around.engineerbuddy.util.BMAConstants;
 import com.around.engineerbuddy.util.BMAUIUtil;
@@ -153,8 +154,16 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 //                    bundle.putString("purchaseDate", purchaseDate);
 //                    bundle.putBoolean("isBroken", isBroken);
                 }
+                bundle.putBoolean("isCompletePage", true);
+                if(selectpurchadeDate!=null) {
+                    bundle.putString("pod", selectpurchadeDate);
+                }
+                if(modelNumber!=null) {
+                    bundle.putParcelable("modelNumber", modelNumber);
+                }
 
-                this.updateFragment(bundle, new ProductDetailFragment(), "Product Details");
+             //   this.updateFragment(bundle, new ProductDetailFragment(), "Product Details");
+                this.updateFragment(bundle, new EditWarrantyBooking(), "Warranty Checker");
                 break;
             case R.id.tile2:
                 if (selectedProductDetail == null) {
@@ -219,6 +228,8 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     boolean isBroken, isCash;
     EOCompleteProductdetail selectedProductDetail;
     String paymentsAmount;
+    EOModelNumber modelNumber;
+    String selectpurchadeDate;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -229,8 +240,10 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         switch (data.getStringExtra("completeCatogryPageName")) {
             case "productDetail":
                 selectedProductDetail = data.getParcelableExtra("productDetail");
-
+                 modelNumber=data.getParcelableExtra("modelNumber");
+                 selectpurchadeDate=data.getStringExtra("pod");
                 addMoreProductDetail = data.getStringExtra("AddMoreproductDetail");
+                Log.d("aaaaaaa","editWarranty Onacxtivity = "+modelNumber.modelNumber+"        pod= "+selectpurchadeDate);
 
                 break;
 
@@ -307,10 +320,20 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 requestMap.put("model_number", selectCompleteProduct.model_number);
             requestMap.put("service_charge", selectCompleteProduct.customerBasicharge);
             requestMap.put("additional_service_charge", selectCompleteProduct.customerExtraharge);
-            requestMap.put("parts_cost", selectCompleteProduct.customerPartharge);
+            Log.d("aaaaaa","productSERVCIE = "+selectCompleteProduct.product_or_services+"     AMOUNTDUE = "+selectCompleteProduct.amountDue);
+            if(selectCompleteProduct.product_or_services.equalsIgnoreCase("product") && Double.valueOf(selectCompleteProduct.amountDue)>0){
+                requestMap.put("service_charge", selectCompleteProduct.customerPartharge);
+                requestMap.put("parts_cost", "0.00");
+
+            }else {
+                requestMap.put("parts_cost", selectCompleteProduct.customerPartharge);
+            }
             requestMap.put("pod", selectCompleteProduct.pod);
             if (selectCompleteProduct.serialNoPic != null) {
                 requestMap.put("serial_number_pic", onCaptureImageResult(selectCompleteProduct.serialNoPic));
+            }
+            if(selectCompleteProduct.invoicePic!=null){
+                requestMap.put("purchase_invoice", onCaptureImageResult(selectCompleteProduct.invoicePic));
             }
             unitlist.add(requestMap);
 
@@ -420,10 +443,13 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 
         String serialNoPath = eoBooking.bookingID + "_" + pic_name + ".png";
         File destination = new File(SN_DIRECTORY, serialNoPath);
-        FileOutputStream fo;
+
         try {
-            destination.createNewFile();
-            fo = new FileOutputStream(destination);
+            boolean isFile=destination.createNewFile();
+            if(!isFile){
+                destination.mkdirs();
+            }
+            FileOutputStream fo = new FileOutputStream(destination);
             fo.write(bytes.toByteArray());
             fo.close();
             String encodeImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);

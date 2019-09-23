@@ -186,6 +186,11 @@
     <string name="enterPartName">Enter part name</string>
     <string name="customerChargesValidation">Sum of charges should not less then amount due </string>
     <string name="selectCompleteOnce">Please select complete one item</string>
+    <string name="userIDValidation">UserID can\'t be blank</string>
+    <string name="passwordValidation">Password can\'t be blank</string>
+
+
+
 
 
 

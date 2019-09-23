@@ -37,6 +37,7 @@ import com.around.engineerbuddy.entity.BookingInfo;
 import com.around.engineerbuddy.entity.EOBooking;
 import com.around.engineerbuddy.entity.EOCompleteBookingProductUnit;
 import com.around.engineerbuddy.entity.EOCompleteProductQuantity;
+import com.around.engineerbuddy.entity.EOCompleteProductdetail;
 import com.around.engineerbuddy.entity.EOModelNumber;
 import com.around.engineerbuddy.entity.EOSparePartWarrantyChecker;
 import com.around.engineerbuddy.entity.EOWarrantyChecker;
@@ -69,11 +70,17 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
     private String actionID;
     String purchaseDate;
     EOModelNumber selectedEOModelNumber;
+    EOCompleteProductdetail selectedCompleteDetail;
+    boolean isCompletePage;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.eoBooking = getArguments().getParcelable("eoBooking");
+        this.isCompletePage = getArguments().getBoolean("isCompletePage");
+        selectedCompleteDetail = getArguments().getParcelable("productDetail");
+        selectedEOModelNumber= getArguments().getParcelable("modelNumber");
+        this.purchaseDate=getArguments().getString("pod");
     }
 
     @Nullable
@@ -89,7 +96,8 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         this.selectModel.setEnabled(false);
         this.checkWarrantyButton.setText("Check Warranty");
         this.modelDropDownIcon.setOnClickListener(this);
-        this.view.findViewById(R.id.selectPurchaseDateLayout).setOnClickListener(this);
+        selectPurchaseDateLayout=this.view.findViewById(R.id.selectPurchaseDateLayout);
+        selectPurchaseDateLayout.setOnClickListener(this);
         this.checkWarrantyButton.setOnClickListener(this);
         if(purchaseDate!=null){
             selectPurchaseDate.setText(purchaseDate);
@@ -115,7 +123,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
     private void getRequest() {
         httpRequest = new HttpRequest(getContext(), true);
         httpRequest.delegate = EditWarrantyBooking.this;
-        Log.d("aaaaaa", "partnerID = " + eoBooking.partnerID + "        " + eoBooking.serviceID);
+       // Log.d("aaaaaa", "partnerID = " + eoBooking.partnerID + "        " + eoBooking.serviceID);
         this.actionID = "warrantyCheckerAndCallTypeData";
         httpRequest.execute(this.actionID, this.eoBooking.bookingID, this.eoBooking.partnerID, this.eoBooking.serviceID);
 
@@ -165,7 +173,11 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                             bmaAlertDialog.show(jsonObject.getString("result"));
                             //return;
                         } else if (flag.equalsIgnoreCase("0")) {
-                            openSparePartPage();
+                            if(isCompletePage){
+                                openProductDetialPage();
+                            }else {
+                                openSparePartPage();
+                            }
                         } else if (flag.equalsIgnoreCase("2")) {
                             BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), true, false) {
 
@@ -173,7 +185,11 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                                 @Override
                                 public void onConfirmation() {
                                     super.onConfirmation();
-                                    openSparePartPage();
+                                    if(isCompletePage){
+                                        openProductDetialPage();
+                                    }else {
+                                        openSparePartPage();
+                                    }
                                 }
 
                                 @Override
@@ -216,7 +232,11 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                         bmaAlertDialog.show(jsonObject.getString("result"));
                         //return;
                     } else if (flag.equalsIgnoreCase("0")) {
-                        openSparePartPage();
+                        if(isCompletePage){
+                            openProductDetialPage();
+                        }else {
+                            openSparePartPage();
+                        }
                     } else if (flag.equalsIgnoreCase("2")) {
                         BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), true, true) {
 
@@ -224,7 +244,11 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                             @Override
                             public void onConfirmation() {
                                 super.onConfirmation();
-                                openSparePartPage();
+                                if(isCompletePage){
+                                    openProductDetialPage();
+                                }else {
+                                    openSparePartPage();
+                                }
                             }
 
 
@@ -305,15 +329,36 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
 
     private void bindDataTOArray() {
         callTypeList=new ArrayList<>();
-        if (this.eoSparePartWarrantyChecker.modelList == null || this.eoSparePartWarrantyChecker.modelList.size() == 0) {
+        if(this.eoSparePartWarrantyChecker.eoSpareParts!=null && this.eoSparePartWarrantyChecker.eoSpareParts.model_number!=null){
+            selectModel.setEnabled(false);
+            selectPurchaseDateLayout.setEnabled(false);
+            this.modelDropDownIcon.setVisibility(View.GONE);
+            selectModel.setText(this.eoSparePartWarrantyChecker.eoSpareParts.model_number);
+            EOModelNumber eoModelNumber=new EOModelNumber();
+            eoModelNumber.modelNumber=this.eoSparePartWarrantyChecker.eoSpareParts.model_number;
+            eoModelNumber.id="";
+            selectModel.setTag(eoModelNumber);
+            selectPurchaseDate.setText(this.eoSparePartWarrantyChecker.eoSpareParts.date_of_purchase);
+        }else if(selectedEOModelNumber!=null){
+            selectModel.setText(selectedEOModelNumber.modelNumber);
+           // selectModel.setEnabled(false);
+           // this.modelDropDownIcon.setVisibility(View.GONE);
+            if(selectPurchaseDate!=null){
+                selectPurchaseDate.setText(purchaseDate);
+               // selectPurchaseDateLayout.setEnabled(false);
+            }
+
+        }
+        else if (this.eoSparePartWarrantyChecker.modelList == null || this.eoSparePartWarrantyChecker.modelList.size() == 0) {
             selectModel.setEnabled(true);
             this.selectModel.setHint("Enter Model Number");
             this.modelDropDownIcon.setVisibility(View.GONE);
             this.selectModel.addTextChangedListener(new CustomeTextWatcher(this.selectModel));
-        } else {
-
-            selectModel.setEnabled(false);
         }
+//        else {
+//
+//            selectModel.setEnabled(false);
+//        }
         int counter = 0;
         unitDetailCallTypeMap = new HashMap<>();
         for (ArrayList<EOCompleteProductQuantity> priceArray : this.eoSparePartWarrantyChecker.eoWarrantyCheckerBookingDetail.prices) {
@@ -383,7 +428,6 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         bmaSelectionDialog.show();
     }
 
-    //LP-165768190903101
     private ArrayList<BMAUiEntity> getModelList(TextView selectModel) {
         ArrayList<BMAUiEntity> bmaUiEntityArrayList = new ArrayList<>();
         if (this.eoSparePartWarrantyChecker==null || this.eoSparePartWarrantyChecker.modelList == null) {
@@ -476,6 +520,9 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         @Override
         public void afterTextChanged(Editable s) {
             String value = s.toString();
+            if (eoSparePartWarrantyChecker.modelList == null || eoSparePartWarrantyChecker.modelList.size() == 0) {
+                selectModel.setTag(new EOModelNumber());
+            }
             //  int getKey = (int) editText.getTag();
 
 //            EOCompleteProductQuantity selectCompleteProduct = selectedCompleteDetail.getbookingProductUnit().quantity.get(getKey);
@@ -689,12 +736,36 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
 
     private void openSparePartPage() {
         Bundle bundle = new Bundle();
+
         bundle.putString("pod",selectPurchaseDate.getText().toString().trim());
-        bundle.putString("modelNo",selectModel.getText().toString().trim());
-        bundle.putParcelable("modelNumber",((EOModelNumber)selectModel.getTag()));
+      //  bundle.putString("modelNo",modelNo);
+        bundle.putParcelable("modelNumber",getModelNumber());
         bundle.putParcelable("eoBooking", eoBooking);
         this.updateFragment(bundle, new SparePartsOrderFragment(), getString(R.string.spareParts));
     }
+    private EOModelNumber getModelNumber(){
+        EOModelNumber eoModelNumber= (EOModelNumber) selectModel.getTag();
+        String modelNo=selectModel.getText().toString().trim();
+        eoModelNumber.modelNumber=modelNo;
+        if (this.eoSparePartWarrantyChecker.modelList == null || this.eoSparePartWarrantyChecker.modelList.size() == 0) {
+            // eoModelNumber=new EOModelNumber();
+            eoModelNumber.id="";
+        }
+        return eoModelNumber;
+    }
+    private void openProductDetialPage(){
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("eoBooking", eoBooking);
+
+        if (selectedCompleteDetail != null) {
+            bundle.putParcelable("productDetail", selectedCompleteDetail);
+        }
+        bundle.putString("pod",selectPurchaseDate.getText().toString().trim());
+        bundle.putParcelable("modelNumber",getModelNumber());
+        this.updateFragment(bundle, new ProductDetailFragment(), "Product Details");
+    }
+
+
 
     public void updateFragment(Bundle bundle, Fragment fragment, String headerText) {
         this.updateFragment(bundle, fragment, headerText, null);
@@ -715,6 +786,18 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         if(data.getBooleanExtra("isCancelled",false) || data.getBooleanExtra("completed",false)){
             Intent intent=new Intent();
             intent.putExtra("isCancelled",true);
+            getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
+            getFragmentManager().popBackStack();
+        }else {
+            Intent intent=new Intent();
+            EOCompleteProductdetail selectCompleteDetail = data.getParcelableExtra("productDetail");
+            intent.putExtra("productDetail", selectCompleteDetail);
+            EOModelNumber modelNumber=data.getParcelableExtra("modelNumber");
+            String selectpurchadeDate=data.getStringExtra("pod");
+            intent.putExtra("pod",selectpurchadeDate);
+            intent.putExtra("modelNumber",modelNumber);
+            Log.d("aaaaaaa","editWarranty Onacxtivity = "+modelNumber.modelNumber+"        pod= "+selectpurchadeDate);
+            intent.putExtra("completeCatogryPageName", "productDetail");
             getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
             getFragmentManager().popBackStack();
         }
@@ -813,6 +896,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         }
         return -1;
     }
+
 }
 
 
