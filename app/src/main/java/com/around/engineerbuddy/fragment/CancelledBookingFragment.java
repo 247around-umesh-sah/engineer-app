@@ -23,6 +23,7 @@ import com.around.engineerbuddy.adapters.BMARecyclerAdapter;
 import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.entity.BookingInfo;
 import com.around.engineerbuddy.entity.EOBooking;
+import com.around.engineerbuddy.util.BMAConstants;
 import com.around.engineerbuddy.util.BMAUIUtil;
 
 import org.json.JSONException;
@@ -41,14 +42,14 @@ public class CancelledBookingFragment extends BMAFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.isCancelledBooking=this.getArguments().getBoolean("isCancelledBooking");
+        this.isCancelledBooking = this.getArguments().getBoolean("isCancelledBooking");
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.fragment_tomorrow, container, false);
-        BMAmplitude.saveUserAction("CancelledBookingFragment","CancelledBookingFragment");
+        BMAmplitude.saveUserAction("CancelledBookingFragment", "CancelledBookingFragment");
         this.recyclerView = this.view.findViewById(R.id.recyclerView);
         this.countBooking = this.view.findViewById(R.id.count_booking);
         this.tomorrowText = this.view.findViewById(R.id.tomorrowText);
@@ -66,8 +67,8 @@ public class CancelledBookingFragment extends BMAFragment {
     private void loadData() {
         httpRequest = new HttpRequest(getContext(), true);
         httpRequest.delegate = CancelledBookingFragment.this;
-        String status=isCancelledBooking ? "Cancelled" : "Completed";
-        httpRequest.execute("engineerBookingsByStatus", MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null),status);
+        String status = isCancelledBooking ? "Cancelled" : "Completed";
+        httpRequest.execute("engineerBookingsByStatus", MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null), status);
 
 
     }
@@ -86,18 +87,20 @@ public class CancelledBookingFragment extends BMAFragment {
     public <T> void createRow(RecyclerView.ViewHolder viewHolder, View itemView, T rowObject, int position) {
 
         EOBooking eoBooking = (EOBooking) rowObject;
+
+        LinearLayout rowLayout = itemView.findViewById(R.id.rowLayout);
         itemView.findViewById(R.id.tileRowLayout).setVisibility(View.GONE);
         itemView.findViewById(R.id.customerDetail).setVisibility(View.GONE);
         itemView.findViewById(R.id.bookingDetail).setVisibility(View.GONE);
         itemView.findViewById(R.id.customerDetailLayout).setVisibility(View.GONE);
 
-        TextView chargeableAmount=itemView.findViewById(R.id.chargableservice);
+        TextView chargeableAmount = itemView.findViewById(R.id.chargableservice);
         chargeableAmount.setText(eoBooking.bookingID);
         itemView.findViewById(R.id.dateCalenderLayout).setVisibility(View.GONE);
 
         LinearLayout dateLayout = itemView.findViewById(R.id.dateLayout);
         dateLayout.setVisibility(View.VISIBLE);
-        dateLayout.setBackgroundColor(this.isCancelledBooking?BMAUIUtil.getColor(R.color.blue_black):BMAUIUtil.getColor(R.color.missedBookingcolor));
+        dateLayout.setBackgroundColor(this.isCancelledBooking ? BMAUIUtil.getColor(R.color.blue_black) : BMAUIUtil.getColor(R.color.missedBookingcolor));
         itemView.findViewById(R.id.name).setVisibility(View.GONE);
         TextView name = itemView.findViewById(R.id.bookingDeatilName);
         name.setVisibility(View.VISIBLE);
@@ -106,7 +109,7 @@ public class CancelledBookingFragment extends BMAFragment {
         TextView requestType = itemView.findViewById(R.id.requestType);
         TextView bookingIdName = itemView.findViewById(R.id.bookingIdName);
         TextView chargeabletext = itemView.findViewById(R.id.chargeabletext);
-       // itemView.findViewById(R.id.chargableservice).setVisibility(View.GONE);
+        // itemView.findViewById(R.id.chargableservice).setVisibility(View.GONE);
         itemView.findViewById(R.id.chargeableAmount).setVisibility(View.GONE);
 
 
@@ -114,12 +117,27 @@ public class CancelledBookingFragment extends BMAFragment {
         bookingDate.setText(eoBooking.bookingDate);
         requestType.setText(eoBooking.requestType);
         bookingIdName.setText(eoBooking.bookingID);
-       // itemView.findViewById(R.id.bookingDetai_chargellayout).setVisibility(View.GONE);
-       chargeabletext.setText("₹ " + eoBooking.dueAmount);
+        // itemView.findViewById(R.id.bookingDetai_chargellayout).setVisibility(View.GONE);
+        chargeabletext.setText("₹ " + eoBooking.dueAmount);
+        rowLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("eoBooking", eoBooking);
+               // updateFragment(bundle, "Detail");
+
+            }
+        });
 
 
     }
 
+    private void updateFragment(Bundle bundle, String headerText) {
+        CompletedBookingDetailFragment completedBookingDetailFragment = new CompletedBookingDetailFragment();
+        bundle.putString(BMAConstants.HEADER_TXT, headerText);
+        completedBookingDetailFragment.setArguments(bundle);
+        getMainActivity().updateFragment(completedBookingDetailFragment, true);
+    }
 
     @Override
     public void processFinish(String response) {

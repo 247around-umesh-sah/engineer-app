@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,12 +40,18 @@ import com.around.engineerbuddy.entity.EOBooking;
 import com.around.engineerbuddy.entity.EOCompleteProductQuantity;
 import com.around.engineerbuddy.entity.EOCompleteProductdetail;
 import com.around.engineerbuddy.entity.EOModelNumber;
+import com.around.engineerbuddy.entity.EOSpareParts;
 import com.around.engineerbuddy.util.BMAConstants;
 import com.around.engineerbuddy.util.BMAUIUtil;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -283,9 +290,17 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 //            Log.d("aaaaaa","serialNoPIC= "+eselectedCompleteProductQuantity.serial_number_pic);
             if (eselectedCompleteProductQuantity.serialNoPic != null) {
                 serialNoPic.setImageBitmap(eselectedCompleteProductQuantity.serialNoPic);
+            }else {
+                if(this.eoCompleteProductdetail.eoSpareParts!=null ){
+                    setInvoiceAndSerialPic(this.eoCompleteProductdetail.eoSpareParts,false);
+                }
             }
             if(eselectedCompleteProductQuantity.invoicePic != null){
                 invoiceNoPic.setImageBitmap(eselectedCompleteProductQuantity.invoicePic);
+            }else {
+                if(this.eoCompleteProductdetail.eoSpareParts!=null){
+                    setInvoiceAndSerialPic(this.eoCompleteProductdetail.eoSpareParts,true);
+                }
             }
             childView.findViewById(R.id.serialPhotoLayout).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -362,7 +377,11 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         if (eselectedCompleteProductQuantity.serialNumber != null) {
             enterSerialNumber.setText(eselectedCompleteProductQuantity.serialNumber);
         } else {
-            enterSerialNumber.setText(eoCompleteProductQuantity.serial_number);
+            if(this.eoCompleteProductdetail!=null && this.eoCompleteProductdetail.eoSpareParts!=null && this.eoCompleteProductdetail.eoSpareParts.serial_number!=null){
+                enterSerialNumber.setText(this.eoCompleteProductdetail.eoSpareParts.serial_number);
+            }else {
+                enterSerialNumber.setText(eoCompleteProductQuantity.serial_number);
+            }
         }
         if (eselectedCompleteProductQuantity.customerBasicharge != null) {
             basichChargeEdittext.setText(eselectedCompleteProductQuantity.customerBasicharge);
@@ -643,6 +662,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
                 selectedCompleteDetail.getbookingProductUnit().quantity.get(0).serialNoPic = imageBitmap;
                 serialNuberPic.setImageBitmap(imageBitmap);
 
+
                 break;
             case 2:
                 selectedCompleteDetail.getbookingProductUnit().quantity.get(0).invoicePic = imageBitmap;
@@ -915,6 +935,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
     private void submit() {
 //        if (this.selectedCompleteDetail.bookingUnitDetails.purchase_date!=null && isFillAllFeild()) {
 //            this.selectedCompleteDetail.bookingUnitDetails.isProductBroken=productBorkenStatus.isChecked();
+        Log.d("aaaaaa","Submiyt invoice pic = "+selectedCompleteDetail.getbookingProductUnit().quantity.get(0).invoicePic);
         Intent intent = new Intent();
         intent.putExtra("productDetail", this.selectedCompleteDetail);//BMAGson.store().toJson(this.partsObject));
         //  intent.putExtra("purchaseDate", this.selectDate.getText().toString());
@@ -922,10 +943,63 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         intent.putExtra("completeCatogryPageName", "productDetail");
         intent.putExtra("pod",selectPOD);
         intent.putExtra("modelNumber",modelNumber);
+      //  if(this.eoCompleteProductdetail.eoSpareParts!=null) {
+            intent.putExtra("eoSparePart", this.eoCompleteProductdetail.eoSpareParts);
+       // }
         getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
         getFragmentManager().popBackStack();
 //        } else {
 //            Toast.makeText(getContext(), "Please Select All Field", Toast.LENGTH_SHORT).show();
 //        }
+    }
+
+    private void setInvoiceAndSerialPic(EOSpareParts eoSpareParts,boolean isInvoice){
+
+
+        if(isInvoice && eoSpareParts.invoice_pic!=null) {
+            Picasso.with(getContext()).load(eoSpareParts.invoice_pic).into(invoiceNoPic);
+        }
+        if(!isInvoice && eoSpareParts.serial_number_pic!=null) {
+            Picasso.with(getContext()).load(eoSpareParts.serial_number_pic).into(serialNoPic);
+        }
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try  {
+                    EOCompleteProductQuantity qnty= selectedCompleteDetail.getbookingProductUnit().quantity.get(0);
+                    if(isInvoice){
+                        Log.d("aaaaaa","invoice pic = "+getBitmapFromURL(eoSpareParts.invoice_pic));
+                        qnty.invoicePic = getBitmapFromURL(eoSpareParts.invoice_pic);
+                    }else {
+                        Log.d("aaaaaa","invoice pic = "+getBitmapFromURL(eoSpareParts.invoice_pic));
+                        qnty.serialNoPic = getBitmapFromURL(eoSpareParts.serial_number_pic);
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
+
+       /// if(eoSpareParts.serial_number!=null)
+          //  enterSerialNo.setText(eoSpareParts.serial_number);
+    }
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

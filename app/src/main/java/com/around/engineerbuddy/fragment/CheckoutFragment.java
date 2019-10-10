@@ -74,6 +74,7 @@ public class CheckoutFragment extends BMAFragment {
                 PaytmQRFragment paytmQRFragment=new PaytmQRFragment();
                 Bundle bundle=new Bundle();
                 bundle.putString("bookingID",eoBooking.bookingID);
+                bundle.putString("amountPaid",totalAmount+"");
                 paytmQRFragment.setArguments(bundle);
                 getMainActivity().updateFragment(paytmQRFragment,true);
             }
@@ -108,6 +109,7 @@ public class CheckoutFragment extends BMAFragment {
             }
         });
         if(selectedProductDetail!=null) {
+            totalAmount=0;
             for (EOCompleteProductQuantity eoCompleteProductQuantity:selectedProductDetail.getbookingProductUnit().quantity){
                 if(eoCompleteProductQuantity.isComplete) {
                     View childView = inflater.inflate(R.layout.checkout_item, null, false);
@@ -123,20 +125,20 @@ public class CheckoutFragment extends BMAFragment {
                     addserviceLayout.addView(childView);
                 }
             }
-            for (EOCompleteProductQuantity eoCompleteProductQuantity:selectedProductDetail.prices){
-                if(eoCompleteProductQuantity.isComplete) {
-                    View childView = inflater.inflate(R.layout.checkout_item, null, false);
-                    TextView serviceCatg = childView.findViewById(R.id.serviceName);
-                    serviceCatg.setText(eoCompleteProductQuantity.price_tags);
-                    TextView basicCharge = childView.findViewById(R.id.basicCharge);
-                    basicCharge.setText("₹ " + eoCompleteProductQuantity.customerBasicharge);
-                    TextView additionalCharge = childView.findViewById(R.id.additionalCharge);
-                    additionalCharge.setText("₹ " + eoCompleteProductQuantity.customerExtraharge);
-                    TextView partsCharge = childView.findViewById(R.id.partsCharge);
-                    partsCharge.setText("₹ " + eoCompleteProductQuantity.customerPartharge);
-                    addserviceLayout.addView(childView);
-                }
-            }
+//            for (EOCompleteProductQuantity eoCompleteProductQuantity:selectedProductDetail.prices){
+//                if(eoCompleteProductQuantity.isComplete) {
+//                    View childView = inflater.inflate(R.layout.checkout_item, null, false);
+//                    TextView serviceCatg = childView.findViewById(R.id.serviceName);
+//                    serviceCatg.setText(eoCompleteProductQuantity.price_tags);
+//                    TextView basicCharge = childView.findViewById(R.id.basicCharge);
+//                    basicCharge.setText("₹ " + eoCompleteProductQuantity.customerBasicharge);
+//                    TextView additionalCharge = childView.findViewById(R.id.additionalCharge);
+//                    additionalCharge.setText("₹ " + eoCompleteProductQuantity.customerExtraharge);
+//                    TextView partsCharge = childView.findViewById(R.id.partsCharge);
+//                    partsCharge.setText("₹ " + eoCompleteProductQuantity.customerPartharge);
+//                    addserviceLayout.addView(childView);
+//                }
+//            }
         }
         return this.view;
     }

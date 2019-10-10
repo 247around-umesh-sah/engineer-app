@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -89,10 +90,16 @@ public class HelpingDocumentFragment extends BMAFragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.download:
-                                DownloadTask downloadTask = new DownloadTask(getContext(), eoDocumentType.file);//"http://androhub.com/demo/demo.pdf");
-                                //   downloadTask.downloadFile();
 
-                                //handle menu1 click
+//                                WebView webView = HelpingDocumentFragment.this.view.findViewById(R.id.webView);
+//                                webView.setVisibility(View.VISIBLE);
+//                                webView.getSettings().setSupportZoom(true);
+//                                webView.getSettings().setJavaScriptEnabled(true);
+//                                webView.loadUrl("https://s3.amazonaws.com/bookings-collateral/invoices-excel/Around-1920-1396.pdf");
+                                DownloadTask downloadTask = new DownloadTask(getContext(), eoDocumentType.file);//"http://androhub.com/demo/demo.pdf");
+//                                //   downloadTask.downloadFile();
+//
+//                                //handle menu1 click
                                 return true;
                             case R.id.share:
                                 //handle menu2 click

@@ -34,6 +34,7 @@ import com.around.engineerbuddy.entity.EOBooking;
 import com.around.engineerbuddy.entity.EOCompleteProductQuantity;
 import com.around.engineerbuddy.entity.EOCompleteProductdetail;
 import com.around.engineerbuddy.entity.EOModelNumber;
+import com.around.engineerbuddy.entity.EOSpareParts;
 import com.around.engineerbuddy.entity.EOSymptomDefect;
 import com.around.engineerbuddy.util.BMAConstants;
 import com.around.engineerbuddy.util.BMAUIUtil;
@@ -230,6 +231,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     String paymentsAmount;
     EOModelNumber modelNumber;
     String selectpurchadeDate;
+    EOSpareParts eoSpareParts;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -242,6 +244,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 selectedProductDetail = data.getParcelableExtra("productDetail");
                  modelNumber=data.getParcelableExtra("modelNumber");
                  selectpurchadeDate=data.getStringExtra("pod");
+                eoSpareParts = data.getParcelableExtra("eoSparePart");
                 addMoreProductDetail = data.getStringExtra("AddMoreproductDetail");
                 Log.d("aaaaaaa","editWarranty Onacxtivity = "+modelNumber.modelNumber+"        pod= "+selectpurchadeDate);
 
@@ -320,7 +323,6 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 requestMap.put("model_number", selectCompleteProduct.model_number);
             requestMap.put("service_charge", selectCompleteProduct.customerBasicharge);
             requestMap.put("additional_service_charge", selectCompleteProduct.customerExtraharge);
-            Log.d("aaaaaa","productSERVCIE = "+selectCompleteProduct.product_or_services+"     AMOUNTDUE = "+selectCompleteProduct.amountDue);
             if(selectCompleteProduct.product_or_services.equalsIgnoreCase("product") && Double.valueOf(selectCompleteProduct.amountDue)>0){
                 requestMap.put("service_charge", selectCompleteProduct.customerPartharge);
                 requestMap.put("parts_cost", "0.00");
@@ -329,16 +331,33 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 requestMap.put("parts_cost", selectCompleteProduct.customerPartharge);
             }
             requestMap.put("pod", selectCompleteProduct.pod);
-            if (selectCompleteProduct.serialNoPic != null) {
-                requestMap.put("serial_number_pic", onCaptureImageResult(selectCompleteProduct.serialNoPic));
+            if(eoSpareParts!=null){
+                if(selectCompleteProduct.invoicePic!=null) {
+                    if (this.eoSpareParts.invoice_pic != null) {
+                        requestMap.put("existing_purchase_invoice", onCaptureImageResult(selectCompleteProduct.invoicePic));
+                    } else if (selectCompleteProduct.invoicePic != null) {
+                        requestMap.put("purchase_invoice", onCaptureImageResult(selectCompleteProduct.invoicePic));
+                    }
+                }
+                if(selectCompleteProduct.serialNoPic!=null) {
+                    if (this.eoSpareParts.serial_number_pic != null) {
+                        requestMap.put("existing_serial_number_pic", onCaptureImageResult(selectCompleteProduct.serialNoPic));
+                    } else if (selectCompleteProduct.serialNoPic != null) {
+                        requestMap.put("serial_number_pic", onCaptureImageResult(selectCompleteProduct.serialNoPic));
+                    }
+                }
+            }else {
+                if (selectCompleteProduct.serialNoPic != null && selectCompleteProduct.serialNoPic!=null) {
+                    requestMap.put("serial_number_pic", onCaptureImageResult(selectCompleteProduct.serialNoPic));
+                }
+                if (selectCompleteProduct.invoicePic != null && selectCompleteProduct.invoicePic!=null) {
+                    requestMap.put("purchase_invoice", onCaptureImageResult(selectCompleteProduct.invoicePic));
+                }
             }
-            if(selectCompleteProduct.invoicePic!=null){
-                requestMap.put("purchase_invoice", onCaptureImageResult(selectCompleteProduct.invoicePic));
-            }
+
             unitlist.add(requestMap);
 
         }
-
         for (EOCompleteProductQuantity selectCompleteProduct : this.selectedProductDetail.prices) {
             HashMap<String, Object> requestMap = new HashMap<>();
 

@@ -89,7 +89,7 @@ public class DownloadTask {
         @Override
         protected Void doInBackground(Void... arg0) {
             try {
-                URL url = new URL(downloadUrl);//Create Download URl
+                URL url = new URL(downloadUrl);//Create Download URl   ("http://maven.apache.org/maven-1.x/maven.pdf");//
                 HttpURLConnection c = (HttpURLConnection) url.openConnection();//Open Url Connection
                 c.setRequestMethod("GET");//Set Request Method to "GET" since we are grtting data
                 c.setDoOutput(true);
@@ -120,11 +120,12 @@ public class DownloadTask {
                 outputFile = new File(apkStorage, downloadFileName);//Create Output file in Main File
 
                 //Create New File if not present
-                Log.d("aaaaa","output = "+outputFile.getAbsolutePath()+"    apkfile = "+apkStorage.getAbsolutePath()+"     downloadfile = "+downloadFileName);
+                Log.d("aaaaa","size = "+c.getContentLength()+"     .. output = "+outputFile.getAbsolutePath()+"    apkfile = "+apkStorage.getAbsolutePath()+"     downloadfile = "+downloadFileName);
                 if (outputFile.exists()) {
                     outputFile.createNewFile();
                     Log.e(TAG, "File Created");
                 }
+
 
                 FileOutputStream fos = new FileOutputStream(outputFile);//Get OutputStream for NewFile Location
 

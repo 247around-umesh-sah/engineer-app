@@ -170,6 +170,7 @@ public class GetToken {
         String deviceId = new DeviceInfo(this.context).bindIds();
 
         String requestId = UUID.randomUUID().toString();
+
         jsonData.put("requestId", requestId);
         jsonData.put("token", token);
         jsonData.put("requestUrl", subUrl);
@@ -391,6 +392,7 @@ public class GetToken {
         try {
             urlParameters.put("partner_id", params[1]);
             urlParameters.put("service_id", params[2]);
+            urlParameters.put("booking_id", params[3]);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -429,8 +431,10 @@ public class GetToken {
     public Map<String, String> submitSparePartsOrder(Map<String, String> urlParameters,
                                                        String[] params) {
         try {
+            Log.d("aaaaaa","aentID GETTOKEN  = "+params[2]);
 
             urlParameters.put("submitSparePartsOrder", params[1]);
+            urlParameters.put("sc_agent_id", params[2]);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -635,6 +639,7 @@ public class GetToken {
             urlParameters.put("purchase_date", params[3]);
             urlParameters.put("prices", params[4]);
             urlParameters.put("request_types", params[5]);
+            urlParameters.put("sc_agent_id", params[6]);
 
         } catch (Exception e) {
             e.printStackTrace();

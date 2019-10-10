@@ -31,11 +31,14 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
    //public static String base_url = "http://stag.aroundhomzapp.com/engineerApi";
 
     //Testing URL
-   // public static String base_url ="http://testaroundcrm.247around.com/engineerApi";
-  //  public static String base_url = "http://testapp.247around.com/engineerApi";
+   // public static String base_url = "http://testapp.247around.com/engineerApi";
 
     ///Live Url
-    static String base_url = "https://aroundhomzapp.com/engineerApi";
+   static String base_url = "https://aroundhomzapp.com/engineerApi";
+
+
+    //Kenstar
+    //public static String base_url="http://www.kenstar.aroundhomzapp.com/engineerApi";
     public ApiResponse delegate = null;
     public ProgressDialog progress;
     public JSONObject postDataParams;

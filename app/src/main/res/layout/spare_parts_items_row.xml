@@ -227,7 +227,7 @@
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/quantityLayout"
+        android:id="@+id/partNoLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rect_drawable"
@@ -237,7 +237,7 @@
         android:minHeight="@dimen/_40dp"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/quantity"
+            android:id="@+id/partNo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".3"
@@ -247,7 +247,7 @@
             android:paddingLeft="@dimen/_10dp"
             android:text="Part No."/>
         <TextView
-            android:id="@+id/selectQuantity"
+            android:id="@+id/selectPartNo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".7"
@@ -270,6 +270,51 @@
             <!--/>-->
 
     </LinearLayout>
+        <LinearLayout
+            android:id="@+id/quantityLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rect_drawable"
+            android:layout_marginTop="@dimen/_10dp"
+            android:layout_marginLeft="@dimen/_12dp"
+            android:layout_marginRight="@dimen/_12dp"
+            android:minHeight="@dimen/_40dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/quantity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:gravity="center_vertical"
+                android:textColor="#38445E"
+                android:layout_marginLeft="@dimen/_5dp"
+                android:paddingLeft="@dimen/_10dp"
+                android:text="Quantity"/>
+            <EditText
+                android:id="@+id/selectQuantity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".7"
+                android:background="#F2F2F2"
+                android:paddingLeft="@dimen/_10dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:textColor="#8C8C8C"
+                android:hint="Enter Quantity"
+                android:textSize="@dimen/_15dp" />
+            <!--<engineerbuddyddy.component.BMAFontViewField-->
+            <!--android:id="@+id/quantityDateropDownIcon"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/icon_sort_down"-->
+            <!--android:background="#FFFFFF"-->
+            <!--android:layout_weight=".1"-->
+            <!--android:textColor="#2A3F54"-->
+            <!--android:textSize="@dimen/_25dp"-->
+            <!--/>-->
+
+        </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

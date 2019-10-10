@@ -213,10 +213,12 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
                     editor.putString("service_center_id", response.getString("service_center_id"));
                     editor.putString("engineerID", response.getString("entity_id"));
                     editor.putString("agent_name", response.getString("agent_name"));
+                    editor.putString("scAgentID", response.getString("sc_agent_id"));
                     editor.commit();
                     intent.putExtra("service_center_id", response.getString("service_center_id"));
                     intent.putExtra("agent_name", response.getString("agent_name"));
                     intent.putExtra("engineerID", response.getString("entity_id"));
+                    intent.putExtra("scAgentID", response.getString("sc_agent_id"));
                     intent.putExtra("userId", phone_number.getText().toString().trim());
                     startActivity(intent);
                     finish();

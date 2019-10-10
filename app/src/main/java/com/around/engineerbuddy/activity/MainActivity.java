@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private FragmentManager fragmentManager;
     private Fragment fragment = null;
-    public String engineerID, serviceCenterId;
+    public String engineerID, serviceCenterId,scAgentId;
     public ArrayList<EOBooking> todayMorningBooking = new ArrayList<>();
     public ArrayList<EOBooking> todayAfternoonBooking = new ArrayList<>();
     public ArrayList<EOBooking> todayEveningBooking = new ArrayList<>();
@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         MainActivityHelper.setApplicationObj(this);
         this.engineerID = getIntent().getStringExtra("engineerID");
         this.serviceCenterId = getIntent().getStringExtra("service_center_id");
+        this.scAgentId=getIntent().getStringExtra("scAgentID");
         sharedPrefs=MainActivityHelper.applicationHelper().getSharedPrefrences();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 

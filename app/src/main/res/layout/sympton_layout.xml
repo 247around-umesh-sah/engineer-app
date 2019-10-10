@@ -156,7 +156,7 @@
                     android:textColor="#8C8C8C"
                     android:textSize="@dimen/_15dp"
                     android:enabled="false"
-                    android:hint="Solution"/>
+                    android:hint="Select Solution"/>
                 <com.around.engineerbuddy.component.BMAFontViewField
                     android:id="@+id/solutionDropDownIcon"
                     android:layout_width="0dp"

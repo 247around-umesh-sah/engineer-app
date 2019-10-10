@@ -85,8 +85,8 @@ this.context=this;
 
             }
         });
-       // new VersionCodeTask().execute();
-        checkUserLogin();
+        new VersionCodeTask().execute();
+        //checkUserLogin();
 
 
 
@@ -160,7 +160,14 @@ this.context=this;
                                // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
 
                             }
-                        }).show();
+                        }).setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                               checkUserLogin();
+                            }
+                        }
+                )
+                        .show();
             }
 //                BMAAlertDialog bmaAlertDialog=new BMAAlertDialog(getApplicationContext(),true,false){
 //                    @Override

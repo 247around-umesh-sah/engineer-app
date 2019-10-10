@@ -44,6 +44,7 @@ public class PaytmQRFragment extends BMAFragment implements View.OnClickListener
     EditText receiveAmount;
     String actionID;
     int isAmountDoneByPaytm;
+    String totalAmount;
          //
 
 
@@ -52,6 +53,7 @@ public class PaytmQRFragment extends BMAFragment implements View.OnClickListener
         super.onAttach(context);
 //        Bundle bundle=this.getArguments();
        this.bookingID= this.getArguments().getString("bookingID");
+        this.totalAmount= this.getArguments().getString("amountPaid");
 //
 //        this.formData= bundle.getString("formData");
 //        this.amountPaid= bundle.getString("amountPaid");
@@ -138,7 +140,7 @@ public class PaytmQRFragment extends BMAFragment implements View.OnClickListener
             httpRequest = new HttpRequest(getContext(), true);
             httpRequest.delegate = PaytmQRFragment.this;
             this.actionID="getCustomerQrCode";
-            httpRequest.execute(this.actionID, this.bookingID);
+            httpRequest.execute(this.actionID, this.bookingID,this.totalAmount);
 
         } else {
             misc.NoConnection();

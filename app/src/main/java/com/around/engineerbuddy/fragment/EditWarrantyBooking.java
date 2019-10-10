@@ -40,6 +40,7 @@ import com.around.engineerbuddy.entity.EOCompleteProductQuantity;
 import com.around.engineerbuddy.entity.EOCompleteProductdetail;
 import com.around.engineerbuddy.entity.EOModelNumber;
 import com.around.engineerbuddy.entity.EOSparePartWarrantyChecker;
+import com.around.engineerbuddy.entity.EOSpareParts;
 import com.around.engineerbuddy.entity.EOWarrantyChecker;
 import com.around.engineerbuddy.util.BMAConstants;
 import com.google.gson.JsonObject;
@@ -79,8 +80,8 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         this.eoBooking = getArguments().getParcelable("eoBooking");
         this.isCompletePage = getArguments().getBoolean("isCompletePage");
         selectedCompleteDetail = getArguments().getParcelable("productDetail");
-        selectedEOModelNumber= getArguments().getParcelable("modelNumber");
-        this.purchaseDate=getArguments().getString("pod");
+        selectedEOModelNumber = getArguments().getParcelable("modelNumber");
+        this.purchaseDate = getArguments().getString("pod");
     }
 
     @Nullable
@@ -96,18 +97,18 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         this.selectModel.setEnabled(false);
         this.checkWarrantyButton.setText("Check Warranty");
         this.modelDropDownIcon.setOnClickListener(this);
-        selectPurchaseDateLayout=this.view.findViewById(R.id.selectPurchaseDateLayout);
+        selectPurchaseDateLayout = this.view.findViewById(R.id.selectPurchaseDateLayout);
         selectPurchaseDateLayout.setOnClickListener(this);
         this.checkWarrantyButton.setOnClickListener(this);
-        if(purchaseDate!=null){
+        if (purchaseDate != null) {
             selectPurchaseDate.setText(purchaseDate);
         }
-        if(selectedEOModelNumber!=null){
+        if (selectedEOModelNumber != null) {
             selectModel.setTag(selectedEOModelNumber);
         }
-       // if(this.actionID==null || !this.actionID.equalsIgnoreCase("submitWarrantyCheckerAndEditCallType")) {
-            this.getRequest();
-      //  }
+        // if(this.actionID==null || !this.actionID.equalsIgnoreCase("submitWarrantyCheckerAndEditCallType")) {
+        this.getRequest();
+        //  }
 
 
         return this.view;
@@ -123,7 +124,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
     private void getRequest() {
         httpRequest = new HttpRequest(getContext(), true);
         httpRequest.delegate = EditWarrantyBooking.this;
-       // Log.d("aaaaaa", "partnerID = " + eoBooking.partnerID + "        " + eoBooking.serviceID);
+        // Log.d("aaaaaa", "partnerID = " + eoBooking.partnerID + "        " + eoBooking.serviceID);
         this.actionID = "warrantyCheckerAndCallTypeData";
         httpRequest.execute(this.actionID, this.eoBooking.bookingID, this.eoBooking.partnerID, this.eoBooking.serviceID);
 
@@ -147,7 +148,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                 if (statusCode.equals("0000")) {
                     String res = jsonObject.getString("response");
                     if (this.actionID.equalsIgnoreCase("submitWarrantyCheckerAndEditCallType")) {
-                        if(res.length()==0 || !res.contains("warranty_flag")){
+                        if (res.length() == 0 || !res.contains("warranty_flag")) {
                             BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
 
 
@@ -173,9 +174,9 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                             bmaAlertDialog.show(jsonObject.getString("result"));
                             //return;
                         } else if (flag.equalsIgnoreCase("0")) {
-                            if(isCompletePage){
+                            if (isCompletePage) {
                                 openProductDetialPage();
-                            }else {
+                            } else {
                                 openSparePartPage();
                             }
                         } else if (flag.equalsIgnoreCase("2")) {
@@ -185,9 +186,9 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                                 @Override
                                 public void onConfirmation() {
                                     super.onConfirmation();
-                                    if(isCompletePage){
+                                    if (isCompletePage) {
                                         openProductDetialPage();
-                                    }else {
+                                    } else {
                                         openSparePartPage();
                                     }
                                 }
@@ -232,9 +233,9 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                         bmaAlertDialog.show(jsonObject.getString("result"));
                         //return;
                     } else if (flag.equalsIgnoreCase("0")) {
-                        if(isCompletePage){
+                        if (isCompletePage) {
                             openProductDetialPage();
-                        }else {
+                        } else {
                             openSparePartPage();
                         }
                     } else if (flag.equalsIgnoreCase("2")) {
@@ -244,9 +245,9 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                             @Override
                             public void onConfirmation() {
                                 super.onConfirmation();
-                                if(isCompletePage){
+                                if (isCompletePage) {
                                     openProductDetialPage();
-                                }else {
+                                } else {
                                     openSparePartPage();
                                 }
                             }
@@ -311,7 +312,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         callTypeCustomerCharges.setText(eoWarrantyChecker.amount);
         checkbox.setChecked(eoWarrantyChecker.isCheckBoxChecked);
         checkbox.setTag(eoWarrantyChecker);
-        checkbox.setEnabled(eoWarrantyChecker.serviceCategory.equalsIgnoreCase("Spare Parts")? false:true);
+        checkbox.setEnabled(eoWarrantyChecker.serviceCategory.equalsIgnoreCase("Spare Parts") ? false : true);
         checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -328,28 +329,28 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
     HashMap<String, ArrayList<EOWarrantyChecker>> unitDetailCallTypeMap;//=new HashMap<>();
 
     private void bindDataTOArray() {
-        callTypeList=new ArrayList<>();
-        if(this.eoSparePartWarrantyChecker.eoSpareParts!=null && this.eoSparePartWarrantyChecker.eoSpareParts.model_number!=null){
+        callTypeList = new ArrayList<>();
+        if (this.eoSparePartWarrantyChecker.eoSpareParts != null && this.eoSparePartWarrantyChecker.eoSpareParts.model_number != null) {
             selectModel.setEnabled(false);
             selectPurchaseDateLayout.setEnabled(false);
             this.modelDropDownIcon.setVisibility(View.GONE);
             selectModel.setText(this.eoSparePartWarrantyChecker.eoSpareParts.model_number);
-            EOModelNumber eoModelNumber=new EOModelNumber();
-            eoModelNumber.modelNumber=this.eoSparePartWarrantyChecker.eoSpareParts.model_number;
-            eoModelNumber.id="";
+            EOModelNumber eoModelNumber = new EOModelNumber();
+            eoModelNumber.modelNumber = this.eoSparePartWarrantyChecker.eoSpareParts.model_number;
+            eoModelNumber.id = "";
             selectModel.setTag(eoModelNumber);
             selectPurchaseDate.setText(this.eoSparePartWarrantyChecker.eoSpareParts.date_of_purchase);
-        }else if(selectedEOModelNumber!=null){
+        } else if (selectedEOModelNumber != null) {
             selectModel.setText(selectedEOModelNumber.modelNumber);
-           // selectModel.setEnabled(false);
-           // this.modelDropDownIcon.setVisibility(View.GONE);
-            if(selectPurchaseDate!=null){
+            selectModel.setTag(selectedEOModelNumber);
+            // selectModel.setEnabled(false);
+            // this.modelDropDownIcon.setVisibility(View.GONE);
+            if (selectPurchaseDate != null) {
                 selectPurchaseDate.setText(purchaseDate);
-               // selectPurchaseDateLayout.setEnabled(false);
+                // selectPurchaseDateLayout.setEnabled(false);
             }
 
-        }
-        else if (this.eoSparePartWarrantyChecker.modelList == null || this.eoSparePartWarrantyChecker.modelList.size() == 0) {
+        } else if (this.eoSparePartWarrantyChecker.modelList == null || this.eoSparePartWarrantyChecker.modelList.size() == 0) {
             selectModel.setEnabled(true);
             this.selectModel.setHint("Enter Model Number");
             this.modelDropDownIcon.setVisibility(View.GONE);
@@ -412,7 +413,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                     // partsObject.get(v.getTag()).put("model_number", selectedItems.getDetail1());
                     selectModel.setText(selectedItems.getDetail1());
                     selectModel.setTag(selectedItems.tag);
-                    selectedEOModelNumber= (EOModelNumber) selectedItems.tag;
+                    selectedEOModelNumber = (EOModelNumber) selectedItems.tag;
 
 //                    selectedCompleteDetail.getbookingProductUnit().quantity.get(0).model_number = selectedItems.getDetail1();
 //                    selectedCompleteDetail.getbookingProductUnit().quantity.get(0).model_number_id = ((EOModelNumber) selectedItems.tag).id;
@@ -430,7 +431,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
 
     private ArrayList<BMAUiEntity> getModelList(TextView selectModel) {
         ArrayList<BMAUiEntity> bmaUiEntityArrayList = new ArrayList<>();
-        if (this.eoSparePartWarrantyChecker==null || this.eoSparePartWarrantyChecker.modelList == null) {
+        if (this.eoSparePartWarrantyChecker == null || this.eoSparePartWarrantyChecker.modelList == null) {
             return bmaUiEntityArrayList;
         }
         for (EOModelNumber eoModelNumber : this.eoSparePartWarrantyChecker.modelList) {
@@ -461,7 +462,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                 selectPurchaseDate.setText(getDate(year, month + 1, dayOfMonth));
-                purchaseDate=selectPurchaseDate.getText().toString().trim();
+                purchaseDate = selectPurchaseDate.getText().toString().trim();
                 //  selectedCompleteDetail.getbookingProductUnit().purchase_date = selectDate.getText().toString().trim();
             }
 
@@ -520,6 +521,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         @Override
         public void afterTextChanged(Editable s) {
             String value = s.toString();
+
             if (eoSparePartWarrantyChecker.modelList == null || eoSparePartWarrantyChecker.modelList.size() == 0) {
                 selectModel.setTag(new EOModelNumber());
             }
@@ -538,8 +540,8 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         if (!isSelectAllField()) {
             return;
         }
-        if(!checkCorrectSelection()){
-            Toast.makeText(getContext(),"Not Allow to select multiple different type of service category",Toast.LENGTH_SHORT).show();
+        if (!checkCorrectSelection()) {
+            Toast.makeText(getContext(), "Not Allow to select multiple different type of service category", Toast.LENGTH_SHORT).show();
             return;
         }
 //        int counter = 0, brandUnitCounter = 0;
@@ -704,20 +706,20 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
 
         }
         serviceCategoryMap.put(counter + "", servicecategoryArray);
-        if(selectedPriceIdArray.size()==0){
-            Toast.makeText(getContext(),"Please select atleast one call type",Toast.LENGTH_SHORT).show();
+        if (selectedPriceIdArray.size() == 0) {
+            Toast.makeText(getContext(), "Please select atleast one call type", Toast.LENGTH_SHORT).show();
             return;
         }
         selectedPriceIDMap.put("1", selectedPriceIdArray);
         brandMap1.put(this.eoSparePartWarrantyChecker.eoWarrantyCheckerBookingDetail.unitDetailArray.get(counter).brand_id, selectedPriceIDMap);
-        Log.d("aaaaa", "JSONDATA = " + BMAGson.store().toJson(serviceCategoryMap));
         //        requestMap.put("prices", brandMap1);
 //         requestMap.put("request_types", servicecategoryArray);
         //Log.d("aaaaa", "requestmap = " + BMAGson.store().toJson(requestMap));
         httpRequest = new HttpRequest(getContext(), true);
         httpRequest.delegate = EditWarrantyBooking.this;
         this.actionID = "submitWarrantyCheckerAndEditCallType";
-        httpRequest.execute(this.actionID, eoBooking.bookingID, selectModel.getText().toString(), selectPurchaseDate.getText().toString(), BMAGson.store().toJson(brandMap1), BMAGson.store().toJson(serviceCategoryMap));
+
+        httpRequest.execute(this.actionID, eoBooking.bookingID, selectModel.getText().toString(), selectPurchaseDate.getText().toString(), BMAGson.store().toJson(brandMap1), BMAGson.store().toJson(serviceCategoryMap), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("scAgentID", null));
 
 
     }
@@ -737,34 +739,40 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
     private void openSparePartPage() {
         Bundle bundle = new Bundle();
 
-        bundle.putString("pod",selectPurchaseDate.getText().toString().trim());
-      //  bundle.putString("modelNo",modelNo);
-        bundle.putParcelable("modelNumber",getModelNumber());
+        bundle.putString("pod", selectPurchaseDate.getText().toString().trim());
+        //  bundle.putString("modelNo",modelNo);
+        bundle.putParcelable("modelNumber", getModelNumber());
         bundle.putParcelable("eoBooking", eoBooking);
+        bundle.putParcelable("eoSpareParts", eoSparePartWarrantyChecker.eoSpareParts);
         this.updateFragment(bundle, new SparePartsOrderFragment(), getString(R.string.spareParts));
     }
-    private EOModelNumber getModelNumber(){
-        EOModelNumber eoModelNumber= (EOModelNumber) selectModel.getTag();
-        String modelNo=selectModel.getText().toString().trim();
-        eoModelNumber.modelNumber=modelNo;
+
+    private EOModelNumber getModelNumber() {
+        EOModelNumber eoModelNumber = (EOModelNumber) selectModel.getTag();
+        if(eoModelNumber==null){
+            eoModelNumber=new EOModelNumber();
+            selectModel.setTag(eoModelNumber);
+        }
+        String modelNo = selectModel.getText().toString().trim();
+        eoModelNumber.modelNumber = modelNo;
         if (this.eoSparePartWarrantyChecker.modelList == null || this.eoSparePartWarrantyChecker.modelList.size() == 0) {
             // eoModelNumber=new EOModelNumber();
-            eoModelNumber.id="";
+            eoModelNumber.id = "";
         }
         return eoModelNumber;
     }
-    private void openProductDetialPage(){
+
+    private void openProductDetialPage() {
         Bundle bundle = new Bundle();
         bundle.putParcelable("eoBooking", eoBooking);
 
         if (selectedCompleteDetail != null) {
             bundle.putParcelable("productDetail", selectedCompleteDetail);
         }
-        bundle.putString("pod",selectPurchaseDate.getText().toString().trim());
-        bundle.putParcelable("modelNumber",getModelNumber());
+        bundle.putString("pod", selectPurchaseDate.getText().toString().trim());
+        bundle.putParcelable("modelNumber", getModelNumber());
         this.updateFragment(bundle, new ProductDetailFragment(), "Product Details");
     }
-
 
 
     public void updateFragment(Bundle bundle, Fragment fragment, String headerText) {
@@ -776,6 +784,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         fragment.setArguments(bundle);
         getMainActivity().updateFragment(fragment, true, imageDrawable);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -783,41 +792,44 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
             return;
         }
 
-        if(data.getBooleanExtra("isCancelled",false) || data.getBooleanExtra("completed",false)){
-            Intent intent=new Intent();
-            intent.putExtra("isCancelled",true);
+        if (data.getBooleanExtra("isCancelled", false) || data.getBooleanExtra("completed", false)) {
+            Intent intent = new Intent();
+            intent.putExtra("isCancelled", true);
             getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
             getFragmentManager().popBackStack();
-        }else {
-            Intent intent=new Intent();
+        } else {
+            Intent intent = new Intent();
             EOCompleteProductdetail selectCompleteDetail = data.getParcelableExtra("productDetail");
             intent.putExtra("productDetail", selectCompleteDetail);
-            EOModelNumber modelNumber=data.getParcelableExtra("modelNumber");
-            String selectpurchadeDate=data.getStringExtra("pod");
-            intent.putExtra("pod",selectpurchadeDate);
-            intent.putExtra("modelNumber",modelNumber);
-            Log.d("aaaaaaa","editWarranty Onacxtivity = "+modelNumber.modelNumber+"        pod= "+selectpurchadeDate);
+            EOSpareParts eoSpareParts = data.getParcelableExtra("eoSparePart");
+            intent.putExtra("eoSparePart", eoSpareParts);
+
+            EOModelNumber modelNumber = data.getParcelableExtra("modelNumber");
+            String selectpurchadeDate = data.getStringExtra("pod");
+            intent.putExtra("pod", selectpurchadeDate);
+            intent.putExtra("modelNumber", modelNumber);
             intent.putExtra("completeCatogryPageName", "productDetail");
             getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
             getFragmentManager().popBackStack();
         }
     }
-    private boolean checkCorrectSelection(){
-        ArrayList<EOWarrantyChecker>arrayList=new ArrayList<>();
-        ArrayList<ArrayList<EOWarrantyChecker>>groupArrayList=new ArrayList<>();
 
-        for(EOWarrantyChecker eoWarrantyChecker:callTypeList){
+    private boolean checkCorrectSelection() {
+        ArrayList<EOWarrantyChecker> arrayList = new ArrayList<>();
+        ArrayList<ArrayList<EOWarrantyChecker>> groupArrayList = new ArrayList<>();
 
-        if(eoWarrantyChecker.isHeader){
-            groupArrayList.add(arrayList);
-            arrayList=new ArrayList<>();
-        }else{
-            arrayList.add(eoWarrantyChecker);
-        }
+        for (EOWarrantyChecker eoWarrantyChecker : callTypeList) {
+
+            if (eoWarrantyChecker.isHeader) {
+                groupArrayList.add(arrayList);
+                arrayList = new ArrayList<>();
+            } else {
+                arrayList.add(eoWarrantyChecker);
+            }
         }
         groupArrayList.add(arrayList);
-        for(int i=0;i<groupArrayList.size();i++){
-            if(!isCorrectSelectCheckBox(groupArrayList.get(i))){
+        for (int i = 0; i < groupArrayList.size(); i++) {
+            if (!isCorrectSelectCheckBox(groupArrayList.get(i))) {
                 return false;
 
             }
@@ -826,8 +838,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
     }
 
 
-
-    private boolean isCorrectSelectCheckBox(ArrayList<EOWarrantyChecker> delivered_price_tags){
+    private boolean isCorrectSelectCheckBox(ArrayList<EOWarrantyChecker> delivered_price_tags) {
         boolean repair_flag = false;
         boolean repair_out_flag = false;
         boolean installation_flag = false;
@@ -836,50 +847,50 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         boolean pre_sales = false;
         boolean amc = false;
         //$array =[];
-        ArrayList<Object> objList=new ArrayList<>();
-        if((findInArray(delivered_price_tags, "Repair - In Warranty (Home Visit)")!=-1 || this.findInArray(delivered_price_tags, "Repair - In Warranty (Service Center Visit)")!=-1
-                || this.findInArray(delivered_price_tags, "Repair - In Warranty (Customer Location)")!=-1)){
+        ArrayList<Object> objList = new ArrayList<>();
+        if ((findInArray(delivered_price_tags, "Repair - In Warranty (Home Visit)") != -1 || this.findInArray(delivered_price_tags, "Repair - In Warranty (Service Center Visit)") != -1
+                || this.findInArray(delivered_price_tags, "Repair - In Warranty (Customer Location)") != -1)) {
 
             repair_flag = true;
             objList.add(repair_flag);
         }
-        if((this.findInArray(delivered_price_tags, "Repair - Out Of Warranty (Home Visit)") != -1
+        if ((this.findInArray(delivered_price_tags, "Repair - Out Of Warranty (Home Visit)") != -1
                 || this.findInArray(delivered_price_tags, "Repair - Out Of Warranty (Home Visit)") != -1
                 || this.findInArray(delivered_price_tags, "Repair - Out Of Warranty (Customer Location)") != -1
-                || this.findInArray(delivered_price_tags, "Repair - Out Of Warranty (Service Center Visit)") != -1)){
+                || this.findInArray(delivered_price_tags, "Repair - Out Of Warranty (Service Center Visit)") != -1)) {
 
             repair_out_flag = true;
             objList.add(repair_out_flag);
         }
-        if(this.findInArray(delivered_price_tags, "Extended Warranty") != -1 ){
+        if (this.findInArray(delivered_price_tags, "Extended Warranty") != -1) {
             extended_warranty = true;
             objList.add(extended_warranty);
         }
-        if(this.findInArray(delivered_price_tags, "AMC (Annual Maintenance Contract)") != -1 ){
+        if (this.findInArray(delivered_price_tags, "AMC (Annual Maintenance Contract)") != -1) {
             amc = true;
             objList.add(amc);
         }
 
-        if(this.findInArray(delivered_price_tags, "Presale Repair") != -1 ){
+        if (this.findInArray(delivered_price_tags, "Presale Repair") != -1) {
             pre_sales = true;
             objList.add(pre_sales);
         }
 
-        if(this.findInArray(delivered_price_tags, "Installation & Demo (Free)") != -1
-                || this.findInArray(delivered_price_tags, "Installation & Demo (Paid)") != -1){
+        if (this.findInArray(delivered_price_tags, "Installation & Demo (Free)") != -1
+                || this.findInArray(delivered_price_tags, "Installation & Demo (Paid)") != -1) {
             installation_flag = true;
             objList.add(installation_flag);
         }
 
-        if(this.findInArray(delivered_price_tags, "Pre-Dispatch Inspection PDI - With Packing") != -1
+        if (this.findInArray(delivered_price_tags, "Pre-Dispatch Inspection PDI - With Packing") != -1
                 || this.findInArray(delivered_price_tags, "Pre-Dispatch Inspection PDI - With Packing") != -1
                 || this.findInArray(delivered_price_tags, "Pre-Dispatch Inspection PDI - Without Packing") != -1
-                || this.findInArray(delivered_price_tags, "Pre-Dispatch Inspection PDI - Without Packing") != -1){
+                || this.findInArray(delivered_price_tags, "Pre-Dispatch Inspection PDI - Without Packing") != -1) {
             pdi = true;
             objList.add(pdi);
         }
 
-        if(objList.size() > 1){
+        if (objList.size() > 1) {
             return false;
         } else {
             return true;
@@ -887,10 +898,11 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
 
 
     }
-    private int findInArray(ArrayList<EOWarrantyChecker>ar, String val) {
-        for (int i = 0;i<  ar.size(); i++) {
-            EOWarrantyChecker eoWarrantyChecker=ar.get(i);
-            if (eoWarrantyChecker.isCheckBoxChecked && eoWarrantyChecker.serviceCategory.equalsIgnoreCase(val) ) { // strict equality test
+
+    private int findInArray(ArrayList<EOWarrantyChecker> ar, String val) {
+        for (int i = 0; i < ar.size(); i++) {
+            EOWarrantyChecker eoWarrantyChecker = ar.get(i);
+            if (eoWarrantyChecker.isCheckBoxChecked && eoWarrantyChecker.serviceCategory.equalsIgnoreCase(val)) { // strict equality test
                 return i;
             }
         }

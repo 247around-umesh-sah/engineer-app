@@ -4,5 +4,6 @@ public class EOPartType extends BMAObject{
     public String type;
     public String id;
     public String part_type;
+    public  int selectedPartNumber;
 
 }
