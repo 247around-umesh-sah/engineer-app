@@ -21,6 +21,7 @@ import com.around.engineerbuddy.BMAGson;
 import com.around.engineerbuddy.BMAmplitude;
 import com.around.engineerbuddy.ConnectionDetector;
 import com.around.engineerbuddy.HttpRequest;
+import com.around.engineerbuddy.MainActivityHelper;
 import com.around.engineerbuddy.Misc;
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.component.BMAAlertDialog;
@@ -304,7 +305,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         requestData.put("solution", eoSelectedSymptomDefect.solution_id);
         requestData.put("closing_remark", eoSelectedSymptomDefect.remarks);
         requestData.put("amount_paid", paymentsAmount);
-
+        requestData.put("sc_agent_id", MainActivityHelper.applicationHelper().getSharedPrefrences().getString("scAgentID", null));
 
         requestData.put("appliance_broken", this.selectedProductDetail.getbookingProductUnit().isProductBroken);
         requestData.put("purchase_date", this.selectedProductDetail.getbookingProductUnit().purchase_date);
@@ -382,7 +383,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = CompleteBookingCategoryFragment.this;
         //  this.actionID="completeBookingByEngineer";
-        httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData));
+        httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData),MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null));
 
 
     }
@@ -461,14 +462,27 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
 
         String serialNoPath = eoBooking.bookingID + "_" + pic_name + ".png";
-        File destination = new File(SN_DIRECTORY, serialNoPath);
-
+        File destination = new File(SN_DIRECTORY);//, serialNoPath);
+        //  FileOutputStream fo;
         try {
-            boolean isFile=destination.createNewFile();
-            if(!isFile){
+            File file = new File(destination,serialNoPath);
+            boolean isFile=false;// = file.createNewFile();
+            if(!file.exists()){
+                isFile=file.createNewFile();
+            }
+            if (!isFile) {
                 destination.mkdirs();
             }
-            FileOutputStream fo = new FileOutputStream(destination);
+
+            FileOutputStream fo = new FileOutputStream(file);
+//        File destination = new File(SN_DIRECTORY, serialNoPath);
+//
+//        try {
+//            boolean isFile=destination.createNewFile();
+//            if(!isFile){
+//                destination.mkdirs();
+//            }
+//            FileOutputStream fo = new FileOutputStream(destination);
             fo.write(bytes.toByteArray());
             fo.close();
             String encodeImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);

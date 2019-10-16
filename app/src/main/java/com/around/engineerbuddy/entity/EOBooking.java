@@ -43,7 +43,7 @@ public class EOBooking extends BMAObject {
     public String bookingDistance;
     @SerializedName("create_date")
     public String bookingCreateDate;
-
+    public String symptom;
     public Location destLocation;
 
 

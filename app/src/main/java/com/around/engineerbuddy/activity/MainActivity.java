@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     private FragmentManager fragmentManager;
     private Fragment fragment = null;
-    public String engineerID, serviceCenterId,scAgentId;
+    public String engineerID, serviceCenterId, scAgentId;
     public ArrayList<EOBooking> todayMorningBooking = new ArrayList<>();
     public ArrayList<EOBooking> todayAfternoonBooking = new ArrayList<>();
     public ArrayList<EOBooking> todayEveningBooking = new ArrayList<>();
@@ -76,12 +76,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         BMAmplitude.initializeAmplitude(this, getApplication());
         //  Amplitude.getInstance().initialize(this, "918de58d720e22307e6021fb157c964e").enableForegroundTracking(getApplication());
 
-
         MainActivityHelper.setApplicationObj(this);
         this.engineerID = getIntent().getStringExtra("engineerID");
         this.serviceCenterId = getIntent().getStringExtra("service_center_id");
-        this.scAgentId=getIntent().getStringExtra("scAgentID");
-        sharedPrefs=MainActivityHelper.applicationHelper().getSharedPrefrences();
+        this.scAgentId = getIntent().getStringExtra("scAgentID");
+        sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         fragmentManager = getSupportFragmentManager();
@@ -92,8 +91,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         this.updateFragment(fragment);
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        TextView profileImageName=headerView.findViewById(R.id.profileImageName);
-        this.agentName= MainActivityHelper.applicationHelper().getSharedPrefrences().getString("agent_name", "");
+        TextView profileImageName = headerView.findViewById(R.id.profileImageName);
+        this.agentName = MainActivityHelper.applicationHelper().getSharedPrefrences().getString("agent_name", "");
         profileImageName.setText(agentName);
 
 
@@ -191,11 +190,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             };
             dialog.show(getString(R.string.enableLocation));
         }
-        if(mLocationManager==null){
+        if (mLocationManager == null) {
             mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         }
-       mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 20000, 10, this);
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 10, this);
+        misc=new Misc(this);
+        if(misc.checkAndLocationRequestPermissions()) {
+            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 20000, 10, this);
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 10, this);
+        }
     }
 
     @Override
@@ -366,34 +368,35 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Call some material design APIs here
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return null;
-        }
-         currentLocation =this.mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if(currentLocation==null){
-            currentLocation=this.mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return null;
+            }
+            currentLocation = this.mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (currentLocation == null) {
+                currentLocation = this.mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
         } else {
-            currentLocation =this.mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            currentLocation = this.mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
-               return currentLocation;
+        return currentLocation;
     }
-    public String getPinCode(){
-        if(misc==null)
-         misc=new Misc(this);
+
+    public String getPinCode() {
+        if (misc == null)
+            misc = new Misc(this);
         return misc.getLocationPinCode();
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        this.currentLocation=location;
+        this.currentLocation = location;
     }
 
     @Override

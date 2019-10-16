@@ -5,4 +5,5 @@ public class EOPartName extends BMAObject {
    public String inventory_id;
    public  String max_quantity;
    public String amount;
+   public String part_number;
 }

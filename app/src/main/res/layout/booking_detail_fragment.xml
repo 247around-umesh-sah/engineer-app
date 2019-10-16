@@ -466,30 +466,34 @@
                                     android:gravity="center_vertical"
                                     android:fontFamily="@font/sourcesanspro_regular" />
                             </LinearLayout>
-                            <!--<LinearLayout-->
-                                <!--android:layout_width="0dp"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:paddingTop="@dimen/_4dp"-->
-                                <!--android:layout_weight=".5"-->
-                                <!--android:paddingRight="@dimen/_15dp"-->
-                                <!--android:gravity="center_vertical"-->
-                                <!--android:orientation="horizontal"-->
-                                <!--android:visibility="gone">-->
-                                <!--<engineerbuddyddy.component.BMAFontViewField-->
-                                    <!--android:layout_width="@dimen/_21dp"-->
-                                    <!--android:layout_height="@dimen/_21dp"-->
-                                    <!--android:text="@string/icon_calendar"-->
-                                    <!--android:gravity="center"-->
-                                    <!--android:textSize="@dimen/_21dp"/>-->
-                                <!--<TextView-->
-                                    <!--android:id="@+id/bookingDate"-->
-                                    <!--android:layout_width="wrap_content"-->
-                                    <!--android:layout_height="match_parent"-->
-                                    <!--android:layout_marginLeft="@dimen/_10dp"-->
-                                    <!--android:textSize="@dimen/_16dp"-->
-                                    <!--android:gravity="center_vertical"-->
-                                    <!--android:fontFamily="@font/sourcesanspro_regular" />-->
-                            <!--</LinearLayout>-->
+                            <LinearLayout
+                                android:id="@+id/symptomLayout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="@dimen/_4dp"
+                                android:layout_weight=".5"
+                                android:paddingRight="@dimen/_15dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+                                <ImageView
+                                    android:id="@+id/symptomIcon"
+                                    android:layout_width="@dimen/_24dp"
+                                    android:layout_height="@dimen/_17dp"
+                                    android:background="@drawable/symptom_icon"
+                                    android:layout_marginLeft="@dimen/_6dp"
+                                    android:gravity="center"
+                                    android:visibility="visible"/>
+                                <TextView
+                                    android:id="@+id/symptom"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10dp"
+                                    android:textSize="@dimen/_16dp"
+                                    android:gravity="center_vertical"
+                                    android:text="Black Shadow on Picture"
+                                    android:fontFamily="@font/sourcesanspro_regular" />
+                            </LinearLayout>
                         </LinearLayout>
 
                     </LinearLayout>

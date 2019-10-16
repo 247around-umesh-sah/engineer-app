@@ -367,6 +367,8 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         BMAUIUtil.setBackgroundRound(productStatusLayout, R.color.white, new float[]{dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius, dialogRadius});
 
         BMAFontViewField expandArrowIcon = childView.findViewById(R.id.expandArrowIcon);
+        selectQuantity.setText("1");
+        partsMap.put("quantity", "1");
         selectQuantity.setTag(partNumberCounter);
         selectQuantity.addTextChangedListener(new CustomeTextWatcher(selectQuantity, "quantity"));
         childView.setTag(partNumberCounter);
@@ -409,7 +411,8 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                parentLayout.removeView(childView);
+             //   parentLayout.removeView(childView);
+                parentLayout.getChildAt((Integer) deleteIcon.getTag()-1).setVisibility(View.GONE);
                 int partKey = (int) deleteIcon.getTag();
                 partsObject.remove(partKey);
             }
@@ -602,16 +605,17 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                     TextView spareAmount = setChildView.findViewById(R.id.spareAmount);
                     TextView selectPartNo = setChildView.findViewById(R.id.selectPartNo);
                     EditText selectQuantity = setChildView.findViewById(R.id.selectQuantity);
-                    selectQuantity.setText("");
+                   // selectQuantity.setText("1");
+
 
                     selectedPartNameView.setText(selectedItems.getDetail1());
                     selectedPartNameView.setTag(selectedItems.tag);
                     EOPartName eoPartName = (EOPartName) selectedItems.tag;
                     spareAmount.setText("₹ " + eoPartName.amount+" /- (Per Part)");
-                    selectPartNo.setText(eoPartName.inventory_id);
+                    selectPartNo.setText(eoPartName.part_number);
                     if (eoPartName.max_quantity != null && eoPartName.max_quantity.trim().length() != 0) {
                         maxCountity = Integer.valueOf(eoPartName.max_quantity);
-                        selectQuantity.setHint("Enter quantity ( Max " + eoPartName.max_quantity + " )");
+                       // selectQuantity.setHint("Enter quantity ( Max " + eoPartName.max_quantity + " )");
                     }
 //                    else {
 //                        maxCountity=1;
@@ -739,6 +743,21 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 
         }
     }
+    //mia1//
+//    String serialNoPath = eoBooking.bookingID + "_" + pic_name + ".png";
+//    File destination = new File(SN_DIRECTORY);//, serialNoPath);
+//
+//    //  FileOutputStream fo;
+//        try {
+//        File file = new File(destination,serialNoPath);
+//        boolean isFile = file.createNewFile();
+//        if (!isFile) {
+//            destination.mkdirs();
+//        }
+//        if(!file.exists()){
+//            file.createNewFile();
+//        }
+//        FileOutputStream fo = new FileOutputStream(file);
 
     public String onCaptureImageResult(Bitmap thumbnail) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -746,15 +765,33 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
 
         String serialNoPath = eoBooking.bookingID + "_" + pic_name + ".png";
-        File destination = new File(SN_DIRECTORY, serialNoPath);
-        //  FileOutputStream fo;
+    //    File destination = new File(SN_DIRECTORY, serialNoPath);
+        File destination = new File(SN_DIRECTORY);//, serialNoPath);
+            //  FileOutputStream fo;
         try {
-
-            boolean isFile = destination.createNewFile();
-            if (!isFile) {
-                destination.mkdirs();
+            destination.mkdirs();
+        File file = new File(destination,serialNoPath);
+        boolean isFile=false;// = file.createNewFile();
+            if(!file.exists()){
+                isFile=file.createNewFile();
             }
-            FileOutputStream fo = new FileOutputStream(destination);
+//        if (!isFile) {
+//
+//        }
+
+        FileOutputStream fo = new FileOutputStream(file);
+
+        //  FileOutputStream fo;
+//        try {
+//
+//            boolean isFile = destination.createNewFile();
+//            if (!isFile) {
+//                destination.mkdirs();
+//            }
+////            if(!destination.exists()){
+////                destination.createNewFile();
+////            }
+//            FileOutputStream fo = new FileOutputStream(destination);
             fo.write(bytes.toByteArray());
             fo.close();
             String encodeImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
@@ -896,7 +933,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = SparePartsOrderFragment.this;
         this.actionID = "submitSparePartsOrder";
-        Log.d("aaaaaa","aentID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("scAgentID", null));
+        //Log.d("aaaaaa","aentID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("scAgentID", null));
         //Toast.makeText(getContext(), "submitSparePartsOrder", Toast.LENGTH_SHORT).show();
         httpRequest.execute("submitSparePartsOrder", BMAGson.store().toJson(requestData), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("scAgentID", null));
 
@@ -930,12 +967,12 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             return false;
         } else if (partsMap.get("defective_front_parts") == null) {
             if(partsObject.containsKey(partNumberCounter)) {
-                Toast.makeText(getContext(), "Defective front image can't blank ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Defective front image can't be blank ", Toast.LENGTH_SHORT).show();
             }
             return false;
         } else if (partsMap.get("defective_back_parts") == null) {
             if(partsObject.containsKey(partNumberCounter)) {
-                Toast.makeText(getContext(), "Defective back image can't blank ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Defective back image can't be blank ", Toast.LENGTH_SHORT).show();
             }
             return false;
         } else if (partsMap.get("quantity") == null) {
@@ -972,19 +1009,22 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
         }
-
         @Override
         public void afterTextChanged(Editable s) {
             String value = s.toString();
             int getKey = (int) editText.getTag();
             String getPartString = partsObject.get(getKey);
+            Log.d("aaaaaa","vale = "+value);
             if (key.equalsIgnoreCase("quantity")) {
                 if (getPartString != null) {
+                    Log.d("aaaaaa","partmap valu!=null = "+partsMap.get("quantity"));
                     HashMap<String, Object> getPartsMap = BMAGson.store().getObject(HashMap.class, getPartString);
                     getPartsMap.put("quantity", value);
+                    Log.d("aaaaaa","partmap valu!=nulllllll = "+getPartsMap.get("quantity"));
                     partsObject.put(getKey, BMAGson.store().toJson(getPartsMap));
                 } else {
                     partsMap.put("quantity", value);
+                    Log.d("aaaaaa","partmap valu = "+partsMap.get("quantity"));
                 }
             }
             if (key.equalsIgnoreCase("selectedPartName")) {

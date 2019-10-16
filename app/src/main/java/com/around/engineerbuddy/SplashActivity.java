@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.activity.MainActivity;
@@ -31,6 +32,7 @@ public class SplashActivity extends AppCompatActivity {
     ImageView scooter;
     ImageView building;
     ImageView poles;
+    TextView versionCode;
     private static int SPLASH_TIME_OUT = 500;
     Context context;
 
@@ -47,7 +49,13 @@ public class SplashActivity extends AppCompatActivity {
         building = findViewById(R.id.building);
         scooter = findViewById(R.id.scooter);
         poles =  findViewById(R.id.poles);
-this.context=this;
+        try {
+            this.versionCode=findViewById(R.id.versionCode);
+                 this.versionCode.setText("Version : "+getPackageManager().getPackageInfo(getPackageName(),0).versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        this.context=this;
 
         TranslateAnimation animation = new TranslateAnimation(0.0f, 0.0f,
                 0.0f, 4.0f);          //  new TranslateAnimation(xFrom,xTo, yFrom,yTo)
@@ -114,13 +122,16 @@ this.context=this;
             return newVersion;
         }
 
+//LP-2576461910426/videocon
+
+
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if(s==null){
                 new android.support.v7.app.AlertDialog.Builder(SplashActivity.this)
                         .setTitle("Network Error")
-                        .setMessage("press okay to ")
+                        .setMessage("press 'ok' to continue ")
                         .setCancelable(false)
                         .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                             @Override
@@ -132,7 +143,9 @@ this.context=this;
                 return;
 
             }
+            Log.d("aaaaaa","  BEFORE  playversion = "+s);
             Double playStoreVersion=Double.parseDouble(s);
+            String playVersion=s;
             String versionCode="";
 
             try {
@@ -145,7 +158,7 @@ this.context=this;
             }
             Log.d("aaaaaa","versionCode = "+versionCode+"    playversion = "+playStoreVersion);
 
-            if(String.valueOf(playStoreVersion).equalsIgnoreCase(versionCode)){
+            if(playVersion.equalsIgnoreCase(versionCode)){
                 checkUserLogin();
             }else {
                 new android.support.v7.app.AlertDialog.Builder(SplashActivity.this)

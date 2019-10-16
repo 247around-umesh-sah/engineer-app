@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,8 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
     EOBooking eoBooking;
     HttpRequest httpRequest;
     Misc misc;
+    LinearLayout symptomLayout;
+    TextView symptom;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -56,6 +59,9 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
         TextView applianceName = this.view.findViewById(R.id.applianceName);
         TextView timeSlot = this.view.findViewById(R.id.timeSlot);
         TextView chargeabletext = this.view.findViewById(R.id.chargeabletext);
+        this.symptomLayout= this.view.findViewById(R.id.symptomLayout);
+        this.symptom= this.view.findViewById(R.id.symptom);
+
         this.view.findViewById(R.id.bookingDetai_chargellayout).setVisibility(View.VISIBLE);
 
 
@@ -73,6 +79,11 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
         requestType.setText(eoBooking.requestType);
         bookingIdName.setText(eoBooking.bookingID);
         timeSlot.setText(eoBooking.bookingTimeSlot);
+        if(this.eoBooking.symptom!=null){
+            this.symptomLayout.setVisibility(View.VISIBLE);
+         this.symptom.setText(this.eoBooking.symptom);
+        }
+
         chargeabletext.setText("₹ "+eoBooking.dueAmount);
         this.tile1 = this.view.findViewById(R.id.tile1);
         this.tile2 = this.view.findViewById(R.id.tile2);
