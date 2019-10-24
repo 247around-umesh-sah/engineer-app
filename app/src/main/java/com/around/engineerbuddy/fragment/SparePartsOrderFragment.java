@@ -1038,7 +1038,6 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                     partsMap.put("requested_inventory_id", "");
                 }
             }
-
         }
     }
 

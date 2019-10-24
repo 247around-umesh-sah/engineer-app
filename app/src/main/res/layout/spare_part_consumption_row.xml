@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/_8dp"
+    android:layout_height="wrap_content"
+
+    >
+    <!--Part Number	Part Name	Part Type	Spare Status-->
+    <com.around.engineerbuddy.component.BMACardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingBottom="@dimen/_8dp"
+        android:layout_marginBottom="@dimen/_3dp"
+        app:cardElevation="@dimen/_5dp"
+
+        android:elevation="@dimen/_10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/_10dp"
+            android:background="@drawable/card_gradient_color">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/partNumberText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".3"
+        android:textSize="@dimen/_16dp"
+        android:text="Part Number"/>
+    <TextView
+        android:id="@+id/partNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_16dp"
+        android:layout_weight=".7"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/_6dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/partNameText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:textSize="@dimen/_16dp"
+            android:text="Part Name"/>
+        <TextView
+            android:id="@+id/partName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_16dp"
+            android:layout_weight=".7"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/_6dp"
+        android:textSize="@dimen/_16dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/partTypeText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:textSize="@dimen/_16dp"
+            android:text="Part Type"/>
+        <TextView
+            android:id="@+id/partType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_16dp"
+            android:layout_weight=".7"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="@dimen/_6dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:textSize="@dimen/_16dp"
+            android:text="Status"/>
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_16dp"
+            android:layout_weight=".7"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/reasonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6dp"
+        android:minHeight="@dimen/_40dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/reasonText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".3"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/_16dp"
+            android:text="Reason"/>
+        <LinearLayout
+            android:id="@+id/selectreasonLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".7"
+            android:background="@drawable/rect_drawable"
+            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/selectConsumptionReason"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".6"
+            android:paddingLeft="@dimen/_10dp"
+            android:gravity="center"
+            android:textColor="#8C8C8C"
+            android:textSize="@dimen/_15dp"
+            android:background="@color/transparentWhite"
+            android:hint="Select consumption reason"/>
+        <com.around.engineerbuddy.component.BMAFontViewField
+            android:id="@+id/partNameDropDownIcon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/icon_sort_down"
+            android:background="#FFFFFF"
+            android:layout_weight=".1"
+            android:textColor="#2A3F54"
+            android:textSize="@dimen/_25dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/wrongPartLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <LinearLayout
+                    android:id="@+id/wrongLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6dp"
+                    android:minHeight="@dimen/_40dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/wrongText"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/_16dp"
+                        android:text="Wrong part"/>
+                    <LinearLayout
+                        android:id="@+id/selectwrongLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".7"
+                        android:background="@drawable/rect_drawable"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/selectwrongtpart"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".6"
+                            android:paddingLeft="@dimen/_10dp"
+                            android:gravity="center"
+                            android:textColor="#8C8C8C"
+                            android:textSize="@dimen/_15dp"
+
+                            android:enabled="false"
+                            android:background="@color/transparentWhite"
+                            android:hint="Select wrong part"/>
+                        <com.around.engineerbuddy.component.BMAFontViewField
+                            android:id="@+id/wrongPartDropDownIcon"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/icon_sort_down"
+                            android:background="#FFFFFF"
+                            android:layout_weight=".1"
+                            android:textColor="#2A3F54"
+                            android:textSize="@dimen/_25dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/wrongPartNumberlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1"
+                    android:minHeight="@dimen/_40dp"
+                    android:layout_marginTop="@dimen/_6dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/wrongPartNumberText"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/_16dp"
+                        android:text="Part Number"/>
+                    <TextView
+                        android:id="@+id/wrongPartNumber"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textSize="@dimen/_16dp"
+                        android:background="@drawable/rect_drawable"
+                        android:layout_weight=".7"/>
+                </LinearLayout>
+                <com.around.engineerbuddy.component.BMACardView
+                    android:id="@+id/ProblemdescriptionCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150dp"
+                    android:background="@drawable/rect_drawable"
+                    android:layout_marginTop="@dimen/_10dp">
+                    <EditText
+                        android:id="@+id/Problemdescriptionedittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/_8dp"
+                        android:background="@color/transparentWhite"
+                        android:gravity="top|left"
+                        android:hint="Enter Remarks"
+                        android:paddingLeft="@dimen/_3dp"
+                        android:textSize="@dimen/_14dp"/>
+                </com.around.engineerbuddy.component.BMACardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.around.engineerbuddy.component.BMACardView>
+
+
+</LinearLayout>

@@ -271,7 +271,7 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
         bmaSelectionDialog.setTitle(getString(R.string.selectDefective));
         bmaSelectionDialog.show();
     }
-    private ArrayList<BMAUiEntity> getDefectPartList(){
+    private ArrayList<BMAUiEntity> getDefectPartList( ){
         ArrayList<BMAUiEntity> defectPartList=new ArrayList<>();
 
         for(EOSymptomDefect eoSymptom:this.symptomsList){
@@ -319,7 +319,6 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
     }
     private ArrayList<BMAUiEntity> getSolutionPartList(){
         ArrayList<BMAUiEntity> solutionList=new ArrayList<>();
-
         for(EOSymptomDefect eoSymptom:this.solutionList){
             BMAUiEntity bmaUiEntity=new BMAUiEntity();
             bmaUiEntity.setDetail1(eoSymptom.technical_solution);

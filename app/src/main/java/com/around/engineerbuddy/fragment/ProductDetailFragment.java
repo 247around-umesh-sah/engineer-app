@@ -935,12 +935,14 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
     private void submit() {
 //        if (this.selectedCompleteDetail.bookingUnitDetails.purchase_date!=null && isFillAllFeild()) {
 //            this.selectedCompleteDetail.bookingUnitDetails.isProductBroken=productBorkenStatus.isChecked();
-        Log.d("aaaaaa","Submiyt invoice pic = "+selectedCompleteDetail.getbookingProductUnit().quantity.get(0).invoicePic);
+       // Log.d("aaaaaa","Submiyt invoice pic = "+selectedCompleteDetail.getbookingProductUnit().quantity.get(0).invoicePic);
         Intent intent = new Intent();
         intent.putExtra("productDetail", this.selectedCompleteDetail);//BMAGson.store().toJson(this.partsObject));
         //  intent.putExtra("purchaseDate", this.selectDate.getText().toString());
         // intent.putExtra("isBrokenProduct", this.productBorkenStatus.isChecked());
         intent.putExtra("completeCatogryPageName", "productDetail");
+        Log.d("aaaaaa","productDetailisconsumption = "+this.eoCompleteProductdetail.is_consumption_required);
+        intent.putExtra("isConsumptionrequired", this.eoCompleteProductdetail.is_consumption_required);
         intent.putExtra("pod",selectPOD);
         intent.putExtra("modelNumber",modelNumber);
       //  if(this.eoCompleteProductdetail.eoSpareParts!=null) {

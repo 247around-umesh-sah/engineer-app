@@ -39,6 +39,7 @@ public class BMARecyclerAdapter extends RecyclerView.Adapter {
         Object rowObject = this.list.get(i);
             bmaListRowCreator.createRow(viewHolder,viewHolder.itemView, rowObject, i);
 
+
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv;

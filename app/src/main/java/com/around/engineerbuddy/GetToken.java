@@ -149,6 +149,14 @@ public class GetToken {
             case "submitWarrantyCheckerAndEditCallType":
                 submitWarrantyCheckerAndEditCallType(urlParameters,params);
                 break;
+            case "spareConsumptionData":
+                spareConsumptionData(urlParameters,params);
+                break;
+            case "wrongSparePartsName":
+                wrongSparePartsName(urlParameters,params);
+                break;
+
+
 
 
 
@@ -648,6 +656,35 @@ public class GetToken {
 
         return urlParameters;
     }
+    public Map<String, String> spareConsumptionData(Map<String, String> urlParameters,
+                                                                    String[] params) {
+        try {
+
+            urlParameters.put("booking_id", params[1]);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+    public Map<String, String> wrongSparePartsName(Map<String, String> urlParameters,
+                                                    String[] params) {
+        try {
+
+            urlParameters.put("service_id", params[1]);
+            urlParameters.put("partner_id", params[2]);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+
+
 
 
 

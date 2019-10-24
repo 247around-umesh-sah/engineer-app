@@ -46,6 +46,7 @@
             app:imgWidth="40dp">
 
         </com.around.engineerbuddy.component.BMATileView>
+
     </LinearLayout>
     <LinearLayout
         android:id="@+id/tileLayout"
@@ -75,6 +76,16 @@
             app:imgWidth="40dp">
 
         </com.around.engineerbuddy.component.BMATileView>
+        <!--<com.around.engineerbuddy.component.BMATileView-->
+            <!--android:id="@+id/tile5"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:minHeight="135dp"-->
+            <!--app:imgHeight="40dp"-->
+            <!--app:imgWidth="40dp">-->
+
+        <!--</com.around.engineerbuddy.component.BMATileView>-->
         <com.around.engineerbuddy.component.BMATileView
             android:id="@+id/tile6"
             android:layout_width="0dp"

@@ -806,6 +806,9 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
 
             EOModelNumber modelNumber = data.getParcelableExtra("modelNumber");
             String selectpurchadeDate = data.getStringExtra("pod");
+            boolean isConsumptionrequired=data.getBooleanExtra("isConsumptionrequired",false);
+            Log.d("aaaaaa","editwarranty = "+isConsumptionrequired);
+            intent.putExtra("isConsumptionrequired",isConsumptionrequired);
             intent.putExtra("pod", selectpurchadeDate);
             intent.putExtra("modelNumber", modelNumber);
             intent.putExtra("completeCatogryPageName", "productDetail");

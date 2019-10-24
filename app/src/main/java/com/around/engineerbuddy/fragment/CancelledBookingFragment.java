@@ -87,16 +87,18 @@ public class CancelledBookingFragment extends BMAFragment {
     public <T> void createRow(RecyclerView.ViewHolder viewHolder, View itemView, T rowObject, int position) {
 
         EOBooking eoBooking = (EOBooking) rowObject;
-
         LinearLayout rowLayout = itemView.findViewById(R.id.rowLayout);
         itemView.findViewById(R.id.tileRowLayout).setVisibility(View.GONE);
         itemView.findViewById(R.id.customerDetail).setVisibility(View.GONE);
         itemView.findViewById(R.id.bookingDetail).setVisibility(View.GONE);
         itemView.findViewById(R.id.customerDetailLayout).setVisibility(View.GONE);
 
+        itemView.findViewById(R.id.bookingStatusLayout).setVisibility(View.VISIBLE);
         TextView chargeableAmount = itemView.findViewById(R.id.chargableservice);
         chargeableAmount.setText(eoBooking.bookingID);
         itemView.findViewById(R.id.dateCalenderLayout).setVisibility(View.GONE);
+
+        itemView.findViewById(R.id.symptomLayout).setVisibility(View.GONE);
 
         LinearLayout dateLayout = itemView.findViewById(R.id.dateLayout);
         dateLayout.setVisibility(View.VISIBLE);
@@ -109,22 +111,20 @@ public class CancelledBookingFragment extends BMAFragment {
         TextView requestType = itemView.findViewById(R.id.requestType);
         TextView bookingIdName = itemView.findViewById(R.id.bookingIdName);
         TextView chargeabletext = itemView.findViewById(R.id.chargeabletext);
-        // itemView.findViewById(R.id.chargableservice).setVisibility(View.GONE);
+        TextView bookingStatus=itemView.findViewById(R.id.bookingStatus);
         itemView.findViewById(R.id.chargeableAmount).setVisibility(View.GONE);
-
 
         name.setText(eoBooking.name);
         bookingDate.setText(eoBooking.bookingDate);
         requestType.setText(eoBooking.requestType);
         bookingIdName.setText(eoBooking.bookingID);
-        // itemView.findViewById(R.id.bookingDetai_chargellayout).setVisibility(View.GONE);
         chargeabletext.setText("₹ " + eoBooking.dueAmount);
+        bookingStatus.setText("Status - "+eoBooking.booking_close_status);
         rowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("eoBooking", eoBooking);
-               // updateFragment(bundle, "Detail");
 
             }
         });

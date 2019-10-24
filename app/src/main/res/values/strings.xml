@@ -69,6 +69,7 @@
     <string name="amount_due_text">Amount Due: </string>
     <string name="amount_paid_text">Amount Paid</string>
     <string name="remarks">Remarks </string>
+    <string name="consumption">Consumption </string>
     <string name="input_paid_amount_hint">Customer Paid Amount</string>
     <string name="input_due_amount_hint">Customer Due Amount</string>
     <string name="input_remarks_hint">Enter Your Remarks</string>
@@ -117,6 +118,7 @@
     <string name="payment">Payments</string>
     <string name="customer">Customer</string>
     <string name="artificial">Artificial</string>
+    <string name="spare">Spare</string>
     <string name="accessories">Accessories</string>
     <string name="symptoms">Symptoms</string>
     <string name="New">New</string>
@@ -160,6 +162,7 @@
     <string name="intelligence">Intelligence</string>
     <string name="store">Store</string>
     <string name="fillProductDetailvalidation">Please complete first Product Detail Tile</string>
+    <string name="fillConsumptionvalidation">Please complete first Spare consumption Tile</string>
     <string name="paytm">Paytm</string>
     <string name="video">Videos</string>
     <string name="software">Software</string>

@@ -16,6 +16,7 @@ public class EOCompleteProductdetail extends BMAObject {
     EOCompleteProductQuantity eoCompleteProductQuantity;
     @SerializedName("spare_parts")
     public EOSpareParts eoSpareParts;
+    public boolean is_consumption_required;
 
     public EOCompleteBookingProductUnit getbookingProductUnit(){
         if(bookingUnitDetails==null) {

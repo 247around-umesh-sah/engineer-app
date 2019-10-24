@@ -491,9 +491,35 @@
                                     android:layout_marginLeft="@dimen/_10dp"
                                     android:textSize="@dimen/_16dp"
                                     android:gravity="center_vertical"
-                                    android:text="Black Shadow on Picture"
                                     android:fontFamily="@font/sourcesanspro_regular" />
                             </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/bookingStatusLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="@dimen/_4dp"
+                            android:paddingRight="@dimen/_15dp"
+                            android:paddingLeft="@dimen/_10dp"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+                            <ImageView
+                                android:id="@+id/statusIcon"
+                                android:layout_width="@dimen/_24dp"
+                                android:layout_height="@dimen/_17dp"
+                                android:background="@drawable/symptom_icon"
+                                android:layout_marginLeft="@dimen/_6dp"
+                                android:gravity="center"
+                                android:visibility="visible"/>
+                            <TextView
+                                android:id="@+id/bookingStatus"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10dp"
+                                android:textSize="@dimen/_16dp"
+                                android:gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/sourcesanspro_regular" />
                         </LinearLayout>
 
                     </LinearLayout>

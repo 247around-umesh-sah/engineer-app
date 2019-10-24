@@ -133,6 +133,7 @@ public class TomorrowFragment extends BMAFragment {
             BMAmplitude.saveUserAction("TomorrowFragment","TomorrowFragment");
         }
 
+
         EOBooking eoBooking = (EOBooking) rowObject;
         TextView name = itemView.findViewById(R.id.name);
         TextView address = itemView.findViewById(R.id.address);

@@ -35,6 +35,7 @@ import com.around.engineerbuddy.entity.EOBooking;
 import com.around.engineerbuddy.entity.EOCompleteProductQuantity;
 import com.around.engineerbuddy.entity.EOCompleteProductdetail;
 import com.around.engineerbuddy.entity.EOModelNumber;
+import com.around.engineerbuddy.entity.EOSpareCosumptionRequest;
 import com.around.engineerbuddy.entity.EOSpareParts;
 import com.around.engineerbuddy.entity.EOSymptomDefect;
 import com.around.engineerbuddy.util.BMAConstants;
@@ -96,18 +97,19 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 
     public void bindTile() {
         this.setTileValue(this.tile1, R.string.product, R.drawable.product, "Product", true);
-        this.setTileValue(this.tile2, R.string.symptoms, R.drawable.accessories, "symptom", true);
-        this.setTileValue(this.tile3, R.string.payment, R.drawable.payment, "Payment", true);
-        this.setTileValue(this.tile4, R.string.customer, R.drawable.customer, "Customer", true);
-        this.setTileValue(this.tile5, R.string.artificial, R.drawable.artificial, "Artificial", true);
+        this.setTileValue(this.tile2, R.string.spare, R.drawable.spare_consumption, "Consumption", true);
+        this.setTileValue(this.tile3, R.string.symptoms, R.drawable.accessories, "symptom", true);
+        this.setTileValue(this.tile4, R.string.payment, R.drawable.payment, "Payment", true);
+        this.setTileValue(this.tile5, R.string.customer, R.drawable.customer, "Customer", true);
+       // this.setTileValue(this.tile5, R.string.artificial, R.drawable.artificial, "Artificial", true);
         this.setTileValue(this.tile6, R.string.accessories, R.drawable.accessories, "accesories", true);
-        this.tile5.setAlpha(.5f);
+        //this.tile5.setAlpha(.5f);
         this.tile6.setAlpha(.5f);
         this.tile1.setText(getString(R.string.details));
-        this.tile2.setText(getString(R.string.remarks));
-        this.tile3.setText(getString(R.string.details));
-        this.tile4.setText(getString(R.string.input));
-        this.tile5.setText(getString(R.string.intelligence));
+        this.tile2.setText(getString(R.string.consumption));
+        this.tile3.setText(getString(R.string.remarks));
+        this.tile4.setText(getString(R.string.details));
+        this.tile5.setText(getString(R.string.input));
         this.tile6.setText(getString(R.string.store));
 
     }
@@ -127,16 +129,20 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     //green_tile
     private void setTileBackgroundView() {
         if (eoSelectedSymptomDefect != null) {
+            this.tile3.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
+        }
+        if ((selectedProductDetail!=null && !isConsumptionrequired)|| (selectedCosumption != null && selectedCosumption.size()>0)) {
             this.tile2.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
         }
+
         if (customerSignatureBitmap != null) {
-            this.tile4.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
+            this.tile5.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
         }
         if (selectedProductDetail != null) {
             this.tile1.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
         }
         if (paymentsAmount != null) {
-            this.tile3.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
+            this.tile4.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
         }
 //        if(eoSelectedSymptomDefect!=null){
 //            this.tile2.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
@@ -167,9 +173,14 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
              //   this.updateFragment(bundle, new ProductDetailFragment(), "Product Details");
                 this.updateFragment(bundle, new EditWarrantyBooking(), "Warranty Checker");
                 break;
-            case R.id.tile2:
-                if (selectedProductDetail == null) {
+            case R.id.tile3:
+
+                if(selectedProductDetail==null){
                     Toast.makeText(getContext(), getString(R.string.fillProductDetailvalidation), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (isConsumptionrequired && (selectedCosumption == null || selectedCosumption.size()==0)) {
+                    Toast.makeText(getContext(), getString(R.string.fillConsumptionvalidation), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 bundle.putParcelable("eoBooking", eoBooking);
@@ -178,7 +189,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 }
                 this.updateFragment(bundle, new SymptomFragment(), getString(R.string.symptoms));
                 break;
-            case R.id.tile3:
+            case R.id.tile4:
                 if (eoSelectedSymptomDefect == null) {
                     Toast.makeText(getContext(), "Please complete first Symptom Defect Tile", Toast.LENGTH_SHORT).show();
                     return;
@@ -191,7 +202,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 }
                 this.updateFragment(bundle, new CheckoutFragment(), "Payment Details");
                 break;
-            case R.id.tile4:
+            case R.id.tile5:
                 if (paymentsAmount == null) {
                     Toast.makeText(getContext(), "Please complete first Payment detail Tile", Toast.LENGTH_SHORT).show();
                     return;
@@ -201,11 +212,23 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                     bundle.putParcelable("customerSignatureBitmap", customerSignatureBitmap);
                 this.updateFragment(bundle, new CustomerInput(), "Customer Input");
                 break;
-            case R.id.tile5:
+            case R.id.tile6:
                 // this.updateFragment(bundle, new CompleteBookingCategoryFragment(), "Complete Booking");
                 break;
-            case R.id.tile6:
-                // this.updateFragment(bundle, new HelpingDocumentFragment(), "Helping Document");
+            case R.id.tile2:
+                if (selectedProductDetail == null) {
+                    Toast.makeText(getContext(), getString(R.string.fillProductDetailvalidation), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!isConsumptionrequired){
+                    Toast.makeText(getContext(), "Consumption not required for this booking", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                bundle.putParcelable("eoBooking", eoBooking);
+                if(selectedCosumption!=null && selectedCosumption.size()>0){
+                    bundle.putParcelableArrayList("selectedCosumptionList", selectedCosumption);
+                }
+                 this.updateFragment(bundle, new SparePartConsumptionFragment(), "Spare Part");
                 break;
         }
     }
@@ -233,6 +256,8 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     EOModelNumber modelNumber;
     String selectpurchadeDate;
     EOSpareParts eoSpareParts;
+    ArrayList<EOSpareCosumptionRequest> selectedCosumption=new ArrayList<>();
+    boolean isConsumptionrequired;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -247,8 +272,14 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                  selectpurchadeDate=data.getStringExtra("pod");
                 eoSpareParts = data.getParcelableExtra("eoSparePart");
                 addMoreProductDetail = data.getStringExtra("AddMoreproductDetail");
+                isConsumptionrequired=data.getBooleanExtra("isConsumptionrequired",false);
+                Log.d("aaaaaa","completcategory isconsum = "+isConsumptionrequired);
                 Log.d("aaaaaaa","editWarranty Onacxtivity = "+modelNumber.modelNumber+"        pod= "+selectpurchadeDate);
 
+                break;
+            case "spareConsumption":
+                selectedCosumption=data.getParcelableArrayListExtra("spareConsumption");
+                //isConsumptionrequired=data.getBooleanExtra("isSpareConsumptionRequired",false);
                 break;
 
             case "symptom":
@@ -264,6 +295,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 break;
 
 
+
         }
     }
 
@@ -272,6 +304,10 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     private void submitRequest() {
         if (selectedProductDetail == null) {
             Toast.makeText(getContext(), "Please complete Product Detail Tile", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(isConsumptionrequired && (selectedCosumption==null || selectedCosumption.size()==0)){
+            Toast.makeText(getContext(), "Please complete consumption Tile", Toast.LENGTH_SHORT).show();
             return;
         }
         if (eoSelectedSymptomDefect == null) {
@@ -286,6 +322,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
             Toast.makeText(getContext(), "Please complete Cutomer Input Tile", Toast.LENGTH_SHORT).show();
             return;
         }
+
 //        if(!(this.eoBooking.pincode.equalsIgnoreCase(misc.getLocationPinCode()))){
 //            Toast.makeText(getContext(), "You can not complete booking from out side of booking pincode", Toast.LENGTH_SHORT).show();
 //            return;
@@ -375,6 +412,14 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 
         }
         requestData.put("unit_array", unitlist);
+      //  Log.d("aaaaaa","cosumption Submit = "+ BMAGson.store().toJson(selectedCosumption));
+        if(selectedCosumption!=null && selectedCosumption.size()>0) {
+//            ArrayList
+//            for(EOSpareCosumptionRequest eoSpareCosumptionRequest:selectedCosumption){
+//
+//            }
+            requestData.put("spare_consumption",selectedCosumption );//BMAGson.store().toJson(selectedCosumption));
+        }
 
 
         BMAmplitude.saveUserAction("CompleteBookingcategory", "CompleteButton");
@@ -383,7 +428,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = CompleteBookingCategoryFragment.this;
         //  this.actionID="completeBookingByEngineer";
-        httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData),MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null));
+       httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData),MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null));
 
 
     }

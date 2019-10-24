@@ -44,6 +44,7 @@ public class EOBooking extends BMAObject {
     @SerializedName("create_date")
     public String bookingCreateDate;
     public String symptom;
+    public String booking_close_status;
     public Location destLocation;
 
 
