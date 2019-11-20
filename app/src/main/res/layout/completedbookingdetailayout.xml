@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/productLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/card_gradient_color"
+    android:orientation="vertical"
+    android:padding="@dimen/_8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/numberHeaderLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:layout_marginBottom="@dimen/_10dp"
+            android:background="#2A3F54"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/spareNumberLayout"
+                android:layout_width="@dimen/_110dp"
+                android:layout_height="match_parent"
+                android:background="@color/missedBookingcolor"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/_10dp">
+
+                <com.around.engineerbuddy.component.BMAFontViewField
+                    android:id="@+id/expandArrowIcon"
+                    android:layout_width="@dimen/_20dp"
+                    android:layout_height="@dimen/_20dp"
+                    android:gravity="center"
+                    android:text="@string/icon_down"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_18dp" />
+
+                <TextView
+                    android:id="@+id/rowPartNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_30dp"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_20dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="₹ 100.00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16dp"
+                android:visibility="invisible" />
+
+            <com.around.engineerbuddy.component.BMAFontViewField
+                android:id="@+id/deleteIcon"
+                android:layout_width="@dimen/_40dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/icon_delete_circle"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_30dp"
+                android:visibility="invisible" />
+            <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/_3dp"-->
+            <!--android:background="#05B3B9"></View>-->
+            <!--</LinearLayout>-->
+            <!--<ImageView-->
+            <!--android:layout_width="@dimen/_40dp"-->
+            <!--android:layout_height="@dimen/_40dp"-->
+            <!--android:layout_marginLeft="@dimen/_20dp"-->
+            <!--android:background="@drawable/circle"/>-->
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/partNumber"-->
+            <!--android:layout_width="@dimen/_40dp"-->
+            <!--android:layout_height="@dimen/_40dp"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_marginLeft="@dimen/_20dp"-->
+            <!--android:textSize="@dimen/_17dp"-->
+            <!--android:text="1"/>-->
+            <!--</RelativeLayout>-->
+        </LinearLayout>
+
+
+        <CheckBox
+            android:id="@+id/productBorkencheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:layout_marginRight="@dimen/_10dp"
+            android:fontFamily="@font/sourcesanspro_regular"
+            android:text="Product Found Broken"
+            android:textSize="@dimen/_16dp" />
+
+        <LinearLayout
+            android:id="@+id/productPartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/modelLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/model"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_weight=".5"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textSize="@dimen/_15dp"
+                    android:text="Model" />
+
+                <TextView
+                    android:id="@+id/selectModel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:enabled="false"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textColor="#8C8C8C"
+                    android:textSize="@dimen/_15dp" />
+
+                <!--<com.around.engineerbuddy.component.BMAFontViewField-->
+                <!--android:id="@+id/modeldropDownIcon"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight=".1"-->
+                <!--android:background="#FFFFFF"-->
+                <!--android:gravity="center"-->
+                <!--android:text="@string/icon_sort_down"-->
+                <!--android:layout_marginLeft="@dimen/_2dp"-->
+                <!--android:textColor="#2A3F54"-->
+                <!--android:textSize="@dimen/_25dp" />-->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:background="@drawable/rect_drawable"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/purchaseDate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Purchase Date"
+                    android:textColor="#38445E"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/selectpurchaseDate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".9"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Select Puchase Date"
+                    android:textColor="#8C8C8C"
+                    android:textSize="@dimen/_15dp" />
+
+                <com.around.engineerbuddy.component.BMAFontViewField
+                    android:id="@+id/selectPurchaseDateIcon"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".1"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:text="@string/icon_calendar"
+                    android:textColor="#2A3F54"
+                    android:textSize="@dimen/_25dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/enterSerialNoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="Serial No." />
+
+                <EditText
+                    android:id="@+id/enterSerialNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:background="@color/transparentWhite"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textColor="#8C8C8C"
+                    android:textSize="@dimen/_15dp" />
+            </LinearLayout>
+
+            <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:cardCornerRadius="@dimen/_5dp"-->
+            <!--android:layout_marginTop="@dimen/_10dp"-->
+            <!--&gt;-->
+            <LinearLayout
+                android:id="@+id/serialNumberPhotoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_10dp"
+                android:paddingTop="@dimen/_5dp"
+                android:paddingBottom="@dimen/_5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/serialNoPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center_vertical"
+                    android:text="Serial No. Photo"
+                    android:textSize="16dp" />
+
+                <LinearLayout
+                    android:id="@+id/serialPhotoLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:background="@drawable/rect_drawable"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/serialNoPicLink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/_2dp"
+                        android:text="Take Photo" />
+
+                    <ImageView
+                        android:id="@+id/serialNoPic"
+                        android:layout_width="@dimen/_35dp"
+                        android:layout_height="@dimen/_35dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:background="#D8D8D8"
+                        android:padding="@dimen/_5dp"
+                        android:src="@drawable/sparepic" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/invoiceNumberPhotoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_10dp"
+                android:paddingTop="@dimen/_5dp"
+                android:paddingBottom="@dimen/_5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/invoiceNoPhoto"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center_vertical"
+                    android:text="Invoice Photo"
+                    android:textSize="16dp" />
+
+                <LinearLayout
+                    android:id="@+id/invoicePhotoLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:background="@drawable/rect_drawable"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/invoiceNoPicLink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="@dimen/_2dp"
+                        android:text="Take Photo" />
+
+                    <ImageView
+                        android:id="@+id/invoiceNoPic"
+                        android:layout_width="@dimen/_35dp"
+                        android:layout_height="@dimen/_35dp"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:background="#D8D8D8"
+                        android:padding="@dimen/_5dp"
+                        android:src="@drawable/sparepic" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/serviceCatgLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/serivceCatg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_weight=".5"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Serivce Category"
+                    android:textSize="@dimen/_15dp"/>
+
+                <TextView
+                    android:id="@+id/selectServiceCatg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textColor="#8C8C8C"
+                    android:textSize="@dimen/_15dp" />
+
+                <com.around.engineerbuddy.component.BMAFontViewField
+                    android:id="@+id/ServiceCatgdropDownIcon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:text="@string/icon_sort_down"
+                    android:textColor="#2A3F54"
+                    android:textSize="@dimen/_25dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <!--</android.support.v7.widget.CardView>-->
+            <!--<LinearLayout-->
+            <!--android:id="@+id/serialnumberLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/_10dp"-->
+            <!--android:background="@drawable/rect_drawable"-->
+            <!--android:minHeight="@dimen/_40dp"-->
+            <!---->
+            <!--android:orientation="horizontal">-->
+
+            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/serialno"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginLeft="@dimen/_5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_weight=".3"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:gravity="center_vertical"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:paddingLeft="@dimen/_10dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="Serial No."&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="#38445E" />&ndash;&gt;-->
+
+            <!--<EditText-->
+            <!--android:id="@+id/serialNumber"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight=".9"-->
+            <!--android:background="#F2F2F2"-->
+            <!--android:gravity="center"-->
+            <!--android:hint="Upload serial Number Pic"-->
+            <!--android:paddingLeft="@dimen/_10dp"-->
+            <!--android:textColor="#8C8C8C"-->
+            <!--android:textSize="@dimen/_15dp" />-->
+
+            <!--<engineerbuddyddy.component.BMAFontViewField-->
+            <!--android:id="@+id/serialNodropDownIcon"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight=".1"-->
+            <!--android:background="#FFFFFF"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/icon_camera"-->
+            <!--android:textColor="#2A3F54"-->
+            <!--android:textSize="@dimen/_25dp" />-->
+
+            <!--</LinearLayout>-->
+
+
+            <LinearLayout
+                android:id="@+id/basicChargeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/basichCharges"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_weight=".5"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Basic Charges"
+                    android:textSize="@dimen/_15dp"/>
+
+                <TextView
+                    android:id="@+id/basichChargeEdittext"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:gravity="center_vertical"
+                    android:inputType="numberDecimal"
+                    android:background="@color/transparentWhite"
+                    android:paddingRight="@dimen/_10dp"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textSize="@dimen/_15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/additionalChargeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/additionalCharges"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_weight=".5"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Additional Charges"
+                    android:textSize="@dimen/_15dp"/>
+
+                <TextView
+                    android:id="@+id/additionalChargeEdittext"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:gravity="center_vertical"
+                    android:inputType="numberDecimal"
+                    android:background="@color/transparentWhite"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:paddingRight="@dimen/_10dp"
+                    android:textSize="@dimen/_15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/partsChargeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/_40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/partsCostTaken"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_5dp"
+                    android:layout_weight=".5"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:textSize="@dimen/_15dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:text="Part Charges"
+                    />
+
+                <TextView
+                    android:id="@+id/partsCostEdittext"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:background="@color/transparentWhite"
+                    android:gravity="center_vertical"
+                    android:inputType="numberDecimal"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:paddingRight="@dimen/_10dp"
+                    android:textSize="@dimen/_15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginLeft="@dimen/_5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:paddingRight="@dimen/_5dp"
+                    android:text="Status"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:textSize="@dimen/_15dp" />
+
+                <RadioGroup
+                    android:id="@+id/radioStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <RadioButton
+                        android:id="@+id/radioComplete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="@dimen/_5dp"
+                        android:text="Completed"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="@dimen/_15dp" />
+
+                    <RadioButton
+                        android:id="@+id/radioNotComplete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Not Completed"
+                        android:fontFamily="@font/sourcesanspro_regular"
+                        android:textSize="@dimen/_15dp" />
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/amountDueLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:text="Amount Due : "
+                    android:textSize="@dimen/_16dp" />
+
+                <TextView
+                    android:id="@+id/amountDue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_2dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_20dp"
+                    android:textColor="@color/blackMedium"
+                    android:textSize="@dimen/_17dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/symptomLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:layout_marginRight="@dimen/_12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/symptonView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".3"
+                    android:gravity="center_vertical"
+                    android:text="Symptom"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:textSize="@dimen/_15dp" />
+
+                <TextView
+                    android:id="@+id/selectSympton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textSize="@dimen/_15dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/defectLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:layout_marginRight="@dimen/_12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/defectView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".3"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:fontFamily="@font/sourcesanspro_regular"
+                    android:text="Defect"
+                    android:textSize="@dimen/_15dp"/>
+
+                <TextView
+                    android:id="@+id/selectDefect"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textSize="@dimen/_15dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/solutionLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:layout_marginRight="@dimen/_12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/solutionView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".3"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:text="Solution"
+                    android:textSize="@dimen/_15dp"
+                    android:fontFamily="@font/sourcesanspro_regular" />
+
+                <TextView
+                    android:id="@+id/selectSolution"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textSize="@dimen/_15dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/symptomRemarksLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:layout_marginRight="@dimen/_12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/symptomRemarks"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".3"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:text="Remarks"
+                    android:textSize="@dimen/_15dp"
+                    android:fontFamily="@font/sourcesanspro_regular" />
+
+                <TextView
+                    android:id="@+id/remarks"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".6"
+                    android:paddingLeft="@dimen/_10dp"
+                    android:textSize="@dimen/_15dp" />
+            </LinearLayout>
+
+            <com.around.engineerbuddy.component.BMACardView
+                android:id="@+id/ProblemdescriptionCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/Problemdescriptionedittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8dp"
+                    android:background="@color/transparentWhite"
+                    android:gravity="top|left"
+                    android:hint="Closing Remarks"
+                    android:minHeight="@dimen/_120dp"
+                    android:paddingLeft="3dp" />
+            </com.around.engineerbuddy.component.BMACardView>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/symptonDeviderLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_2dp"
+            android:layout_marginTop="@dimen/_10dp"
+            android:visibility="gone"
+            android:background="@color/darkNavy"></View>
+
+        <LinearLayout
+            android:id="@+id/addServicePartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10dp"
+            android:orientation="vertical"></LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

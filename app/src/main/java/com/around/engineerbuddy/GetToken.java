@@ -155,6 +155,19 @@ public class GetToken {
             case "wrongSparePartsName":
                 wrongSparePartsName(urlParameters,params);
                 break;
+            case "getBookingDetails":
+                getBookingDetails(urlParameters,params);
+                break;
+            case "searchData":
+                searchData(urlParameters,params);
+                break;
+            case "incentiveEearnedBookings":
+                incentiveEearnedBookings(urlParameters,params);
+                break;
+
+
+
+
 
 
 
@@ -307,10 +320,8 @@ public class GetToken {
 
                 if(params[3].equalsIgnoreCase("Cancelled") || params[3].equalsIgnoreCase("Completed")) {
                     urlParameters.put("booking_status", params[3]);
-                    Log.d("aaaaa","params = "+params[3].toString());
                 }else{
                     urlParameters.put("engineer_pincode", params[3]);
-                    Log.d("aaaaa","params = "+params[3].toString());
                 }
 
             }
@@ -683,6 +694,57 @@ public class GetToken {
 
         return urlParameters;
     }
+    public Map<String, String> getBookingDetails(Map<String, String> urlParameters,
+                                                   String[] params) {
+        try {
+
+            urlParameters.put("booking_id", params[1]);
+            urlParameters.put("booking_status", params[2]);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+    public Map<String, String> searchData(Map<String, String> urlParameters,
+                                                 String[] params) {
+        try {
+
+            urlParameters.put("engineer_id", params[1]);
+            urlParameters.put("service_center_id", params[2]);
+            urlParameters.put("search_value", params[3]);
+            urlParameters.put("engineer_pincode", params[4]);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+    public Map<String, String> incentiveEearnedBookings(Map<String, String> urlParameters,
+                                          String[] params) {
+        try {
+
+            urlParameters.put("engineer_id", params[1]);
+            urlParameters.put("service_center_id", params[2]);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+
+
+
 
 
 

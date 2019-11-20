@@ -97,8 +97,8 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 
     public void bindTile() {
         this.setTileValue(this.tile1, R.string.product, R.drawable.product, "Product", true);
-        this.setTileValue(this.tile2, R.string.spare, R.drawable.spare_consumption, "Consumption", true);
-        this.setTileValue(this.tile3, R.string.symptoms, R.drawable.accessories, "symptom", true);
+        this.setTileValue(this.tile2, R.string.consumption, R.drawable.spare_consumption, "Consumption", true);
+        this.setTileValue(this.tile3, R.string.symptoms, R.drawable.complete_symptom_icon, "symptom", true);
         this.setTileValue(this.tile4, R.string.payment, R.drawable.payment, "Payment", true);
         this.setTileValue(this.tile5, R.string.customer, R.drawable.customer, "Customer", true);
        // this.setTileValue(this.tile5, R.string.artificial, R.drawable.artificial, "Artificial", true);
@@ -106,7 +106,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         //this.tile5.setAlpha(.5f);
         this.tile6.setAlpha(.5f);
         this.tile1.setText(getString(R.string.details));
-        this.tile2.setText(getString(R.string.consumption));
+        this.tile2.setText(getString(R.string.reason));
         this.tile3.setText(getString(R.string.remarks));
         this.tile4.setText(getString(R.string.details));
         this.tile5.setText(getString(R.string.input));
@@ -428,7 +428,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = CompleteBookingCategoryFragment.this;
         //  this.actionID="completeBookingByEngineer";
-       httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData),MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null));
+       httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData),getMainActivity().getEngineerId());
 
 
     }

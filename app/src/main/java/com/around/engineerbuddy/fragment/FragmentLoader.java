@@ -15,7 +15,7 @@ import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.adapters.CustomFragmentPageAdapter;
 
 
-public class FragmentLoader extends Fragment {
+public class FragmentLoader extends BMAFragment {
 
     private static final String TAG = FragmentLoader.class.getSimpleName();
 

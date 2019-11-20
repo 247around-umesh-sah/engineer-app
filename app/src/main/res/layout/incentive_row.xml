@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/_8dp"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/bookingIDlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/bookingID"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_5dp"
+            android:layout_weight=".5"
+            android:fontFamily="@font/sourcesanspro_regular"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/_10dp"
+            android:textSize="@dimen/_15dp"
+            android:text="Booking id" />
+
+        <TextView
+            android:id="@+id/bookingId"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/sourcesanspro_regular"
+            android:paddingLeft="@dimen/_10dp"
+            android:textSize="@dimen/_15dp" />
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/serviceTypelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/service_Type"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_5dp"
+            android:layout_weight=".5"
+            android:fontFamily="@font/sourcesanspro_regular"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/_10dp"
+            android:textSize="@dimen/_15dp"
+            android:text="Service Type" />
+
+        <TextView
+            android:id="@+id/serviceType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:fontFamily="@font/sourcesanspro_regular"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/_10dp"
+            android:textSize="@dimen/_15dp" />
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/requestTypelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/request_Type"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_5dp"
+            android:layout_weight=".5"
+            android:fontFamily="@font/sourcesanspro_regular"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/_10dp"
+            android:textSize="@dimen/_15dp"
+            android:text="Request Type" />
+
+        <TextView
+            android:id="@+id/requestType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:fontFamily="@font/sourcesanspro_regular"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/_10dp"
+            android:textSize="@dimen/_15dp" />
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/earninglayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/earning"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_5dp"
+            android:layout_weight=".5"
+            android:fontFamily="@font/sourcesanspro_regular"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/_10dp"
+            android:textSize="@dimen/_15dp"
+            android:text="Earning" />
+
+        <TextView
+            android:id="@+id/earnings"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".5"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/sourcesanspro_regular"
+            android:paddingLeft="@dimen/_10dp"
+            android:textSize="@dimen/_15dp" />
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

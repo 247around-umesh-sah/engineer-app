@@ -43,23 +43,39 @@ public class MorningTasksFragment extends BMAFragment {
         this.view.findViewById(R.id.headerLayout).setVisibility(View.GONE);
         this.nodataToDisplayLayout=this.view.findViewById(R.id.nodataToDisplayLayout);
         BMAmplitude.saveUserAction("MorningTask","MorningTask");
-        if(getMainActivity().todayMorningBooking.size()==0){
-            nodataToDisplayLayout.setVisibility(View.VISIBLE);
-        }else {
-            bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(),getBookingArray(), recyclerView, this, R.layout.tomorrow_item_row);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(bmaRecyclerAdapter);
-            //this.updateDistance();
-        }
+        loadRecyclerView();
+//        if(getMainActivity().todayMorningBooking.size()==0){
+//            nodataToDisplayLayout.setVisibility(View.VISIBLE);
+//        }else {
+////            bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(),getBookingArray(), recyclerView, this, R.layout.tomorrow_item_row);
+////            recyclerView.setHasFixedSize(true);
+////            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+////            recyclerView.setAdapter(bmaRecyclerAdapter);
+//            loadRecyclerView();
+//            //this.updateDistance();
+//        }
 
         return this.view;
+    }
+    private void loadRecyclerView(){
+        bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), getBookingArray(), recyclerView, this, R.layout.tomorrow_item_row);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(bmaRecyclerAdapter);
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if(isVisibleToUser){
-           // this.updateDistance();
+
+            if (getMainActivity().todayMorningBooking.size() == 0) {
+                if(nodataToDisplayLayout!=null)
+                    nodataToDisplayLayout.setVisibility(View.VISIBLE);
+            }else if(recyclerView!=null) {
+                loadRecyclerView();
+
+                //this.updateDistance();
+            }
         }
     }
 

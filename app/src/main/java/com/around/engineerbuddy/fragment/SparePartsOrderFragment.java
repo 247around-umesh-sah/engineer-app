@@ -411,7 +411,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //   parentLayout.removeView(childView);
+                //   parentLayout.removeView(childView);
                 parentLayout.getChildAt((Integer) deleteIcon.getTag()-1).setVisibility(View.GONE);
                 int partKey = (int) deleteIcon.getTag();
                 partsObject.remove(partKey);
@@ -605,7 +605,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                     TextView spareAmount = setChildView.findViewById(R.id.spareAmount);
                     TextView selectPartNo = setChildView.findViewById(R.id.selectPartNo);
                     EditText selectQuantity = setChildView.findViewById(R.id.selectQuantity);
-                   // selectQuantity.setText("1");
+                    // selectQuantity.setText("1");
 
 
                     selectedPartNameView.setText(selectedItems.getDetail1());
@@ -615,7 +615,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                     selectPartNo.setText(eoPartName.part_number);
                     if (eoPartName.max_quantity != null && eoPartName.max_quantity.trim().length() != 0) {
                         maxCountity = Integer.valueOf(eoPartName.max_quantity);
-                       // selectQuantity.setHint("Enter quantity ( Max " + eoPartName.max_quantity + " )");
+                        // selectQuantity.setHint("Enter quantity ( Max " + eoPartName.max_quantity + " )");
                     }
 //                    else {
 //                        maxCountity=1;
@@ -765,13 +765,13 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
 
         String serialNoPath = eoBooking.bookingID + "_" + pic_name + ".png";
-    //    File destination = new File(SN_DIRECTORY, serialNoPath);
+        //    File destination = new File(SN_DIRECTORY, serialNoPath);
         File destination = new File(SN_DIRECTORY);//, serialNoPath);
-            //  FileOutputStream fo;
+        //  FileOutputStream fo;
         try {
             destination.mkdirs();
-        File file = new File(destination,serialNoPath);
-        boolean isFile=false;// = file.createNewFile();
+            File file = new File(destination,serialNoPath);
+            boolean isFile=false;// = file.createNewFile();
             if(!file.exists()){
                 isFile=file.createNewFile();
             }
@@ -779,9 +779,9 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 //
 //        }
 
-        FileOutputStream fo = new FileOutputStream(file);
+            FileOutputStream fo = new FileOutputStream(file);
 
-        //  FileOutputStream fo;
+            //  FileOutputStream fo;
 //        try {
 //
 //            boolean isFile = destination.createNewFile();
@@ -1189,6 +1189,9 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         }
         return true;
 
+    }
+    private void showQuantity(){
+        //  int maxQuantity=
     }
 
 }

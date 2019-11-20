@@ -70,6 +70,7 @@
     <string name="amount_paid_text">Amount Paid</string>
     <string name="remarks">Remarks </string>
     <string name="consumption">Consumption </string>
+    <string name="reason">Reason</string>
     <string name="input_paid_amount_hint">Customer Paid Amount</string>
     <string name="input_due_amount_hint">Customer Due Amount</string>
     <string name="input_remarks_hint">Enter Your Remarks</string>
@@ -126,8 +127,8 @@
     <string name="selectFromList">Select from List</string>
     <string name="nothing_to_select">No %1$s to select</string>
     <string name="comingSoon"> </string>
-    <string name="noNoonBooking">There is No Noon Booking </string>
-    <string name="noMorningBooking"> There is No Morning Booking</string>
+    <string name="noNoonBooking">There is no Noon Bookings</string>
+    <string name="noMorningBooking"> There is no Morning Bookings</string>
     <string name="selectPartName">Select Part Name</string>
 
     <string name="checkAllFieldsValidation">Please Fill all fields</string>
@@ -144,9 +145,9 @@
     <string name="tomorrowBooking">Tomorrow Booking</string>
     <string name="missedBooking">Missed Booking</string>
 
-    <string name="noTomorrowBookingValidation">There is No Tomorrow Booking</string>
-    <string name="missedBookingValidation">There is No Missed Booking</string>
-    <string name="noEveningBookingValidation">There is No Evening Booking</string>
+    <string name="noTomorrowBookingValidation">There is no Tomorrow Bookings</string>
+    <string name="missedBookingValidation">There is no Missed Bookings</string>
+    <string name="noEveningBookingValidation">There is no Evening Bookings</string>
     <string name="payThroughPaytm">Pay Through Paytm</string>
     <string name="enableLocation">Enable Location</string>
     <string name="cancelBooking">Cancel Booking</string>
@@ -191,62 +192,6 @@
     <string name="selectCompleteOnce">Please select complete one item</string>
     <string name="userIDValidation">UserID can\'t be blank</string>
     <string name="passwordValidation">Password can\'t be blank</string>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </resources>

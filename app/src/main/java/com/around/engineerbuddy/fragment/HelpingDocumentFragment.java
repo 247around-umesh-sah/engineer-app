@@ -3,6 +3,7 @@ package com.around.engineerbuddy.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import android.widget.VideoView;
 
 import com.around.engineerbuddy.BMAmplitude;
 import com.around.engineerbuddy.R;
+import com.around.engineerbuddy.activity.MainActivity;
+import com.around.engineerbuddy.activity.VideoViewActivity;
 import com.around.engineerbuddy.adapters.BMARecyclerAdapter;
 import com.around.engineerbuddy.component.BMAFontViewField;
 import com.around.engineerbuddy.entity.EODocumentType;
@@ -50,6 +53,7 @@ public class HelpingDocumentFragment extends BMAFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        return super.onCreateView(inflater, container, savedInstanceState);
+       // getMainActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         this.view = inflater.inflate(R.layout.helping_document_fragment, container, false);
         BMAmplitude.saveUserAction("DocumentDetailFragment", "DocumentDetailFragment");
         this.recyclerView = this.view.findViewById(R.id.documentRecyclerView);
@@ -106,23 +110,28 @@ public class HelpingDocumentFragment extends BMAFragment {
                                 sharedLink(eoDocumentType.file);
                                 return true;
                             case R.id.view:
+                                Intent intent=new Intent(getMainActivity(), VideoViewActivity.class);
+                                intent.putExtra("url",eoDocumentType.file);
+                                startActivity(intent);
 
-                                VideoView videoView = HelpingDocumentFragment.this.view.findViewById(R.id.videoView);
-                                videoView.setVisibility(View.VISIBLE);
-                                ProgressDialog pd = new ProgressDialog(getContext());
-                                pd.setMessage("Loading please wait...");
-                                pd.show();
-                                Uri uri = Uri.parse(eoDocumentType.file);//("https://s3.amazonaws.com/bookings-collateral/vendor-partner-docs/Partner-Brand_Collateral_21_2019-05-15.Lpg To Png_E.m4v");
-                                videoView.setVideoURI(uri);
-                                videoView.start();
-
-                                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                                    @Override
-                                    public void onPrepared(MediaPlayer mp) {
-                                        //close the progress dialog when buffering is done
-                                        pd.dismiss();
-                                    }
-                                });
+//                                VideoView videoView = HelpingDocumentFragment.this.view.findViewById(R.id.videoView);
+//                                videoView.setVisibility(View.VISIBLE);
+//                                ProgressDialog pd = new ProgressDialog(getContext());
+//                                pd.setMessage("Loading please wait...");
+//                                pd.show();
+//                                Uri uri = Uri.parse(eoDocumentType.file);//("https://s3.amazonaws.com/bookings-collateral/vendor-partner-docs/Partner-Brand_Collateral_21_2019-05-15.Lpg To Png_E.m4v");
+//                                videoView.setRotation(90f);
+//
+//                                videoView.setVideoURI(uri);
+//                                videoView.start();
+//
+//                                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                                    @Override
+//                                    public void onPrepared(MediaPlayer mp) {
+//                                        //close the progress dialog when buffering is done
+//                                        pd.dismiss();
+//                                    }
+//                                });
 
 
 //                                WebView webView = HelpingDocumentFragment.this.view.findViewById(R.id.webView);
@@ -131,7 +140,7 @@ public class HelpingDocumentFragment extends BMAFragment {
 //                                webView.loadUrl("http://docs.google.com/gview?embedded=true&url=" + "https://androhub.com/demo/demo.pdf");
 
 
-                                https:
+                              //  https:
 //s3.amazonaws.com/bookings-collateral/vendor-partner-docs/Partner-Brand_Collateral_21_2019-05-15.Lpg To Png_E.m4v
 
 

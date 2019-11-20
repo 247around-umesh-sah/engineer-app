@@ -79,9 +79,11 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
         requestType.setText(eoBooking.requestType);
         bookingIdName.setText(eoBooking.bookingID);
         timeSlot.setText(eoBooking.bookingTimeSlot);
-        if(this.eoBooking.symptom!=null){
+        if(this.eoBooking.bookingRemarks!=null && this.eoBooking.bookingRemarks.length()!=0){
             this.symptomLayout.setVisibility(View.VISIBLE);
-         this.symptom.setText(this.eoBooking.symptom);
+         this.symptom.setText(this.eoBooking.bookingRemarks);
+        }else {
+            this.symptomLayout.setVisibility(View.GONE);
         }
 
         chargeabletext.setText("₹ "+eoBooking.dueAmount);

@@ -81,4 +81,7 @@ public class HeaderFragment extends BMAFragment {
         this.headerTitleImage.setBackground(getResources().getDrawable(imageDrawable));
         this.headerTitleImage.setVisibility(View.VISIBLE);
     }
+    public void startSearch(String text) {
+        getMainActivity().startSearch(text.trim());
+    }
 }

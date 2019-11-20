@@ -207,4 +207,9 @@ public class BMAFragment extends Fragment implements ApiResponse, BMARecyclerAda
     public ArrayList<EOBooking> getBookingList(){
         return new ArrayList<>();
     }
+
+    public void startSearch(String filterStr) {
+
+    }
 }
+

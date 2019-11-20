@@ -28,13 +28,13 @@ import javax.net.ssl.HttpsURLConnection;
 public class HttpRequest extends AsyncTask<String, Void, String> {
 
     //stag url
-   //public static String base_url = "http://stag.aroundhomzapp.com/engineerApi";
+    //public static String base_url = "http://stag.aroundhomzapp.com/engineerApi";
 
     //Testing URL
    // public static String base_url = "http://testapp.247around.com/engineerApi";
 
     ///Live Url
-   static String base_url = "https://aroundhomzapp.com/engineerApi";
+    static String base_url = "https://aroundhomzapp.com/engineerApi";
 
 
     //Kenstar
@@ -76,7 +76,7 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
 
             postDataParams = new JSONObject();
             postDataParams.put("request", requestData);
-           // Log.d("aaaaaa","HTTPREQUESTDATA  = "+requestData);
+            // Log.d("aaaaaa","HTTPREQUESTDATA  = "+requestData);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(50000 /* milliseconds */);
@@ -90,7 +90,7 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
                     new OutputStreamWriter(os, "UTF-8"));
             writer.write(getToken.getPostDataString(postDataParams));
 
-          //  Log.d("aaaaa","getPostData = "+getToken.getPostDataString(postDataParams));
+            //  Log.d("aaaaa","getPostData = "+getToken.getPostDataString(postDataParams));
             writer.flush();
             writer.close();
             os.close();
@@ -136,32 +136,32 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
 //        response.contains("data")
-        Log.d("aaaaaa","httpResponse = = = "+result);
-        if(result.contains("data")) {
+        Log.d("aaaaaa", "httpResponse = = = " + result);
+        if (result.contains("data")) {
             delegate.processFinish(result);
-        }else if(result!=null){
-            String[] serverResp=result.split(":");
-            String serverResponse="Something Went Wrong";
-            if(serverResponse!=null && serverResp.length>0 && serverResp.length>1){
-                serverResponse="Server Error : "+serverResp[1];
+        } else if (result != null) {
+            String[] serverResp = result.split(":");
+            String serverResponse = "Something Went Wrong";
+            if (serverResponse != null && serverResp.length > 0 && serverResp.length > 1) {
+                serverResponse = "Server Error : " + serverResp[1];
             }
-            if(this.context instanceof MainActivity) {
-                        delegate.processFinish(result);
-            }else {
-                AlertDialog.Builder builder=new AlertDialog.Builder(this.context);
+            if (this.context instanceof MainActivity) {
+                delegate.processFinish(result);
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
                 builder.setTitle("Error");
 
                 //Setting message manually and performing action on button click
                 builder.setMessage(serverResponse).setCancelable(false)
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                               dialog.cancel();
+                                dialog.cancel();
                                 progress.dismiss();
                             }
                         });
 
                 AlertDialog alert = builder.create();
-               // alert.setTitle("AlertDialogExample");
+                // alert.setTitle("AlertDialogExample");
                 alert.show();
             }
 
@@ -169,8 +169,8 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
 
     }
 
-    private void submitRequest(){
-        ArrayList<String> partnerPaidBasicCharge=new ArrayList<>();
+    private void submitRequest() {
+        ArrayList<String> partnerPaidBasicCharge = new ArrayList<>();
 
     }
 

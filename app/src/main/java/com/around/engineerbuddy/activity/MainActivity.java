@@ -37,6 +37,7 @@ import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.component.BMAFontViewField;
 import com.around.engineerbuddy.entity.EOBooking;
+import com.around.engineerbuddy.fragment.BMAFragment;
 import com.around.engineerbuddy.fragment.CancelledBookingFragment;
 import com.around.engineerbuddy.fragment.FragmentLoader;
 import com.around.engineerbuddy.fragment.HeaderFragment;
@@ -178,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     protected void onStart() {
+        Log.d("aaaaaa","onStartMainActivity");
         super.onStart();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             BMAAlertDialog dialog = new BMAAlertDialog(this, true, false) {
@@ -199,6 +201,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 10, this);
         }
     }
+
+
 
     @Override
     protected void onPause() {
@@ -327,9 +331,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     }
 
-    public Fragment getPageFragment() {
+    public BMAFragment getPageFragment() {
         Fragment fragment = this.findFragmentById(dataContainerResID());
-        return fragment != null ? fragment : null;
+        return fragment != null ? (BMAFragment) fragment : null;
     }
 
     public Fragment findFragmentById(int fragmentContainerID) {
@@ -412,5 +416,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+    public void startSearch(String filterStr) {
+        if (getPageFragment() != null) {
+            getPageFragment().startSearch(filterStr);
+        }
     }
 }

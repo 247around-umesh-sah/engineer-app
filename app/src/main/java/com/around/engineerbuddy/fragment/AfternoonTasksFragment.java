@@ -44,22 +44,38 @@ public class AfternoonTasksFragment extends BMAFragment {
         this.recyclerView = this.view.findViewById(R.id.recyclerView);
         this.view.findViewById(R.id.headerLayout).setVisibility(View.GONE);
         this.nodataToDisplayLayout = this.view.findViewById(R.id.nodataToDisplayLayout);
-        BMAmplitude.saveUserAction("AfternoonTask","AfterNoonTask");
-        if (getMainActivity().todayAfternoonBooking.size() == 0) {
-            nodataToDisplayLayout.setVisibility(View.VISIBLE);
-        }else {
-
-            bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), getMainActivity().todayAfternoonBooking, recyclerView, this, R.layout.tomorrow_item_row);
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(bmaRecyclerAdapter);
-        }
+        loadRecyclerView();
+//        BMAmplitude.saveUserAction("AfternoonTask","AfterNoonTask");
+//        if (getMainActivity().todayAfternoonBooking.size() == 0) {
+//            nodataToDisplayLayout.setVisibility(View.VISIBLE);
+//        }else {
+//
+//            loadRecyclerView();
+////            bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), getMainActivity().todayAfternoonBooking, recyclerView, this, R.layout.tomorrow_item_row);
+////            recyclerView.setHasFixedSize(true);
+////            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+////            recyclerView.setAdapter(bmaRecyclerAdapter);
+//        }
         return this.view;
+    }
+    private void loadRecyclerView(){
+        bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), getMainActivity().todayAfternoonBooking, recyclerView, this, R.layout.tomorrow_item_row);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(bmaRecyclerAdapter);
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if(isVisibleToUser){
+            if (getMainActivity().todayAfternoonBooking.size() == 0) {
+                if(nodataToDisplayLayout!=null)
+                    nodataToDisplayLayout.setVisibility(View.VISIBLE);
+            }else if(recyclerView!=null) {
+                loadRecyclerView();
+
+                //this.updateDistance();
+            }
         }
     }
 

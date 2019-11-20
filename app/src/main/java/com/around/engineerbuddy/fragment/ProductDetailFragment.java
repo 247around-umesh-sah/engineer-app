@@ -962,6 +962,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
             Picasso.with(getContext()).load(eoSpareParts.invoice_pic).into(invoiceNoPic);
         }
         if(!isInvoice && eoSpareParts.serial_number_pic!=null) {
+           // Glide.with(mContext).load(imgID).asBitmap().override(1080, 600).into(mImageView);
             Picasso.with(getContext()).load(eoSpareParts.serial_number_pic).into(serialNoPic);
         }
         Thread thread = new Thread(new Runnable() {
@@ -998,7 +999,20 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
             connection.connect();
             InputStream input = connection.getInputStream();
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
+                int width = myBitmap.getWidth();
+                int height = myBitmap.getHeight();
+
+                float bitmapRatio = (float)width / (float) height;
+                if (bitmapRatio > 1) {
+                    width = 500;
+                    height = (int) (width / bitmapRatio);
+                } else {
+                    height = 500;
+                    width = (int) (height * bitmapRatio);
+                }
+                return Bitmap.createScaledBitmap(myBitmap, width, height, true);
+
+          //  return myBitmap;
         } catch (IOException e) {
             e.printStackTrace();
             return null;

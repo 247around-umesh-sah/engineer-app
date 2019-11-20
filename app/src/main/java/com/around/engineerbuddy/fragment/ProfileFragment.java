@@ -65,7 +65,7 @@ public class ProfileFragment extends BMAFragment {
         }
 
 
-        if(!this.eoProfile.identityProofType.equalsIgnoreCase("0")) {
+        if(this.eoProfile.identityProofType!=null && this.eoProfile.identityProofType.length()>0 && !this.eoProfile.identityProofType.equalsIgnoreCase("0")) {
             this.idType.setText(this.eoProfile.identityProofType);
         }else{
             this.adharLayout.setVisibility(View.GONE);

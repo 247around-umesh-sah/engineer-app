@@ -31,7 +31,7 @@ import java.util.List;
 public class BMASelectionDialog extends AppCompatDialog {
 
     RecyclerView popUpRecyclerView;
-    TextView titleText,noDataToDisplay;
+    TextView titleText, noDataToDisplay;
     Context context;
     Button okButton, cancelButton;
     List<BMAUiEntity> itemList = new ArrayList<>();
@@ -53,11 +53,12 @@ public class BMASelectionDialog extends AppCompatDialog {
         this.itemList = itemList;
         //this.copyList=itemList;
     }
-    public BMASelectionDialog(Context context, ArrayList<BMAUiEntity> itemList,boolean isSerachEnable) {
+
+    public BMASelectionDialog(Context context, ArrayList<BMAUiEntity> itemList, boolean isSerachEnable) {
         super(context);
         this.context = context;
         this.itemList = itemList;
-        this.isSerachEnable=isSerachEnable;
+        this.isSerachEnable = isSerachEnable;
         //this.copyList=itemList;
     }
 
@@ -84,13 +85,16 @@ public class BMASelectionDialog extends AppCompatDialog {
         loaddata();
     }
 
+    LinearLayout headerLayout;
+
     public void init() {
         float buttonRadius = context.getResources().getDimension(R.dimen._50dp);
         this.okButton = this.findViewById(R.id.submitButton);
         this.searchBox = this.findViewById(R.id.serachBox);
-        this.noDataToDisplay=this.findViewById(R.id.noDataToDisplay);
-        if(itemList.size()==0){
-          //  noDataToDisplay.setVisibility(View.VISIBLE);
+        headerLayout = this.findViewById(R.id.headerLayout);
+        this.noDataToDisplay = this.findViewById(R.id.noDataToDisplay);
+        if (itemList.size() == 0) {
+            //  noDataToDisplay.setVisibility(View.VISIBLE);
         }
         this.okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,14 +112,14 @@ public class BMASelectionDialog extends AppCompatDialog {
                 BMASelectionDialog.this.dismiss();
             }
         });
-        // }
+        // }headerLayout
         BMAUIUtil.setBackgroundRect(this.okButton, R.color.submitButtonColor, buttonRadius);
         this.popUpRecyclerView = this.findViewById(R.id.popupRecyclerview);
         this.titleText = this.findViewById(R.id.titleText);
-        this.findViewById(R.id.headerLayout).setVisibility(View.VISIBLE);
+        // this.findViewById(R.id.headerLayout).setVisibility(View.VISIBLE);
         this.titleText.setText("Select ");
-        if(isSerachEnable) {
-            this.searchBox.setVisibility(View.VISIBLE);
+        if (isSerachEnable) {
+            this.headerLayout.setVisibility(View.VISIBLE);
         }
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
@@ -132,7 +136,7 @@ public class BMASelectionDialog extends AppCompatDialog {
             public void afterTextChanged(Editable s) {
                 String input = s.toString();
 
-                if(popUpAdapter!=null) {
+                if (popUpAdapter != null) {
                     popUpAdapter.getFilter().filter(input);
                     Log.d("aaaaaa", "afterTextChange = " + input);
                 }
@@ -227,7 +231,7 @@ public class BMASelectionDialog extends AppCompatDialog {
 
         @Override
         public Filter getFilter() {
-            Log.d("aaaaaa","Upper charSequence = ");
+            Log.d("aaaaaa", "Upper charSequence = ");
             return new Filter() {
                 @Override
                 protected FilterResults performFiltering(CharSequence charSequence) {
@@ -279,7 +283,7 @@ public class BMASelectionDialog extends AppCompatDialog {
                 status = view.findViewById(R.id.staus);
                 radioButton = view.findViewById(R.id.radioButton);
                 radioButton.setClickable(false);
-                radioButtonLayout=view.findViewById(R.id.radioButtonLayout);
+                radioButtonLayout = view.findViewById(R.id.radioButtonLayout);
 
             }
         }

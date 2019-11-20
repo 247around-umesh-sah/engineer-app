@@ -1,0 +1,43 @@
+package com.around.engineerbuddy.entity;
+
+public class EOCompletedCancelledBookingDetail extends BMAObject {
+    public String id;
+    public String booking_id;
+    public String service_center_id;
+    public String engineer_id;
+    public String unit_details_id;
+    public String serial_number;
+    public String serial_number_pic;
+    public String purchase_invoice;
+    public String is_broken;
+    public String current_status;
+    public String internal_status;
+    public String cancellation_reason;
+    public String cancellation_remark;
+    public String amount_paid;
+    public String service_charge;
+    public String additional_service_charge;
+    public String parts_cost;
+    public String model_number;
+    public String sf_purchase_date;
+    public String closing_remark;
+    public String symptom;
+    public String defect;
+    public String solution;
+    public String booking_status;
+    public String create_date;
+    public String update_date;
+    public String closed_date;
+    public String booking_date;
+    public String booking_address;
+    public String state;
+    public String appliance_brand;
+    public String services;
+    public String request_type;
+    public String booking_pincode;
+    public String booking_primary_contact_no;
+    public String booking_timeslot;
+    public String appliance_category;
+    public String appliance_capacity;
+    public String technical_solution;
+}

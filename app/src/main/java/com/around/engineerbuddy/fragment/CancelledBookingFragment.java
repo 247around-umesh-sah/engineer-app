@@ -59,8 +59,11 @@ public class CancelledBookingFragment extends BMAFragment {
         this.bookingHeaderLayout = this.view.findViewById(R.id.headerLayout);
         this.bookingHeaderLayout.setVisibility(View.GONE);
         this.noDataToDisplayLayout = this.view.findViewById(R.id.nodataToDisplayLayout);
-        this.noDataToDisplayLayout.setVisibility(View.VISIBLE);
+        if(this.bookingInfo==null){
         this.loadData();
+        }else{
+            this.dataToView();
+        }
         return this.view;
     }
 
@@ -68,18 +71,17 @@ public class CancelledBookingFragment extends BMAFragment {
         httpRequest = new HttpRequest(getContext(), true);
         httpRequest.delegate = CancelledBookingFragment.this;
         String status = isCancelledBooking ? "Cancelled" : "Completed";
+        Log.d("aaaaa","eid = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null)+"   ScID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
         httpRequest.execute("engineerBookingsByStatus", MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null), status);
 
 
     }
 
     private void dataToView() {
-
         BMARecyclerAdapter bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), this.bookingInfo.cancelledBookings, recyclerView, this, R.layout.booking_detail_fragment);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(bmaRecyclerAdapter);
-
 
     }
 
@@ -125,6 +127,8 @@ public class CancelledBookingFragment extends BMAFragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("eoBooking", eoBooking);
+                bundle.putBoolean("isCancelledBooking",isCancelledBooking);
+                updateFragment(bundle,isCancelledBooking ? "Cancelled details":"Completed details");
 
             }
         });
@@ -165,6 +169,7 @@ public class CancelledBookingFragment extends BMAFragment {
                 }
             } catch (JSONException e) {
                 httpRequest.progress.dismiss();
+                this.noDataToDisplayLayout.setVisibility(View.VISIBLE);
                 BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
 
 
@@ -176,6 +181,7 @@ public class CancelledBookingFragment extends BMAFragment {
                 bmaAlertDialog.show(R.string.loginFailedMsg);
             }
         } else {
+            this.noDataToDisplayLayout.setVisibility(View.VISIBLE);
             httpRequest.progress.dismiss();
         }
     }

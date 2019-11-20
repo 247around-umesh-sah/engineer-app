@@ -2,25 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.around.engineerbuddy">
-
-   <!-- project  iD//242158-->
-
-
+    <!-- project  iD//242158 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
-
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission
         android:name="android.permission.BLUETOOTH"
         android:required="false" />
-    <uses-permission
-        android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission
         android:name="android.permission.READ_PHONE_STATE"
         android:required="false" />
@@ -41,9 +34,10 @@
         android:icon="@mipmap/app_launcher_icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
+        android:largeHeap="true"
         android:usesCleartextTraffic="true">
-
-        <!--<activity android:name=".activity.MainActivity" />-->
+        <activity android:name=".activity.VideoViewActivity"></activity>
+        <!-- <activity android:name=".activity.MainActivity" /> -->
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait">
@@ -69,64 +63,56 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-
-          ></activity>
-        <!--<activity-->
-            <!--android:name=".activity.NavigationMapActivity"-->
-            <!--android:theme="@style/AppTheme.NoActionBar"-->
-            <!--android:screenOrientation="portrait"-->
-
-            <!--&gt;</activity>-->
-        <!--<provider-->
-            <!--android:name="android.support.v4.content.FileProvider"-->
-            <!--android:authorities="${applicationId}.provider"-->
-            <!--android:exported="false"-->
-            <!--android:grantUriPermissions="true">-->
-            <!--<meta-data-->
-                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-                <!--android:resource="@xml/provider_path" />-->
-        <!--</provider>-->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity -->
+        <!-- android:name=".activity.NavigationMapActivity" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- &gt;</activity> -->
+        <!-- <provider -->
+        <!-- android:name="android.support.v4.content.FileProvider" -->
+        <!-- android:authorities="${applicationId}.provider" -->
+        <!-- android:exported="false" -->
+        <!-- android:grantUriPermissions="true"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+        <!-- android:resource="@xml/provider_path" /> -->
+        <!-- </provider> -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
-            android:exported="false"
             android:enabled="true"
+            android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_path"/>
-        </provider>
-
-        <!--<activity-->
-            <!--android:name=".SearchActivity"-->
-            <!--android:screenOrientation="portrait" />-->
-        <!--<activity-->
-            <!--android:name=".CompleteBookingActivity"-->
-            <!--android:screenOrientation="portrait" />-->
-        <!--<activity-->
-            <!--android:name=".CancelBookingActivity"-->
-            <!--android:screenOrientation="portrait" />-->
-        <!--<activity-->
-            <!--android:name=".AmountPaidActivity"-->
-            <!--android:label="@string/title_activity_amount_paid"-->
-            <!--android:theme="@style/AppTheme" />-->
-        <!--<activity-->
-            <!--android:name=".DigitalSignatureActivity"-->
-            <!--android:label="@string/title_activity_digital_signature"-->
-            <!--android:theme="@style/AppTheme" />-->
-        <!--<activity-->
-            <!--android:name=".PaytmQrActivity"-->
-            <!--android:label="@string/title_activity_paytm_qr"-->
-            <!--android:theme="@style/AppTheme" />-->
+                android:resource="@xml/provider_path" />
+        </provider> <!-- <activity -->
+        <!-- android:name=".SearchActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <!-- <activity -->
+        <!-- android:name=".CompleteBookingActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <!-- <activity -->
+        <!-- android:name=".CancelBookingActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
+        <!-- <activity -->
+        <!-- android:name=".AmountPaidActivity" -->
+        <!-- android:label="@string/title_activity_amount_paid" -->
+        <!-- android:theme="@style/AppTheme" /> -->
+        <!-- <activity -->
+        <!-- android:name=".DigitalSignatureActivity" -->
+        <!-- android:label="@string/title_activity_digital_signature" -->
+        <!-- android:theme="@style/AppTheme" /> -->
+        <!-- <activity -->
+        <!-- android:name=".PaytmQrActivity" -->
+        <!-- android:label="@string/title_activity_paytm_qr" -->
+        <!-- android:theme="@style/AppTheme" /> -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDYYGttub8nTWcXVZBG9iMuQwZfFaBNcbQ" />
-        <!--<meta-data-->
-            <!--android:name="com.google.android.gms.version"-->
-            <!--android:value="@integer/google_play_services_version" />-->
-
+            android:value="AIzaSyDYYGttub8nTWcXVZBG9iMuQwZfFaBNcbQ" /> <!-- <meta-data -->
+        <!-- android:name="com.google.android.gms.version" -->
+        <!-- android:value="@integer/google_play_services_version" /> -->
         <service
             android:name=".service.BMAFirebaseMessagingService"
             android:exported="true">

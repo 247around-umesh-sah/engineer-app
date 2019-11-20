@@ -66,41 +66,43 @@
                                 android:minHeight="35dp"
                                 android:src="@drawable/noimage" />
                         </LinearLayout>
+
                         <TextView
                             android:id="@+id/title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
                             android:layout_marginTop="5dp"
+                            android:layout_marginRight="6dp"
                             android:ellipsize="end"
+                            android:fontFamily="@font/sourcesanspro_regular"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:fontFamily="@font/sourcesanspro_regular"
-                            android:layout_marginLeft="6dp"
-                            android:layout_marginRight="6dp"
                             android:textColor="#505050"
                             android:textSize="17dp" />
+
                         <TextView
                             android:id="@+id/booking"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:fontFamily="@font/sourcesanspro_regular"
                             android:layout_marginLeft="6dp"
+                            android:layout_marginTop="5dp"
                             android:layout_marginRight="6dp"
-                            android:textColor="#505050"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/sourcesanspro_regular"
+                            android:gravity="center"
                             android:text="Booking"
+                            android:textColor="#505050"
                             android:textSize="14dp"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                     </LinearLayout>
+
                     <TextView
                         android:id="@+id/bottomBoader"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_7dp"
-                        android:visibility="gone"/>
-
+                        android:visibility="gone" />
 
 
                 </LinearLayout>
@@ -119,8 +121,8 @@
         android:text="0"
         android:textColor="@android:color/white"
         android:textSize="12dp"
-        android:visibility="gone"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
 
 </FrameLayout>

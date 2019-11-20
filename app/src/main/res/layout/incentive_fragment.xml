@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50dp"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary1"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="@dimen/_30dp"
+            android:layout_height="@dimen/_20dp"
+            android:layout_marginLeft="@dimen/_15dp"
+            android:visibility="gone"
+            android:background="@drawable/logout_icon"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:paddingLeft="@dimen/_15dp"
+            android:textSize="@dimen/_17dp"
+            android:text="Total Incentive"/>
+        <TextView
+            android:id="@+id/totalIncentiveAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:layout_marginLeft="@dimen/_10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_17dp"
+            android:text="1000"/>
+
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_8dp"
+        android:background="#F2F2F2"
+      >
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>
