@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.around.engineerbuddy.fragment.AfternoonTasksFragment;
 import com.around.engineerbuddy.fragment.AllTasksFragment;
+import com.around.engineerbuddy.fragment.BMAFragment;
 import com.around.engineerbuddy.fragment.EveningTasksFragment;
 import com.around.engineerbuddy.fragment.MorningTasksFragment;
 
@@ -26,7 +27,7 @@ public class CustomFragmentPageAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public BMAFragment getItem(int position) {
         switch (position) {
             case 0:
                 return new MorningTasksFragment();

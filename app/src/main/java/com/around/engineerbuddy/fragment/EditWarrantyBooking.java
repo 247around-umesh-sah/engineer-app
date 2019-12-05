@@ -20,7 +20,6 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +32,7 @@ import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.component.BMAFontViewField;
 import com.around.engineerbuddy.component.BMASelectionDialog;
 import com.around.engineerbuddy.entity.BMAUiEntity;
-import com.around.engineerbuddy.entity.BookingInfo;
 import com.around.engineerbuddy.entity.EOBooking;
-import com.around.engineerbuddy.entity.EOCompleteBookingProductUnit;
 import com.around.engineerbuddy.entity.EOCompleteProductQuantity;
 import com.around.engineerbuddy.entity.EOCompleteProductdetail;
 import com.around.engineerbuddy.entity.EOModelNumber;
@@ -43,7 +40,6 @@ import com.around.engineerbuddy.entity.EOSparePartWarrantyChecker;
 import com.around.engineerbuddy.entity.EOSpareParts;
 import com.around.engineerbuddy.entity.EOWarrantyChecker;
 import com.around.engineerbuddy.util.BMAConstants;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -312,7 +308,9 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         callTypeCustomerCharges.setText(eoWarrantyChecker.amount);
         checkbox.setChecked(eoWarrantyChecker.isCheckBoxChecked);
         checkbox.setTag(eoWarrantyChecker);
-        checkbox.setEnabled(eoWarrantyChecker.serviceCategory.equalsIgnoreCase("Spare Parts") ? false : true);
+        if(eoWarrantyChecker!=null && eoWarrantyChecker.serviceCategory!=null) {
+            checkbox.setEnabled(eoWarrantyChecker.serviceCategory.equalsIgnoreCase("Spare Parts") ? false : true);
+        }
         checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

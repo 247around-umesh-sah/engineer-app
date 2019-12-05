@@ -9,9 +9,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -91,7 +94,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
     EOSparePartsOrder eoSparePartsOrder;
     ArrayList<EOPartType> partTypeList;
     ArrayList<EOPartName> partNameList;
-
+    String mCurrentPhotoPath;
 
     HashMap<String, Object> partsMap = new HashMap<>();
     String SN_DIRECTORY = Environment.getExternalStorageDirectory() + "/AroundSerialNO/";
@@ -692,106 +695,86 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null || data.getExtras() == null || data.getExtras().get("data") == null) {
-            return;
+        File file = new File(mCurrentPhotoPath);
+        Bitmap imageBitmap = null;
+        try {
+            imageBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), Uri.fromFile(file));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
         switch (requestCode) {
             case 1:
-                this.serialNoPicBitmap = imageBitmap;
-                serialNoPic.setImageBitmap(imageBitmap);
+                if(imageBitmap!=null) {
+                    this.serialNoPicBitmap = imageBitmap;
+                    serialNoPic.setImageBitmap(imageBitmap);
+                }
                 break;
             case 2:
+                if(imageBitmap!=null) {
 
-                this.invoicePicBitmap = imageBitmap;
-                invoicePic.setImageBitmap(imageBitmap);
+                    this.invoicePicBitmap = imageBitmap;
+                    invoicePic.setImageBitmap(imageBitmap);
+                }
 
 
                 break;
             case 3:
-                Log.d("aaaaaa", "defective_front_parts = " + onCaptureImageResult(imageBitmap));
-                String getPartString = partsObject.get(ImagePartKey);
-                if (getPartString != null) {
-                    HashMap<String, Object> getPartsMap = BMAGson.store().getObject(HashMap.class, getPartString);
-                    getPartsMap.put("defective_front_parts", onCaptureImageResult(imageBitmap));
-                    partsObject.put(ImagePartKey, BMAGson.store().toJson(getPartsMap));
-                } else {
-                    partsMap.put("defective_front_parts", onCaptureImageResult(imageBitmap));
+                if(imageBitmap!=null) {
+                    Log.d("aaaaaa", "defective_front_parts = " + onCaptureImageResult(imageBitmap));
+                    String getPartString = partsObject.get(ImagePartKey);
+                    if (getPartString != null) {
+                        HashMap<String, Object> getPartsMap = BMAGson.store().getObject(HashMap.class, getPartString);
+                        getPartsMap.put("defective_front_parts", onCaptureImageResult(imageBitmap));
+                        partsObject.put(ImagePartKey, BMAGson.store().toJson(getPartsMap));
+                    } else {
+                        partsMap.put("defective_front_parts", onCaptureImageResult(imageBitmap));
+                    }
+
+                    frontDefectiveBitmap = imageBitmap;
+
+                    frontDefectivePart.setImageBitmap(imageBitmap);
                 }
-
-                frontDefectiveBitmap = imageBitmap;
-
-                frontDefectivePart.setImageBitmap(imageBitmap);
                 break;
             case 4:
+                if(imageBitmap!=null) {
+                    backDefectiveBitmap = imageBitmap;
 
-                backDefectiveBitmap = imageBitmap;
+                    String getPartString1 = partsObject.get(ImagePartKey);
+                    if (getPartString1 != null) {
+                        HashMap<String, Object> getPartsMap = BMAGson.store().getObject(HashMap.class, getPartString1);
+                        partsMap.put("defective_back_parts", onCaptureImageResult(imageBitmap));
+                        partsObject.put(ImagePartKey, BMAGson.store().toJson(getPartsMap));
+                    } else {
+                        partsMap.put("defective_back_parts", onCaptureImageResult(imageBitmap));
+                    }
+                    //Log.d("aaaaaa", "defective_back_parts = " + onCaptureImageResult(imageBitmap));
 
-                String getPartString1 = partsObject.get(ImagePartKey);
-                if (getPartString1 != null) {
-                    HashMap<String, Object> getPartsMap = BMAGson.store().getObject(HashMap.class, getPartString1);
-                    partsMap.put("defective_back_parts", onCaptureImageResult(imageBitmap));
-                    partsObject.put(ImagePartKey, BMAGson.store().toJson(getPartsMap));
-                } else {
-                    partsMap.put("defective_back_parts", onCaptureImageResult(imageBitmap));
+                    backDefectivePart.setImageBitmap(imageBitmap);
                 }
-                //Log.d("aaaaaa", "defective_back_parts = " + onCaptureImageResult(imageBitmap));
-
-                backDefectivePart.setImageBitmap(imageBitmap);
-
                 break;
 
         }
     }
-    //mia1//
-//    String serialNoPath = eoBooking.bookingID + "_" + pic_name + ".png";
-//    File destination = new File(SN_DIRECTORY);//, serialNoPath);
-//
-//    //  FileOutputStream fo;
-//        try {
-//        File file = new File(destination,serialNoPath);
-//        boolean isFile = file.createNewFile();
-//        if (!isFile) {
-//            destination.mkdirs();
-//        }
-//        if(!file.exists()){
-//            file.createNewFile();
-//        }
-//        FileOutputStream fo = new FileOutputStream(file);
+
 
     public String onCaptureImageResult(Bitmap thumbnail) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.PNG, 90, bytes);
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 30, bytes);
         String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
 
         String serialNoPath = eoBooking.bookingID + "_" + pic_name + ".png";
-        //    File destination = new File(SN_DIRECTORY, serialNoPath);
         File destination = new File(SN_DIRECTORY);//, serialNoPath);
-        //  FileOutputStream fo;
         try {
-            destination.mkdirs();
-            File file = new File(destination,serialNoPath);
-            boolean isFile=false;// = file.createNewFile();
-            if(!file.exists()){
-                isFile=file.createNewFile();
+            File file = new File(destination, serialNoPath);
+            boolean isFile = file.createNewFile();
+            if (!file.exists()) {
+                isFile = file.createNewFile();
             }
-//        if (!isFile) {
-//
-//        }
+            if (!isFile) {
+                destination.mkdirs();
+            }
 
             FileOutputStream fo = new FileOutputStream(file);
-
-            //  FileOutputStream fo;
-//        try {
-//
-//            boolean isFile = destination.createNewFile();
-//            if (!isFile) {
-//                destination.mkdirs();
-//            }
-////            if(!destination.exists()){
-////                destination.createNewFile();
-////            }
-//            FileOutputStream fo = new FileOutputStream(destination);
             fo.write(bytes.toByteArray());
             fo.close();
             String encodeImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
@@ -840,10 +823,9 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
         } else {
             Log.d("aaaaaa", "requestCODE = " + requestCode);
-            Intent galleryIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(galleryIntent, requestCode);
-            // user already provided permission
-            // perform function for what you want to achieve
+//            Intent galleryIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//            startActivityForResult(galleryIntent, requestCode);
+           dispatchTakePictureIntent(requestCode);
         }
 
 
@@ -1192,6 +1174,51 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
     }
     private void showQuantity(){
         //  int maxQuantity=
+    }
+
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "PNG" + timeStamp + "_";
+        File storageDir =new File(Environment.getExternalStorageDirectory() + "/AroundSerialNO/");
+        if(!storageDir.exists()){
+            storageDir.mkdirs();
+            //("/storage/emulated/0/AroundSerialNO/"); //getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        }
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".png",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+    static final int REQUEST_TAKE_PHOTO = 1;
+
+    private void dispatchTakePictureIntent(int requestCode) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+
+            }
+            // Continue only if the File was successfully created
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+            if (photoFile != null) {
+                Uri photoURI = Uri.fromFile(photoFile);// FileProvider.getUriForFile(getContext(), "com.example.android.fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, requestCode);
+            }
+        }
     }
 
 }

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +50,14 @@ public class HeaderFragment extends BMAFragment {
         barNavigation=this.view.findViewById(R.id.barNavigation);
         backButton=this.view.findViewById(R.id.backBtn);
         this.headerTitleImage=this.view.findViewById(R.id.headerTitleImage);
+        EditText serch=view.findViewById(R.id.serachTextField);
+        this.view.findViewById(R.id.searchIcon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("aaaaa","startserach = "+serch.getText().toString().trim());
+                startSearch(serch.getText().toString().trim());
+            }
+        });
         if(this.headerImageDrawable!=0){
             this.setHeaderTitleImage(this.headerImageDrawable);
         }
@@ -81,6 +91,7 @@ public class HeaderFragment extends BMAFragment {
         this.headerTitleImage.setBackground(getResources().getDrawable(imageDrawable));
         this.headerTitleImage.setVisibility(View.VISIBLE);
     }
+
     public void startSearch(String text) {
         getMainActivity().startSearch(text.trim());
     }

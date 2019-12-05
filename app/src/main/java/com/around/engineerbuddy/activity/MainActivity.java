@@ -53,9 +53,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private FragmentManager fragmentManager;
     private Fragment fragment = null;
     public String engineerID, serviceCenterId, scAgentId;
-    public ArrayList<EOBooking> todayMorningBooking = new ArrayList<>();
-    public ArrayList<EOBooking> todayAfternoonBooking = new ArrayList<>();
-    public ArrayList<EOBooking> todayEveningBooking = new ArrayList<>();
+//    public ArrayList<EOBooking> todayMorningBooking = new ArrayList<>();
+//    public ArrayList<EOBooking> todayAfternoonBooking = new ArrayList<>();
+//    public ArrayList<EOBooking> todayEveningBooking = new ArrayList<>();
     public SharedPreferences sharedPrefs;
     SharedPreferences.Editor editor;
     private LocationManager mLocationManager;

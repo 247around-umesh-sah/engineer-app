@@ -164,6 +164,10 @@ public class GetToken {
             case "incentiveEearnedBookings":
                 incentiveEearnedBookings(urlParameters,params);
                 break;
+            case "todaysSlotBookings":
+                todaysSlotBookings(urlParameters,params);
+                break;
+
 
 
 
@@ -742,6 +746,25 @@ public class GetToken {
 
         return urlParameters;
     }
+    public Map<String, String> todaysSlotBookings(Map<String, String> urlParameters,
+                                                        String[] params) {
+        try {
+
+            urlParameters.put("engineer_id", params[1]);
+            urlParameters.put("service_center_id", params[2]);
+            urlParameters.put("engineer_pincode", params[3]);
+            urlParameters.put("booking_slot", params[4]);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+
 
 
 

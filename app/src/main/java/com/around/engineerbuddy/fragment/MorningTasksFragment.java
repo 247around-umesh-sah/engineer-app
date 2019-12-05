@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,22 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.around.engineerbuddy.BMAGson;
 import com.around.engineerbuddy.BMAmplitude;
+import com.around.engineerbuddy.HttpRequest;
+import com.around.engineerbuddy.MainActivityHelper;
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.adapters.BMARecyclerAdapter;
 import com.around.engineerbuddy.component.BMAAlertDialog;
+import com.around.engineerbuddy.entity.BookingInfo;
 import com.around.engineerbuddy.entity.EOBooking;
+import com.around.engineerbuddy.entity.EoWrongPart;
 import com.around.engineerbuddy.util.BMAConstants;
 import com.around.engineerbuddy.util.BMAUIUtil;
 import com.around.engineerbuddy.util.BMAUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -35,6 +44,8 @@ public class MorningTasksFragment extends BMAFragment {
     RecyclerView recyclerView;
     LinearLayout nodataToDisplayLayout;
     BMARecyclerAdapter bmaRecyclerAdapter;
+    HttpRequest httpRequest;
+    public ArrayList<EOBooking> todayMorningBooking = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,15 +78,76 @@ public class MorningTasksFragment extends BMAFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if(isVisibleToUser){
+//
+//
+//            if (getMainActivity().todayMorningBooking.size() == 0) {
+//                if(nodataToDisplayLayout!=null)
+//                    nodataToDisplayLayout.setVisibility(View.VISIBLE);
+//            }else if(recyclerView!=null) {
+//                loadRecyclerView();
+//
+//                //this.updateDistance();
+//            }
+            getRequest();
+        }
+    }
 
-            if (getMainActivity().todayMorningBooking.size() == 0) {
-                if(nodataToDisplayLayout!=null)
-                    nodataToDisplayLayout.setVisibility(View.VISIBLE);
-            }else if(recyclerView!=null) {
-                loadRecyclerView();
+    private void getRequest(){
+        httpRequest = new HttpRequest(getMainActivity(), true);
+        httpRequest.delegate = MorningTasksFragment.this;
+       // this.actionID = "engineerHomeScreen";
+        //  Log.d("aaaaaaa"," All Task engineerID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID","abcfegd")+"    service id = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
+        httpRequest.execute("todaysSlotBookings", MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null), getMainActivity().getPinCode(),"10AM-1PM");
 
-                //this.updateDistance();
+    }
+
+    @Override
+    public void processFinish(String response) {
+        httpRequest.progress.dismiss();
+        if (response.contains("data")) {
+            JSONObject jsonObjectHttpReq;
+
+            try {
+                jsonObjectHttpReq = new JSONObject(response);
+
+                final JSONObject jsonObject = jsonObjectHttpReq.getJSONObject("data");
+                String statusCode = jsonObject.getString("code");
+                if (statusCode.equals("0000")) {
+                    httpRequest.progress.dismiss();
+                    String res = jsonObject.getString("response");
+                    this.todayMorningBooking = BMAGson.store().getList(EOBooking.class, res);
+                    //  this.bookingInfo = BMAGson.store().getObject(BookingInfo.class, jsonObject);
+                    if(this.todayMorningBooking!=null && this.todayMorningBooking.size()>0) {
+                        loadRecyclerView();
+                    }else {
+                        nodataToDisplayLayout.setVisibility(View.VISIBLE);
+                    }
+
+
+                }
+            } catch (JSONException e) {
+                httpRequest.progress.dismiss();
+                BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
+
+
+                    @Override
+                    public void onWarningDismiss() {
+                        super.onWarningDismiss();
+                    }
+                };
+                bmaAlertDialog.show(R.string.loginFailedMsg);
             }
+        }else{
+            httpRequest.progress.dismiss();
+            BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
+
+
+                @Override
+                public void onWarningDismiss() {
+                    super.onWarningDismiss();
+                }
+            };
+            bmaAlertDialog.show(getString(R.string.somethingWentWrong));
         }
     }
 
@@ -185,7 +257,8 @@ public class MorningTasksFragment extends BMAFragment {
 
 
     public ArrayList<EOBooking> getBookingList() {
-        return getMainActivity().todayMorningBooking;
+     //   return getMainActivity().todayMorningBooking;
+        return this.todayMorningBooking;
 
     }
     private ArrayList<EOBooking> getBookingArray(){
@@ -193,6 +266,23 @@ public class MorningTasksFragment extends BMAFragment {
             eoBooking.name=BMAUtil.getTitleString(eoBooking.name);
         }
         return getBookingList();
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null ) {
+            return;
+        }
+
+        if(data.getBooleanExtra("isCancelled",false)) {
+            if (this.getBookingList().size() == 1) {
+
+                getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, new Intent());
+                getFragmentManager().popBackStack();
+            } else {
+                getRequest();
+            }
+        }
     }
 
 

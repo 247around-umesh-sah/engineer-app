@@ -3,6 +3,8 @@ package com.around.engineerbuddy.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.DrawableRes;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.around.engineerbuddy.BMAGson;
@@ -49,6 +52,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +67,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     HashMap<String, Object> requestData = new HashMap<>();
     EOBooking eoBooking;
     Misc misc;
+    Button submitButton;
 
     @Override
     public void onAttach(Context context) {
@@ -83,7 +90,8 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         this.tile4 = this.view.findViewById(R.id.tile4);
         this.tile5 = this.view.findViewById(R.id.tile5);
         this.tile6 = this.view.findViewById(R.id.tile6);
-        this.view.findViewById(R.id.submitButton).setOnClickListener(new View.OnClickListener() {
+        submitButton= this.view.findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 submitRequest();
@@ -101,7 +109,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         this.setTileValue(this.tile3, R.string.symptoms, R.drawable.complete_symptom_icon, "symptom", true);
         this.setTileValue(this.tile4, R.string.payment, R.drawable.payment, "Payment", true);
         this.setTileValue(this.tile5, R.string.customer, R.drawable.customer, "Customer", true);
-       // this.setTileValue(this.tile5, R.string.artificial, R.drawable.artificial, "Artificial", true);
+        // this.setTileValue(this.tile5, R.string.artificial, R.drawable.artificial, "Artificial", true);
         this.setTileValue(this.tile6, R.string.accessories, R.drawable.accessories, "accesories", true);
         //this.tile5.setAlpha(.5f);
         this.tile6.setAlpha(.5f);
@@ -126,12 +134,11 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         fnTileView.setOnClickListener(this);
     }
 
-    //green_tile
     private void setTileBackgroundView() {
         if (eoSelectedSymptomDefect != null) {
             this.tile3.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
         }
-        if ((selectedProductDetail!=null && !isConsumptionrequired)|| (selectedCosumption != null && selectedCosumption.size()>0)) {
+        if ((selectedProductDetail != null && !isConsumptionrequired) || (selectedCosumption != null && selectedCosumption.size() > 0)) {
             this.tile2.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
         }
 
@@ -159,27 +166,24 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                     bundle.putString("addMoreProductDetail", addMoreProductDetail);
                 if (selectedProductDetail != null) {
                     bundle.putParcelable("productDetail", selectedProductDetail);
-//                    bundle.putString("purchaseDate", purchaseDate);
-//                    bundle.putBoolean("isBroken", isBroken);
                 }
                 bundle.putBoolean("isCompletePage", true);
-                if(selectpurchadeDate!=null) {
+                if (selectpurchadeDate != null) {
                     bundle.putString("pod", selectpurchadeDate);
                 }
-                if(modelNumber!=null) {
+                if (modelNumber != null) {
                     bundle.putParcelable("modelNumber", modelNumber);
                 }
 
-             //   this.updateFragment(bundle, new ProductDetailFragment(), "Product Details");
                 this.updateFragment(bundle, new EditWarrantyBooking(), "Warranty Checker");
                 break;
             case R.id.tile3:
 
-                if(selectedProductDetail==null){
+                if (selectedProductDetail == null) {
                     Toast.makeText(getContext(), getString(R.string.fillProductDetailvalidation), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (isConsumptionrequired && (selectedCosumption == null || selectedCosumption.size()==0)) {
+                if (isConsumptionrequired && (selectedCosumption == null || selectedCosumption.size() == 0)) {
                     Toast.makeText(getContext(), getString(R.string.fillConsumptionvalidation), Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -220,15 +224,15 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                     Toast.makeText(getContext(), getString(R.string.fillProductDetailvalidation), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!isConsumptionrequired){
+                if (!isConsumptionrequired) {
                     Toast.makeText(getContext(), "Consumption not required for this booking", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 bundle.putParcelable("eoBooking", eoBooking);
-                if(selectedCosumption!=null && selectedCosumption.size()>0){
+                if (selectedCosumption != null && selectedCosumption.size() > 0) {
                     bundle.putParcelableArrayList("selectedCosumptionList", selectedCosumption);
                 }
-                 this.updateFragment(bundle, new SparePartConsumptionFragment(), "Spare Part");
+                this.updateFragment(bundle, new SparePartConsumptionFragment(), "Spare Part");
                 break;
         }
     }
@@ -248,43 +252,36 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     Bitmap customerSignatureBitmap;
 
     String addMoreProductDetail;
-    String productDetail;
-    String purchaseDate;
-    boolean isBroken, isCash;
+    boolean  isCash;
     EOCompleteProductdetail selectedProductDetail;
     String paymentsAmount;
     EOModelNumber modelNumber;
     String selectpurchadeDate;
     EOSpareParts eoSpareParts;
-    ArrayList<EOSpareCosumptionRequest> selectedCosumption=new ArrayList<>();
+    ArrayList<EOSpareCosumptionRequest> selectedCosumption = new ArrayList<>();
     boolean isConsumptionrequired;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
         if (data == null || data.getStringExtra("completeCatogryPageName") == null) {
             return;
         }
         switch (data.getStringExtra("completeCatogryPageName")) {
             case "productDetail":
                 selectedProductDetail = data.getParcelableExtra("productDetail");
-                 modelNumber=data.getParcelableExtra("modelNumber");
-                 selectpurchadeDate=data.getStringExtra("pod");
+                modelNumber = data.getParcelableExtra("modelNumber");
+                selectpurchadeDate = data.getStringExtra("pod");
                 eoSpareParts = data.getParcelableExtra("eoSparePart");
                 addMoreProductDetail = data.getStringExtra("AddMoreproductDetail");
-                isConsumptionrequired=data.getBooleanExtra("isConsumptionrequired",false);
-                Log.d("aaaaaa","completcategory isconsum = "+isConsumptionrequired);
-                Log.d("aaaaaaa","editWarranty Onacxtivity = "+modelNumber.modelNumber+"        pod= "+selectpurchadeDate);
+                isConsumptionrequired = data.getBooleanExtra("isConsumptionrequired", false);
 
                 break;
             case "spareConsumption":
-                selectedCosumption=data.getParcelableArrayListExtra("spareConsumption");
-                //isConsumptionrequired=data.getBooleanExtra("isSpareConsumptionRequired",false);
+                selectedCosumption = data.getParcelableArrayListExtra("spareConsumption");
                 break;
 
             case "symptom":
                 this.eoSelectedSymptomDefect = data.getParcelableExtra("selectedEOSymptomDefect");
-                Log.d("aaaaaa", "eosymptom .... " + this.eoSelectedSymptomDefect.remarks);
                 break;
             case "paymentDetail":
                 this.paymentsAmount = data.getStringExtra("paymentsAmount");
@@ -295,7 +292,6 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 break;
 
 
-
         }
     }
 
@@ -304,9 +300,10 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     private void submitRequest() {
         if (selectedProductDetail == null) {
             Toast.makeText(getContext(), "Please complete Product Detail Tile", Toast.LENGTH_SHORT).show();
+
             return;
         }
-        if(isConsumptionrequired && (selectedCosumption==null || selectedCosumption.size()==0)){
+        if (isConsumptionrequired && (selectedCosumption == null || selectedCosumption.size() == 0)) {
             Toast.makeText(getContext(), "Please complete consumption Tile", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -327,6 +324,8 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 //            Toast.makeText(getContext(), "You can not complete booking from out side of booking pincode", Toast.LENGTH_SHORT).show();
 //            return;
 //        }
+        this.submitButton.setEnabled(false);
+        Bitmap serialnppicture = null;
 
         requestData.put("booking_id", eoBooking.bookingID);
         requestData.put("partner_id", eoBooking.partnerID);
@@ -361,34 +360,35 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 requestMap.put("model_number", selectCompleteProduct.model_number);
             requestMap.put("service_charge", selectCompleteProduct.customerBasicharge);
             requestMap.put("additional_service_charge", selectCompleteProduct.customerExtraharge);
-            if(selectCompleteProduct.product_or_services.equalsIgnoreCase("product") && Double.valueOf(selectCompleteProduct.amountDue)>0){
+            if (selectCompleteProduct.product_or_services.equalsIgnoreCase("product") && Double.valueOf(selectCompleteProduct.amountDue) > 0) {
                 requestMap.put("service_charge", selectCompleteProduct.customerPartharge);
                 requestMap.put("parts_cost", "0.00");
 
-            }else {
+            } else {
                 requestMap.put("parts_cost", selectCompleteProduct.customerPartharge);
             }
             requestMap.put("pod", selectCompleteProduct.pod);
-            if(eoSpareParts!=null){
-                if(selectCompleteProduct.invoicePic!=null) {
+            if (eoSpareParts != null) {
+                if (selectCompleteProduct.invoicePic != null) {
                     if (this.eoSpareParts.invoice_pic != null) {
                         requestMap.put("existing_purchase_invoice", onCaptureImageResult(selectCompleteProduct.invoicePic));
                     } else if (selectCompleteProduct.invoicePic != null) {
                         requestMap.put("purchase_invoice", onCaptureImageResult(selectCompleteProduct.invoicePic));
                     }
                 }
-                if(selectCompleteProduct.serialNoPic!=null) {
+                if (selectCompleteProduct.serialNoPic != null) {
                     if (this.eoSpareParts.serial_number_pic != null) {
                         requestMap.put("existing_serial_number_pic", onCaptureImageResult(selectCompleteProduct.serialNoPic));
                     } else if (selectCompleteProduct.serialNoPic != null) {
                         requestMap.put("serial_number_pic", onCaptureImageResult(selectCompleteProduct.serialNoPic));
                     }
                 }
-            }else {
-                if (selectCompleteProduct.serialNoPic != null && selectCompleteProduct.serialNoPic!=null) {
+            } else {
+                if (selectCompleteProduct.serialNoPic != null && selectCompleteProduct.serialNoPic != null) {
                     requestMap.put("serial_number_pic", onCaptureImageResult(selectCompleteProduct.serialNoPic));
+                    serialnppicture = selectCompleteProduct.serialNoPic;
                 }
-                if (selectCompleteProduct.invoicePic != null && selectCompleteProduct.invoicePic!=null) {
+                if (selectCompleteProduct.invoicePic != null && selectCompleteProduct.invoicePic != null) {
                     requestMap.put("purchase_invoice", onCaptureImageResult(selectCompleteProduct.invoicePic));
                 }
             }
@@ -412,13 +412,8 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 
         }
         requestData.put("unit_array", unitlist);
-      //  Log.d("aaaaaa","cosumption Submit = "+ BMAGson.store().toJson(selectedCosumption));
-        if(selectedCosumption!=null && selectedCosumption.size()>0) {
-//            ArrayList
-//            for(EOSpareCosumptionRequest eoSpareCosumptionRequest:selectedCosumption){
-//
-//            }
-            requestData.put("spare_consumption",selectedCosumption );//BMAGson.store().toJson(selectedCosumption));
+        if (selectedCosumption != null && selectedCosumption.size() > 0) {
+            requestData.put("spare_consumption", selectedCosumption);//BMAGson.store().toJson(selectedCosumption));
         }
 
 
@@ -427,9 +422,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = CompleteBookingCategoryFragment.this;
-        //  this.actionID="completeBookingByEngineer";
-       httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData),getMainActivity().getEngineerId());
-
+        httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData),getMainActivity().getEngineerId());
 
     }
 
@@ -452,9 +445,10 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                         @Override
                         public void onDefault() {
                             super.onDefault();
-                            Intent intent=new Intent();
-                            intent.putExtra("completed",true);
-                            getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode,intent);
+                            submitButton.setEnabled(true);
+                            Intent intent = new Intent();
+                            intent.putExtra("completed", true);
+                            getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
                             getFragmentManager().popBackStack();
                         }
 
@@ -469,6 +463,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 
                 }
             } catch (JSONException e) {
+                this.submitButton.setEnabled(true);
                 httpRequest.progress.dismiss();
                 BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
 
@@ -481,7 +476,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 bmaAlertDialog.show("Something went wrong");
             }
         } else {
-
+            this.submitButton.setEnabled(true);
             httpRequest.progress.dismiss();
             BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
 
@@ -499,44 +494,37 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 
     String SN_DIRECTORY = Environment.getExternalStorageDirectory() + "/AroundSerialNO/";
 
-    public String onCaptureImageResult(Bitmap thumbnail) {
-        //Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.PNG, 90, bytes);
 
+
+
+    public String onCaptureImageResult(Bitmap thumbnail) {
+
+
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 30, bytes);
+
+
+        //Log.d("aaaaaa","category = "+thumbnail.getWidth()+"    bitmap height ="+thumbnail.getHeight());
         String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
 
         String serialNoPath = eoBooking.bookingID + "_" + pic_name + ".png";
-        File destination = new File(SN_DIRECTORY);//, serialNoPath);
-        //  FileOutputStream fo;
+        File destination = new File(SN_DIRECTORY);
         try {
-            File file = new File(destination,serialNoPath);
-            boolean isFile=false;// = file.createNewFile();
-            if(!file.exists()){
-                isFile=file.createNewFile();
+            File file = new File(destination, serialNoPath);
+            boolean isFile = file.createNewFile();
+            if (!file.exists()) {
+                isFile = file.createNewFile();
             }
             if (!isFile) {
                 destination.mkdirs();
             }
-
             FileOutputStream fo = new FileOutputStream(file);
-//        File destination = new File(SN_DIRECTORY, serialNoPath);
-//
-//        try {
-//            boolean isFile=destination.createNewFile();
-//            if(!isFile){
-//                destination.mkdirs();
-//            }
-//            FileOutputStream fo = new FileOutputStream(destination);
             fo.write(bytes.toByteArray());
             fo.close();
             String encodeImage = Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
+            //Log.d("aaaaaa","image string = "+encodeImage);
             return encodeImage;
-//            customUnitList.setSerialNoUrl(encodeImage);
-//            customUnitList.setSerialNoBitmap(thumbnail);
-//            viewHolder.sNCamera.setImageBitmap(thumbnail);
-
-            //notifyDataSetChanged();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -545,4 +533,6 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         return null;
 
     }
+
+
 }

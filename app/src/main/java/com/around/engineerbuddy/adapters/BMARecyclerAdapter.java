@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class BMARecyclerAdapter extends RecyclerView.Adapter {
+public class BMARecyclerAdapter extends RecyclerView.Adapter   {
     Context context;
     List<?> list;
     RecyclerView recyclerView;

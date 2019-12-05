@@ -10,10 +10,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.activity.MainActivity;
+import com.around.engineerbuddy.component.BMAUrlSelectionDialog;
 import com.around.engineerbuddy.util.BMAUIUtil;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -33,6 +35,8 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
     public SharedPreferences sharedPrefs;
     public SharedPreferences.Editor editor;
     private HttpRequest httpRequest;
+    ImageView loginAppLogo;
+    private int ttlTapToOpenAppUrlDlg = 0;
     private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
@@ -49,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
 
         phone_number = (EditText) findViewById(R.id.phonenumber);
         password = (EditText) findViewById(R.id.password);
+        this.loginAppLogo=findViewById(R.id.loginAppLogo);
 
         login_button = (Button) findViewById(R.id.login_button);
         BMAUIUtil.setBackgroundRect(login_button, getResources().getColor(R.color.colorPrimary), R.dimen._50dp);
@@ -111,6 +116,15 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
 //                    login_button.setTextColor(Color.parseColor("#32475A"));
 //                    login_button.setBackgroundColor(Color.parseColor("#D6D7D7"));
 //                }
+            }
+        });
+        this.loginAppLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ttlTapToOpenAppUrlDlg++;
+                if(ttlTapToOpenAppUrlDlg>=10){
+                    openAppUrlDialog();
+                }
             }
         });
     }
@@ -238,5 +252,10 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
             misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serverConnectionFailedMsg);
             httpRequest.progress.dismiss();
         }
+    }
+    private void openAppUrlDialog(){
+        BMAUrlSelectionDialog bmaUrlSelectionDialog=new BMAUrlSelectionDialog(this);
+        bmaUrlSelectionDialog.show();
+        ttlTapToOpenAppUrlDlg=0;
     }
 }

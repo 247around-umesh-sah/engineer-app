@@ -20,6 +20,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/loginAppLogo"
                 android:layout_width="@dimen/_250dp"
                 android:layout_height="@dimen/_230dp"
                 android:layout_centerHorizontal="true"

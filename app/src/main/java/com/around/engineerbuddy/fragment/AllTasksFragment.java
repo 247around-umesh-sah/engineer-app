@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -57,6 +58,7 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.all_task_fragment, container, false);
         //  BMAmplitude.saveUserAction("AllTaskFragment","AllTaskFragment");
+        Log.d("aaaaa","pkname = "+ Environment.getExternalStorageDirectory() + "/AroundSerialNO/");
         this.swipeRefresh=this.view.findViewById(R.id.swipeRefresh);
         this.missedBookingLayout = this.view.findViewById(R.id.missedLayout);
         this.tomorrowBookingLayout = this.view.findViewById(R.id.tomorroBookingLayout);
@@ -158,7 +160,7 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
         }
         //LP-4394701910188
     }
-
+// After search on home screen is taking time to change page.
     @Override
     public void processFinish(String response) {
         // super.processFinish(response);
@@ -179,9 +181,9 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
                     if (this.actionID.equalsIgnoreCase("engineerHomeScreen")) {
                         String res = jsonObject.getString("response");
                         eoAllBookingTask = BMAGson.store().getObject(EOAllBookingTask.class, res);
-                        getMainActivity().todayMorningBooking = eoAllBookingTask.todayMorningBooking;
-                        getMainActivity().todayAfternoonBooking = eoAllBookingTask.todayAfternoonBooking;
-                        getMainActivity().todayEveningBooking = eoAllBookingTask.todayEveningBooking;
+//                        getMainActivity().todayMorningBooking = eoAllBookingTask.todayMorningBooking;
+//                        getMainActivity().todayAfternoonBooking = eoAllBookingTask.todayAfternoonBooking;
+//                        getMainActivity().todayEveningBooking = eoAllBookingTask.todayEveningBooking;
                         this.dataToView();
                     } else {
                         ArrayList<EOBooking> searchedBookingList = BMAGson.store().getList(EOBooking.class, jsonObject.getJSONObject("response").getString("Bookings"));
@@ -328,7 +330,7 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
 
     @Override
     public void startSearch(String filterStr) {
-     //   Log.d("aaaaa", "search data = " + filterStr);
+        Log.d("aaaaa", "search data = " + filterStr);
 
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = AllTasksFragment.this;

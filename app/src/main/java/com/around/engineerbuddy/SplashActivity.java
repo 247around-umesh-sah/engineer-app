@@ -162,7 +162,7 @@ public class SplashActivity extends AppCompatActivity {
                 checkUserLogin();
             }else {
                 new android.support.v7.app.AlertDialog.Builder(SplashActivity.this)
-                        .setTitle("New version avialable\nPlease Update")
+                        .setTitle("New version available,\nPlease Update.")
                         .setMessage("247Around Engineer buddy")
                         .setCancelable(false)
                         .setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -189,7 +189,7 @@ public class SplashActivity extends AppCompatActivity {
 //                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
 //                    }
 //                    };
-//                bmaAlertDialog.show("New version avialable");
+//                bmaAlertDialog.show("New version available");
 //                }
             }
 

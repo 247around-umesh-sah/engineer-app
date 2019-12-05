@@ -9,7 +9,7 @@ public class ApplicationHelper {
 
     public  SharedPreferences sharedprefrence;
     SharedPreferences.Editor editor;
-    Context applicationContex;
+    public Context applicationContex;
    public ApplicationHelper(Context applicationContex){
         this.applicationContex=applicationContex;
     }

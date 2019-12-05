@@ -57,4 +57,18 @@ public int index=3;
 
         //}
     }
+
+    @Override
+    public void startSearch(String filterStr) {
+        if (getCurrentFragment() != null) {
+            getCurrentFragment().startSearch(filterStr);
+        }
+    }
+    public BMAFragment getCurrentFragment() {
+        return this.getFragmentAtIndex(this.viewPager != null ? this.viewPager.getCurrentItem() : 0);
+    }
+
+    public BMAFragment getFragmentAtIndex(int index) {
+        return this.customFragmentPageAdapter != null ? this.customFragmentPageAdapter.getItem(index) : null;
+    }
 }

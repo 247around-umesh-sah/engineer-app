@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/productLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -208,15 +209,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Serial No."
-                    android:layout_weight=".5"/>
+                    android:layout_weight=".3"/>
             <EditText
                 android:id="@+id/enterSerialNumber"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight=".5"
-                android:gravity="center"
+                android:layout_weight=".7"
+                android:gravity="center_vertical"
                 android:hint="Enter Serial Number"
                 android:paddingLeft="@dimen/_10dp"
+                android:layout_marginLeft="@dimen/_10dp"
                 android:textColor="#8C8C8C"
                 android:background="@drawable/rect_drawable"
                 android:textSize="@dimen/_15dp" />
@@ -237,14 +239,13 @@
                     android:layout_marginTop="@dimen/_10dp"
                     android:gravity="center"
                     android:paddingBottom="@dimen/_5dp"
-
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/serialNoPhoto"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight=".5"
+                        android:layout_weight=".3"
                         android:gravity="center_vertical"
                         android:fontFamily="@font/sourcesanspro_regular"
                         android:textSize="16dp"
@@ -254,7 +255,9 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:background="@drawable/rect_drawable"
-                        android:layout_weight=".5"
+                        android:layout_weight=".7"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:paddingLeft="@dimen/_8dp"
                         android:orientation="horizontal"
                         >
                         <TextView
@@ -262,7 +265,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="Take Photo"
-                            android:gravity="center"
+                            android:gravity="center_vertical"
                             android:padding="@dimen/_2dp"
                             android:layout_weight="1"/>
                     <ImageView
@@ -291,7 +294,7 @@
                     android:id="@+id/invoiceNoPhoto"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".5"
+                    android:layout_weight=".3"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/sourcesanspro_regular"
                     android:textSize="16dp"
@@ -301,7 +304,9 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/rect_drawable"
-                    android:layout_weight=".5"
+                    android:layout_weight=".7"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:paddingLeft="@dimen/_8dp"
                     android:orientation="horizontal"
                     >
                     <TextView
@@ -309,7 +314,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="Take Photo"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:padding="@dimen/_2dp"
                         android:layout_weight="1"/>
                     <ImageView
@@ -326,33 +331,33 @@
                 android:id="@+id/serviceCatgLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rect_drawable"
                 android:minHeight="@dimen/_40dp"
                 android:layout_marginTop="@dimen/_10dp"
                 android:visibility="visible"
+                android:paddingLeft="@dimen/_10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/serivceCatg"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/_5dp"
-                    android:layout_weight=".4"
+                    android:layout_weight=".3"
                     android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/_10dp"
+
                     android:text="Serivce Category"
-                    android:visibility="gone"
-                    android:textColor="#38445E" />
+                    android:visibility="visible"
+                    android:fontFamily="@font/sourcesanspro_regular" />
 
                 <TextView
                     android:id="@+id/selectServiceCatg"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
+                    android:layout_weight=".7"
+                    android:gravity="center_vertical"
                     android:hint="Service Category"
                     android:paddingLeft="@dimen/_10dp"
                     android:textColor="#8C8C8C"
+                    android:layout_marginLeft="@dimen/_10dp"
                     android:textSize="@dimen/_15dp" />
 
                 <com.around.engineerbuddy.component.BMAFontViewField
@@ -423,7 +428,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10dp"
-
+                android:paddingLeft="@dimen/_10dp"
                 android:gravity="center_vertical"
                 android:minHeight="@dimen/_40dp"
                 android:orientation="horizontal">
@@ -432,11 +437,9 @@
                     android:id="@+id/basichCharges"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/_5dp"
-                    android:layout_weight=".5"
+                    android:layout_weight=".3"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/sourcesanspro_regular"
-                    android:paddingLeft="@dimen/_10dp"
                     android:text="Basic Charges"
                    />
 
@@ -444,12 +447,13 @@
                     android:id="@+id/basichChargeEdittext"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".5"
+                    android:layout_weight=".7"
                     android:gravity="center"
                     android:hint="Enter Basic Charges"
                     android:background="@drawable/rect_drawable"
                     android:paddingLeft="@dimen/_10dp"
                     android:textColor="#38445E"
+                    android:layout_marginLeft="@dimen/_10dp"
                     android:inputType="numberDecimal"
                     android:textSize="@dimen/_15dp" />
             </LinearLayout>
@@ -459,20 +463,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10dp"
-
                 android:gravity="center_vertical"
                 android:minHeight="@dimen/_40dp"
+                android:paddingLeft="@dimen/_10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/additionalCharges"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_5dp"
-                    android:layout_weight=".5"
+                    android:layout_weight=".3"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/sourcesanspro_regular"
-                    android:paddingLeft="@dimen/_10dp"
                     android:text="Additional Charges"
                     />
 
@@ -480,12 +482,13 @@
                     android:id="@+id/additionalChargeEdittext"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".5"
+                    android:layout_weight=".7"
                     android:gravity="center"
                     android:background="@drawable/rect_drawable"
                     android:hint="Enter Additional Charges"
                     android:paddingLeft="@dimen/_10dp"
                     android:textColor="#38445E"
+                    android:layout_marginLeft="@dimen/_10dp"
                     android:inputType="numberDecimal"
                     android:textSize="@dimen/_15dp" />
             </LinearLayout>
@@ -495,7 +498,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10dp"
-
+                android:paddingLeft="@dimen/_10dp"
                 android:gravity="center_vertical"
                 android:minHeight="@dimen/_40dp"
                 android:orientation="horizontal">
@@ -504,11 +507,10 @@
                     android:id="@+id/partsCostTaken"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/_5dp"
-                    android:layout_weight=".5"
+                    android:layout_weight=".3"
                     android:gravity="center_vertical"
                     android:fontFamily="@font/sourcesanspro_regular"
-                    android:paddingLeft="@dimen/_10dp"
+
                     android:text="Part Charges"
                     />
 
@@ -516,12 +518,13 @@
                     android:id="@+id/partsCostEdittext"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".5"
+                    android:layout_weight=".7"
                     android:background="@drawable/rect_drawable"
                     android:gravity="center"
                     android:hint="Enter Parts Charge"
                     android:paddingLeft="@dimen/_10dp"
                     android:textColor="#38445E"
+                    android:layout_marginLeft="@dimen/_10dp"
                     android:inputType="numberDecimal"
                     android:textSize="@dimen/_15dp" />
             </LinearLayout>
