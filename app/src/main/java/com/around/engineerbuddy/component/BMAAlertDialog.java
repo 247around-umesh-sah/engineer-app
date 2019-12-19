@@ -38,6 +38,7 @@ public class BMAAlertDialog  extends Dialog implements View.OnClickListener {
     private TextView alertTextView;
     TableRow tableInputRow,tableRow2,tableRow1;
     EditText txt_input;
+    boolean isInformation;
 
     public BMAAlertDialog(Context context) {
         this(context,false,false);
@@ -50,6 +51,13 @@ public class BMAAlertDialog  extends Dialog implements View.OnClickListener {
         this.context=context;
         this.isConfirmation = isConfirmation;
         this.isWarning = isWarning;
+    }
+    public BMAAlertDialog(Context context, boolean isConfirmation, boolean isWarning,boolean isOptionalBtnVisible,boolean isInformation) {
+        super(context);
+        this.context=context;
+        this.isConfirmation = isConfirmation;
+        this.isWarning = isWarning;
+        this.isInformation=isInformation;
     }
 
     public BMAAlertDialog(Context context, boolean isConfirmation, boolean isWarning, boolean isOptionalBtnVisible) {
@@ -105,7 +113,8 @@ public class BMAAlertDialog  extends Dialog implements View.OnClickListener {
         final float buttonRadius = 50f;//this.getDimension(R.dimen._50dp);
         BMAUIUtil.setBackgroundRect(okButton, R.color.dark_gray, buttonRadius);
         if (this.isConfirmation || this.isOptionalBtnVisible) {
-            BMAUIUtil.setBackgroundRect(okButton, R.color.new_green_color, buttonRadius);
+
+            BMAUIUtil.setBackgroundRect(okButton, isInformation ? R.color.orangeLight : R.color.new_green_color, buttonRadius);
             BMAUIUtil.setBackgroundRect(cancelBtnLayout, R.color.transparentWhite, buttonRadius);
             cancelBtnLayout.setVisibility(View.VISIBLE);
             cancelButton.setTextColor(BMAUIUtil.getColor(R.color.blackMedium));
@@ -153,12 +162,17 @@ public class BMAAlertDialog  extends Dialog implements View.OnClickListener {
 
     @DrawableRes
     protected int getHeaderIcon() {
-        if (isConfirmation)
-            return R.drawable.icon_check_circle;
+        if (isConfirmation) {
+            if(isInformation){
+               return R.drawable.icon_info_sign;
+            }else {
+                return R.drawable.icon_check_circle;
+            }
+        }
         else if (isWarning) {
             return R.drawable.icon_exclamation_triangle;
         }
-        return R.drawable.icon_check_circle;//icon_info_sign;
+        return R.drawable.icon_check_circle;
     }
 
     private @ColorRes

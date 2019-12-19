@@ -58,7 +58,6 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.all_task_fragment, container, false);
         //  BMAmplitude.saveUserAction("AllTaskFragment","AllTaskFragment");
-        Log.d("aaaaa","pkname = "+ Environment.getExternalStorageDirectory() + "/AroundSerialNO/");
         this.swipeRefresh=this.view.findViewById(R.id.swipeRefresh);
         this.missedBookingLayout = this.view.findViewById(R.id.missedLayout);
         this.tomorrowBookingLayout = this.view.findViewById(R.id.tomorroBookingLayout);

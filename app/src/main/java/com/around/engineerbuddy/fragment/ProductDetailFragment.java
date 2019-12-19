@@ -583,14 +583,43 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
                         this.noDataToDisplay.setVisibility(View.VISIBLE);
                     }
 
-                    BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
-                        @Override
-                        public void onWarningDismiss() {
-                            super.onWarningDismiss();
-                        }
+                    if(statusCode.equalsIgnoreCase("1001")) {
+                        BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
+                            @Override
+                            public void onWarningDismiss() {
+                                super.onWarningDismiss();
+                            }
 
-                    };
-                    bmaAlertDialog.show(jsonObject.getString("result"));
+                        };
+                        bmaAlertDialog.show(jsonObject.getString("result"));
+                    }else{
+                        if(this.actionID.equalsIgnoreCase("validateSerialNumber")) {
+
+                            BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), true, false,false,true) {
+                                @Override
+                                public void onConfirmation() {
+                                    super.onConfirmation();
+                                    submit();
+                                }
+
+                                @Override
+                                public void onCancelConfirmation() {
+                                    super.onCancelConfirmation();
+
+                                }
+                            };
+                            bmaAlertDialog.show( jsonObject.getString("result")+" You can click ok to proceed to the next screen");
+                        }else{
+                            BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
+                                @Override
+                                public void onWarningDismiss() {
+                                    super.onWarningDismiss();
+                                }
+
+                            };
+                            bmaAlertDialog.show(jsonObject.getString("result"));
+                        }
+                    }
                 }
             } catch (Exception e) {
 
@@ -829,6 +858,9 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
                         Toast.makeText(getContext(), getString(R.string.customerChargesValidation), Toast.LENGTH_SHORT).show();
                     }
                 } else {
+                    if(this.scrollView!=null) {
+                        this.scrollView.fullScroll(View.FOCUS_DOWN);
+                    }
                     Toast.makeText(getContext(), getString(R.string.selectAllFieldsValidation), Toast.LENGTH_SHORT).show();
                 }
 
@@ -838,7 +870,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         }
 
     }
-
+//14S1831804A6EV102538
     private void addMoreProduct() {
         Bundle bundle = new Bundle();
         bundle.putParcelable("productDetail", this.selectedCompleteDetail);
@@ -892,7 +924,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
                 selectCompleteProduct.customerBasicharge = value;
             }
             if (key.equalsIgnoreCase("serial_number")) {
-                selectCompleteProduct.serialNumber = value;
+                selectCompleteProduct.serialNumber = value.trim();
             }
             if (key.equalsIgnoreCase("additional_service_charge")) {
                 selectCompleteProduct.customerExtraharge = value;
@@ -981,6 +1013,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = ProductDetailFragment.this;
         this.actionID = "validateSerialNumber";
+
         httpRequest.execute(this.actionID, eoBooking.bookingID, serialNumber, selectedCompleteDetail.getbookingProductUnit().quantity.get(0).model_number, selectServiceCatg.getText().toString().trim());
 
     }

@@ -157,10 +157,16 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
                 break;
             case R.id.tile4:
                 //bundle.putString(BMAConstants.HEADER_TXT, "New Appointment");
-                NewAppointmentFragment newAppointmentFragment = new NewAppointmentFragment();
-                bundle.putParcelable("eoBooking", eoBooking);
-                bundle.putString("bookingID", eoBooking.bookingID);
-                this.updateFragment(bundle, newAppointmentFragment, getString(R.string.newAppointment));
+
+                if(eoBooking.service_center_booking_action_status!=null && !eoBooking.service_center_booking_action_status.equalsIgnoreCase("InProcess")) {
+                    NewAppointmentFragment newAppointmentFragment = new NewAppointmentFragment();
+                    bundle.putParcelable("eoBooking", eoBooking);
+                    bundle.putString("bookingID", eoBooking.bookingID);
+                    this.updateFragment(bundle, newAppointmentFragment, getString(R.string.newAppointment));
+                }else{
+                    Toast.makeText(getContext(), "You can not Reshedule this booking due to "+eoBooking.service_center_booking_action_status, Toast.LENGTH_SHORT).show();
+
+                }
 //                bundle.putString("bookingID",eoBooking.bookingID);
 //                this.updateFragment(bundle, new DocumentCategory(), "Documents");
                 break;

@@ -157,12 +157,20 @@ public class SparePartConsumptionFragment extends BMAFragment {
         }
         if (cosumptionArray == null || cosumptionArray.size() == 0) {
             cosumptionArray = new ArrayList<>();
+            int counter=0;
             for (int i = 0; i < this.eoConsumption.sparePartCosumption.size(); i++) {
-                cosumptionArray.add(new EOSpareCosumptionRequest());
+                EOSpareCosumptionRequest eoSpareCosumptionRequest=new EOSpareCosumptionRequest();
+                eoSpareCosumptionRequest.position=counter;
+                cosumptionArray.add(eoSpareCosumptionRequest);
+                counter++;
             }
         } else if (cosumptionArray != null && cosumptionArray.size() < this.eoConsumption.sparePartCosumption.size()) {
+            int counter=0;
             for (int i = cosumptionArray.size(); i < this.eoConsumption.sparePartCosumption.size(); i++) {
-                cosumptionArray.add(new EOSpareCosumptionRequest());
+                EOSpareCosumptionRequest eoSpareCosumptionRequest=new EOSpareCosumptionRequest();
+                eoSpareCosumptionRequest.position=counter;
+                cosumptionArray.add(eoSpareCosumptionRequest);
+                counter++;
             }
         }
         BMARecyclerAdapter bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), this.eoConsumption.sparePartCosumption, recyclerView, this, R.layout.spare_part_consumption_row);
@@ -308,6 +316,7 @@ public class SparePartConsumptionFragment extends BMAFragment {
             public void onDismiss(BMAUiEntity selectedItems, BMAUiEntity deletedItems, List<BMAUiEntity> updatedItems) {
                 super.onDismiss(selectedItems, deletedItems, updatedItems);
                 if (selectedItems != null) {
+
                     selectWrong.setText(selectedItems.getDetail1());
                     EoWrongPart eoWrongPart = (EoWrongPart) selectedItems.tag;
                     selectWrong.setTag(eoWrongPart);
@@ -350,6 +359,10 @@ public class SparePartConsumptionFragment extends BMAFragment {
             for (EOSpareCosumptionRequest eoSpareCosumptionRequest : this.cosumptionArray) {
 
                 if (eoSpareCosumptionRequest.consumed_spare_tag == null) {
+                    if(this.eoConsumption!=null && this.eoConsumption.sparePartCosumption!=null && this.eoConsumption.sparePartCosumption.size()>2) {
+                        this.recyclerView.scrollToPosition(eoSpareCosumptionRequest.position);
+
+                    }
                     Toast.makeText(getContext(), "Please select Cosumption Reason ", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (eoSpareCosumptionRequest.consumed_spare_tag.equalsIgnoreCase("wrong_part_received")) {
