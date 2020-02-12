@@ -1,11 +1,18 @@
 package com.around.engineerbuddy.filepicker;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.around.engineerbuddy.R;
+import com.around.engineerbuddy.entity.EODocumentType;
+
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -17,12 +24,16 @@ public class DownloadTask {
     private Context context;
     //private Button buttonText;
     private String downloadUrl = "", downloadFileName = "";
-
-    public DownloadTask(Context context, String downloadUrl) {
+String docFilename="";
+    ProgressDialog progress;
+EODocumentType eoDocumentType;
+    public DownloadTask(Context context, String downloadUrl, EODocumentType eoDocumentType) {
         this.context = context;
        // this.buttonText = buttonText;
         this.downloadUrl = downloadUrl;
-         downloadFileName =("pdf");//downloadUrl.replace("http://androhub.com/demo/", "");//Create file name by picking download file name from URL
+         downloadFileName=eoDocumentType.documentType;
+        this.eoDocumentType=eoDocumentType;
+                 docFilename=eoDocumentType.documentDescription;//("pdf");//downloadUrl.replace("http://androhub.com/demo/", "");//Create file name by picking download file name from URL
         Log.e(TAG, downloadFileName);
 
         //Start Downloading Task
@@ -37,16 +48,22 @@ public class DownloadTask {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progress = new ProgressDialog(context);
+            progress.setMessage(context.getString(R.string.downloading));
+            progress.setIndeterminate(true);
+            progress.setCancelable(false);
+            progress.show();
 //            buttonText.setEnabled(false);
 //            buttonText.setText("DownLoad Started...");//Set Button Text when download started
         }
 
         @Override
         protected void onPostExecute(Void result) {
+            progress.dismiss();
             try {
                 if (outputFile != null) {
                     Toast.makeText(context, "Download Complete.", Toast.LENGTH_SHORT).show();
-                    BMAFilePicker.openDownLoadFile(context);
+                   // BMAFilePicker.openDownLoadFile(context,eoDocumentType);
                     //BMAFilePicker.openFilePicker(context,outputFile);
                    // BMAFilePicker.openFile(context,outputFile);
 
@@ -62,7 +79,7 @@ public class DownloadTask {
 //                        }
 //                    }, 3000);
 
-                    Log.e(TAG, "Download Failed");
+                    //Log.e(TAG, "Download Failed");
                     Toast.makeText(context, "Download Failed", Toast.LENGTH_SHORT).show();
 
                 }
@@ -87,12 +104,20 @@ public class DownloadTask {
         }
 
         @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
         protected Void doInBackground(Void... arg0) {
+
             try {
+                //http://www3.nd.edu/~cpoellab/teaching/cse40816/android_tutorial.pdf
                 URL url = new URL(downloadUrl);//Create Download URl   ("http://maven.apache.org/maven-1.x/maven.pdf");//
                 HttpURLConnection c = (HttpURLConnection) url.openConnection();//Open Url Connection
                 c.setRequestMethod("GET");//Set Request Method to "GET" since we are grtting data
                 c.setDoOutput(true);
+               // c.setRequestProperty();
                 c.connect();//connect the URL Connection
 
                 //If Connection response is not OK then show Logs
@@ -117,7 +142,7 @@ public class DownloadTask {
                     Log.e(TAG, "Directory Created.");
                 }
 
-                outputFile = new File(apkStorage, downloadFileName);//Create Output file in Main File
+                outputFile = new File(apkStorage, eoDocumentType.documentDescription+"."+downloadFileName);//Create Output file in Main File
 
                 //Create New File if not present
                 Log.d("aaaaa","size = "+c.getContentLength()+"     .. output = "+outputFile.getAbsolutePath()+"    apkfile = "+apkStorage.getAbsolutePath()+"     downloadfile = "+downloadFileName);
@@ -128,18 +153,40 @@ public class DownloadTask {
 
 
                 FileOutputStream fos = new FileOutputStream(outputFile);//Get OutputStream for NewFile Location
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    String value = c.getHeaderField("content-length");
+//                    Log.d("aaaaa","values = "+value);
+//                    try {
+//                        Log.d("aaaaa","CCCC ggg= "+Long.parseLong(value));
+//                       //  Long.parseLong(value);
+//                    } catch (Exception e) {
+//                        Log.d("aaaaa","exception= "+e.toString());
+//                    }
+//                  //  Log.d("aaaaa","CCCC ggg= "+c.getHeaderFieldLong("content-length", -1));
+//                }
+//                Log.d("aaaaa","CCCC = "+c+"           is ="+c.getInputStream());
+//                InputStream is = c.getInputStream();//Get InputStream for connection
+//                byte[] buffer = new byte[1024*1024*100];//Set buffer type
+//                int len1 = 0;//init length
+//                while ((len1 = is.read(buffer)) != -1) {
+//                    fos.write(buffer, 0, len1);//Write new file
+//                }
+                BufferedInputStream in = null;
+                FileOutputStream fout = null;
 
-                InputStream is = c.getInputStream();//Get InputStream for connection
+                in = new BufferedInputStream(url.openStream());
+                fout = new FileOutputStream(outputFile);
 
-                byte[] buffer = new byte[1024*1024*100];//Set buffer type
-                int len1 = 0;//init length
-                while ((len1 = is.read(buffer)) != -1) {
-                    fos.write(buffer, 0, len1);//Write new file
+                byte data[] = new byte[1024*10];
+                int count;
+                while ((count = in.read(data, 0, 1024*10)) != -1){
+                    fout.write(data, 0, count);
                 }
 
+
                 //Close all connection after doing task
-                fos.close();
-                is.close();
+                fout.close();
+                in.close();
 
             } catch (Exception e) {
 

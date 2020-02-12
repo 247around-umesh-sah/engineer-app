@@ -16,6 +16,7 @@
     <string name="action_sign_in">Login</string>
 
     <string name="loading">Please Wait…</string>
+    <string name="downloading">Downloading…</string>
     <string name="search_booking_hint">Search Booking Or Phone No</string>
 
     <!-- Strings related to Home -->
@@ -107,6 +108,8 @@
     <string name="cancel_booking">Cancel</string>
     <string name="update_booking">Update</string>
     <string name="complete_booking">Complete</string>
+    <string name="notification">Notification</string>
+    <string name="checkSparePrice">Check Spare Price</string>
     <string name="navigation">Navigation</string>
     <string name="customercall">Customer</string>
     <string name="reschedule">Reschedule</string>

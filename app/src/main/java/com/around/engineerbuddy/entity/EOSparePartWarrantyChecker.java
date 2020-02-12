@@ -13,4 +13,6 @@ public class EOSparePartWarrantyChecker extends BMAObject {
 
     @SerializedName("spare_parts")
     public EOSpareParts eoSpareParts;
+
+    public ArrayList<EORepairBooking> parents=new ArrayList<>();
 }

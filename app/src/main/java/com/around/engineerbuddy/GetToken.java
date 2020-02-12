@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.around.engineerbuddy.util.BMAConstants;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -33,7 +34,7 @@ public class GetToken {
 
     public GetToken(Context context) {
         this.context = context;
-        sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences();//context.getSharedPreferences(SplashActivity.MyPREFERENCES,
+        sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO);//context.getSharedPreferences(SplashActivity.MyPREFERENCES,
                // Context.MODE_PRIVATE);
     }
 
@@ -167,23 +168,15 @@ public class GetToken {
             case "todaysSlotBookings":
                 todaysSlotBookings(urlParameters,params);
                 break;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            case "usernotifications":
+                usernotifications(urlParameters,params);
+                break;
+            case "partners":
+                partners(urlParameters,params);
+                break;
+            case "partnerAppliances":
+                partnerAppliances(urlParameters,params);
+                break;
 
 
 
@@ -288,9 +281,11 @@ public class GetToken {
 
             String mobile = params[1];
             String password = params[2];
-
+            String deviceToken = params[3];
+            Log.d("zzzzz", " request deviceToken is = " + deviceToken);
             urlParameters.put("mobile", mobile);
             urlParameters.put("password", password);
+            urlParameters.put("device_firebase_token", deviceToken);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -647,6 +642,8 @@ public class GetToken {
             urlParameters.put("booking_id", params[1]);
             urlParameters.put("partner_id", params[2]);
             urlParameters.put("service_id", params[3]);
+            urlParameters.put("primary_contact", params[4]);
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -764,6 +761,52 @@ public class GetToken {
 
         return urlParameters;
     }
+    public Map<String, String> usernotifications(Map<String, String> urlParameters,
+                                                  String[] params) {
+        try {
+
+            urlParameters.put("mobile", params[1]);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+    public Map<String, String> partners(Map<String, String> urlParameters,
+                                                 String[] params) {
+        try {
+
+            urlParameters.put("mobile", params[1]);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+    public Map<String, String> partnerAppliances(Map<String, String> urlParameters,
+                                        String[] params) {
+        try {
+
+            urlParameters.put("partner_id", params[1]);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+
 
 
 

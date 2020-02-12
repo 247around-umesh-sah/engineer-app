@@ -18,7 +18,10 @@ public interface BMAConstants {
     final static int myreqGallary=666;
     String menu_id = "home";
     String HEADER_TXT = "headerTitle";
+    String LOGIN_INFO = "loginInfo";
+    String NOTIF_INFO = "notifInfo";
     int requestCode = 1111;
+    String INTERNAL_SATATUS_CANCELLED="InProcess_Cancelled";
 
 
 }

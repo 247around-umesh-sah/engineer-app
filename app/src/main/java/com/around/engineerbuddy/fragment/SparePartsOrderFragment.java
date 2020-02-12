@@ -1,25 +1,22 @@
 package com.around.engineerbuddy.fragment;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -33,15 +30,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.around.engineerbuddy.BMAGson;
 import com.around.engineerbuddy.BMAmplitude;
 import com.around.engineerbuddy.HttpRequest;
+import com.around.engineerbuddy.ImagePicker;
 import com.around.engineerbuddy.MainActivityHelper;
 import com.around.engineerbuddy.R;
+import com.around.engineerbuddy.activity.ShowImageActivity;
+import com.around.engineerbuddy.activity.VideoViewActivity;
 import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.component.BMACardView;
 import com.around.engineerbuddy.component.BMAFontViewField;
@@ -153,13 +152,17 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         this.view.findViewById(R.id.serialPhotoLayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectPic(1);
+             //   selectPic(1);
+                //inflateDialog(serialNoPicBitmap);
+
+                new ImagePicker(getContext(),getMainActivity(),1,SparePartsOrderFragment.this,selectedSerialNoImageUri,true);
             }
         });
         this.view.findViewById(R.id.invoicePhotoLayout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectPic(2);
+                //selectPic(2);
+                new ImagePicker(getContext(),getMainActivity(),2,SparePartsOrderFragment.this,selectedInvoiceImageUri,true);
             }
         });
         this.selectPurchaseDateIcon.setOnClickListener(this);
@@ -235,7 +238,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 
     @Override
     public void processFinish(String response) {
-        // super.processFinish(response);
+        // super.processFinish(respononse);
         Log.d("bbbbbbb", "response  = " + response);
         httpRequest.progress.dismiss();
         if (response.contains("data")) {
@@ -430,7 +433,8 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                 ImagePartKey = (int) v.getTag();
                 View setChildView = parentLayout.getChildAt(ImagePartKey - 1);
                 frontDefectivePart = setChildView.findViewById(R.id.frontDefectivePartImage);
-                selectPic(3);
+                new ImagePicker(getContext(),getMainActivity(),3,SparePartsOrderFragment.this,null,true);
+              //  selectPic(3);
             }
         });
         backDefectiveImageLayout.setTag(partNumberCounter);
@@ -440,7 +444,8 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                 ImagePartKey = (int) v.getTag();
                 View setChildView = parentLayout.getChildAt(ImagePartKey - 1);
                 backDefectivePart = setChildView.findViewById(R.id.backDefectivePartImage);
-                selectPic(4);
+                //selectPic(4);
+                new ImagePicker(getContext(),getMainActivity(),4,SparePartsOrderFragment.this,null,true);
             }
         });
         partsObject.put(partNumberCounter, null);
@@ -478,8 +483,8 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                 //partsMap.put("quantity", selectQuantity.getText().toString().trim());
                 HashMap<String, Object> partsMapObj = partsMap;
                 partsObject.put(partNumberCounter, BMAGson.store().toJson(partsMapObj));
-                frontDefectiveBitmap = null;
-                backDefectiveBitmap = null;
+                frontDefectiveBitmapUri = null;
+                backDefectiveBitmapUri = null;
                 partsMap.clear();
                 this.addPartView();
                 break;
@@ -492,7 +497,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 //                    checkWarranty();
 //                    return;
 //                }
-                if (!((selectModel.getTag() != null || selectModel.getText().toString().trim().length() > 0) && enterSerialNo.getText().toString().trim().length() > 0 && selectpurchaseDate.getText().toString().trim().length() > 0 && this.serialNoPicBitmap != null && this.invoicePicBitmap != null && problemdescriptionedittext.getText().toString().trim().length() > 0)) {
+                if (!((selectModel.getTag() != null || selectModel.getText().toString().trim().length() > 0) && enterSerialNo.getText().toString().trim().length() > 0 && selectpurchaseDate.getText().toString().trim().length() > 0 && this.selectedSerialNoImageUri!= null && this.selectedInvoiceImageUri != null && problemdescriptionedittext.getText().toString().trim().length() > 0)) {
                     Toast.makeText(getContext(), getString(R.string.selectAllFieldsValidation), Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -691,28 +696,44 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         return bmaUiEntityArrayList;
     }
 
-    Bitmap serialNoPicBitmap, invoicePicBitmap, backDefectiveBitmap, frontDefectiveBitmap;
+   // Bitmap serialNoPicBitmap, invoicePicBitmap, backDefectiveBitmap, frontDefectiveBitmap;
 
+    Uri selectedImageUri,selectedSerialNoImageUri,selectedInvoiceImageUri,backDefectiveBitmapUri,frontDefectiveBitmapUri;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+      //  Log.d("aaaaa","spare Fragment ="+mCurrentPhotoPath);
         File file = new File(mCurrentPhotoPath);
         Bitmap imageBitmap = null;
         try {
-            imageBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), Uri.fromFile(file));
+            selectedImageUri=Uri.fromFile(file);
+            imageBitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImageUri);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if(imageBitmap==null && data!=null && data.getData()!=null){
+            Uri getImageUri=data.getData();
+            selectedImageUri=getImageUri;
+            try {
+                imageBitmap = MediaStore.Images.Media.getBitmap(getMainActivity().getContentResolver(), getImageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         switch (requestCode) {
             case 1:
                 if(imageBitmap!=null) {
-                    this.serialNoPicBitmap = imageBitmap;
+                    selectedSerialNoImageUri=selectedImageUri;
+                   // this.serialNoPicBitmap = imageBitmap;
                     serialNoPic.setImageBitmap(imageBitmap);
                 }
                 break;
             case 2:
                 if(imageBitmap!=null) {
-
-                    this.invoicePicBitmap = imageBitmap;
+                    selectedInvoiceImageUri=selectedImageUri;
+                    //this.invoicePicBitmap = imageBitmap;
                     invoicePic.setImageBitmap(imageBitmap);
                 }
 
@@ -720,32 +741,35 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                 break;
             case 3:
                 if(imageBitmap!=null) {
-                    Log.d("aaaaaa", "defective_front_parts = " + onCaptureImageResult(imageBitmap));
+                    frontDefectiveBitmapUri=selectedImageUri;
+                 //   Log.d("aaaaaa", "defective_front_parts = " + onCaptureImageResult(frontDefectiveBitmapUri));
                     String getPartString = partsObject.get(ImagePartKey);
                     if (getPartString != null) {
                         HashMap<String, Object> getPartsMap = BMAGson.store().getObject(HashMap.class, getPartString);
-                        getPartsMap.put("defective_front_parts", onCaptureImageResult(imageBitmap));
+                        getPartsMap.put("defective_front_parts", onCaptureImageResult(frontDefectiveBitmapUri));
                         partsObject.put(ImagePartKey, BMAGson.store().toJson(getPartsMap));
                     } else {
-                        partsMap.put("defective_front_parts", onCaptureImageResult(imageBitmap));
+                        partsMap.put("defective_front_parts", onCaptureImageResult(frontDefectiveBitmapUri));
                     }
 
-                    frontDefectiveBitmap = imageBitmap;
+                 //   frontDefectiveBitmap = imageBitmap;
+
 
                     frontDefectivePart.setImageBitmap(imageBitmap);
                 }
                 break;
             case 4:
                 if(imageBitmap!=null) {
-                    backDefectiveBitmap = imageBitmap;
+                  //  backDefectiveBitmap = imageBitmap;
+                    backDefectiveBitmapUri=selectedImageUri;
 
                     String getPartString1 = partsObject.get(ImagePartKey);
                     if (getPartString1 != null) {
                         HashMap<String, Object> getPartsMap = BMAGson.store().getObject(HashMap.class, getPartString1);
-                        partsMap.put("defective_back_parts", onCaptureImageResult(imageBitmap));
+                        partsMap.put("defective_back_parts", onCaptureImageResult(backDefectiveBitmapUri));
                         partsObject.put(ImagePartKey, BMAGson.store().toJson(getPartsMap));
                     } else {
-                        partsMap.put("defective_back_parts", onCaptureImageResult(imageBitmap));
+                        partsMap.put("defective_back_parts", onCaptureImageResult(backDefectiveBitmapUri));
                     }
                     //Log.d("aaaaaa", "defective_back_parts = " + onCaptureImageResult(imageBitmap));
 
@@ -757,7 +781,18 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
     }
 
 
-    public String onCaptureImageResult(Bitmap thumbnail) {
+    public String onCaptureImageResult(Uri uri) {
+        Bitmap thumbnail= null;
+        try {
+            thumbnail = MediaStore.Images.Media.getBitmap(getMainActivity().getContentResolver(), uri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(thumbnail==null){
+            thumbnail=getBitmapFromURL(uri.toString());
+            if(thumbnail==null)
+            return null;
+        }
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 30, bytes);
         String pic_name = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
@@ -805,7 +840,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             Toast.makeText(getActivity(), "Cannot use this feature without requested permission", Toast.LENGTH_SHORT).show();
         } else {
             Intent galleryIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(galleryIntent, requestCode);
+            getMainActivity().startActivityForResult(galleryIntent, requestCode);
             // user now provided permission
             // perform function for what you want to achieve
 //                }
@@ -814,28 +849,27 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
     }
 
 
-    private void selectPic(int requestCode) {
+//    private void selectPic(int requestCode) {
+//
+//        if ((ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
+//
+//            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                    requestCode);
+//            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
+//        } else {
+//            Log.d("aaaaaa", "requestCODE = " + requestCode);
+////            Intent galleryIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+////            startActivityForResult(galleryIntent, requestCode);
+//           dispatchTakePictureIntent(requestCode);
+//        }
 
-        if ((ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
 
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    requestCode);
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
-        } else {
-            Log.d("aaaaaa", "requestCODE = " + requestCode);
-//            Intent galleryIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//            startActivityForResult(galleryIntent, requestCode);
-           dispatchTakePictureIntent(requestCode);
-        }
-
-
-    }
+  //  }
 
     Calendar mcalendar;
     private int day, month, year;
 
     private void openCalender() {
-
         mcalendar = Calendar.getInstance();
         day = mcalendar.get(Calendar.DAY_OF_MONTH);
         year = mcalendar.get(Calendar.YEAR);
@@ -879,23 +913,26 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         if (this.eoSparePartsOrder != null && this.eoSparePartsOrder.eoSpareParts != null) {
             if (this.eoSparePartsOrder.eoSpareParts.invoice_pic != null) {
 
-                requestData.put("existing_purchase_invoice", onCaptureImageResult(this.invoicePicBitmap));
+                String invoicepic=onCaptureImageResult(this.selectedSerialNoImageUri);
+                Log.d("aaaaaa","REQUEST invoice pic = "+invoicepic);
+                requestData.put("existing_purchase_invoice", invoicepic);
             } else {
-                requestData.put("invoice_number_pic_exist", onCaptureImageResult(this.invoicePicBitmap));
+                requestData.put("invoice_number_pic_exist", onCaptureImageResult(this.selectedInvoiceImageUri));
             }
             if (this.eoSparePartsOrder.eoSpareParts.serial_number_pic != null) {
-                requestData.put("existing_serial_number_pic", onCaptureImageResult(this.serialNoPicBitmap));
+                requestData.put("existing_serial_number_pic", onCaptureImageResult(this.selectedSerialNoImageUri));
             } else {
-                requestData.put("serial_number_pic_exist", onCaptureImageResult(this.serialNoPicBitmap));
+                requestData.put("serial_number_pic_exist", onCaptureImageResult(this.selectedSerialNoImageUri));
             }
         } else {
-            requestData.put("serial_number_pic_exist", onCaptureImageResult(this.serialNoPicBitmap));
-            requestData.put("invoice_number_pic_exist", onCaptureImageResult(this.invoicePicBitmap));
+            requestData.put("serial_number_pic_exist", onCaptureImageResult(this.selectedSerialNoImageUri));
+            requestData.put("invoice_number_pic_exist", onCaptureImageResult(this.selectedInvoiceImageUri));
         }
         requestData.put("model_number", selectModel.getText().toString().trim());
         requestData.put("dop", selectpurchaseDate.getText().toString().trim());
         requestData.put("serial_number", enterSerialNo.getText().toString().trim());
 
+        Log.d("aaaaaaa","GSON  = "+BMAGson.store().toJson(requestData));
         for (Map.Entry<Integer, String> entry : partsObject.entrySet()) {
             HashMap<String, Object> selectedPartsMap = BMAGson.store().getObject(HashMap.class, entry.getValue());
 
@@ -905,11 +942,11 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             }
 
             partList.add(selectedPartsMap);
-            Log.d("aaaaaa", "partListGetvALUE  = " + entry.getKey());
+          //  Log.d("aaaaaa", "partListGetvALUE  = " + entry.getKey());
         }
         //   Log.d("aaaaaa","partsname  = "+partsMap.get("parts_name"));
 
-        Log.d("aaaaaa", "partList = " + BMAGson.store().toJson(partList));
+       // Log.d("aaaaaa", "partList = " + BMAGson.store().toJson(partList));
 
         requestData.put("part", partList);
         httpRequest = new HttpRequest(getMainActivity(), true);
@@ -917,7 +954,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         this.actionID = "submitSparePartsOrder";
         //Log.d("aaaaaa","aentID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("scAgentID", null));
         //Toast.makeText(getContext(), "submitSparePartsOrder", Toast.LENGTH_SHORT).show();
-        httpRequest.execute("submitSparePartsOrder", BMAGson.store().toJson(requestData), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("scAgentID", null));
+        httpRequest.execute("submitSparePartsOrder", BMAGson.store().toJson(requestData), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("scAgentID", null));
 
 
 //    },
@@ -1053,8 +1090,10 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             public void run() {
                 try {
                     //Your code goes here
-                    SparePartsOrderFragment.this.serialNoPicBitmap = getBitmapFromURL(eoSpareParts.serial_number_pic);
-                    SparePartsOrderFragment.this.invoicePicBitmap = getBitmapFromURL(eoSpareParts.invoice_pic);
+
+                    SparePartsOrderFragment.this.selectedSerialNoImageUri = Uri.parse(eoSpareParts.serial_number_pic);
+                    Log.d("aaaaaa","run serialUR i = "+ SparePartsOrderFragment.this.selectedSerialNoImageUri);
+                    SparePartsOrderFragment.this.selectedInvoiceImageUri = Uri.parse(eoSpareParts.invoice_pic);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1198,8 +1237,10 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
     }
     static final int REQUEST_TAKE_PHOTO = 1;
 
-    private void dispatchTakePictureIntent(int requestCode) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    public void dispatchTakePictureIntent(int requestCode, Intent takePictureIntent) {
+        Log.d("aaaaaa","takepictureDispatch  ");
+     //   Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+       // Intent takePictureIntent=new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
             // Create the File where the photo should go
@@ -1216,9 +1257,25 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             if (photoFile != null) {
                 Uri photoURI = Uri.fromFile(photoFile);// FileProvider.getUriForFile(getContext(), "com.example.android.fileprovider", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, requestCode);
+                getMainActivity().startActivityForResult(takePictureIntent, requestCode);
             }
         }
+    }
+
+    private void inflateDialog(Bitmap imageBitmap){
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.imagedialog, null);
+        ImageView image=alertLayout.findViewById(R.id.showImage);
+        image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        image.setScaleType(ImageView.ScaleType.FIT_XY);
+        image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        image.setImageBitmap(imageBitmap);
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity(), R.style.myFullscreenAlertDialogStyle);
+        alert.setTitle("serialimage");
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+        AlertDialog dialog = alert.create();
+        dialog.show();
     }
 
 }

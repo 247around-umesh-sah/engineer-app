@@ -84,7 +84,7 @@ public class HelpingDocumentFragment extends BMAFragment {
                 Menu menuitem = popupMenu.getMenu();
                 if (documentType.equalsIgnoreCase("document")) {
                     menuitem.findItem(R.id.view).setVisible(false);
-                    menuitem.findItem(R.id.share).setVisible(false);
+                    menuitem.findItem(R.id.share).setVisible(true);
                 } else {
                     menuitem.findItem(R.id.download).setVisible(false);
                     menuitem.findItem(R.id.share).setVisible(true);
@@ -100,7 +100,7 @@ public class HelpingDocumentFragment extends BMAFragment {
 //                                webView.getSettings().setSupportZoom(true);
 //                                webView.getSettings().setJavaScriptEnabled(true);
 //                                webView.loadUrl("https://s3.amazonaws.com/bookings-collateral/invoices-excel/Around-1920-1396.pdf");
-                                DownloadTask downloadTask = new DownloadTask(getContext(), eoDocumentType.file);//"http://androhub.com/demo/demo.pdf");
+                                DownloadTask downloadTask = new DownloadTask(getContext(), eoDocumentType.file,eoDocumentType);//"http://androhub.com/demo/demo.pdf");
 //                                //   downloadTask.downloadFile();
 //
 //                                //handle menu1 click
@@ -184,8 +184,8 @@ public class HelpingDocumentFragment extends BMAFragment {
 
         // Add data to the intent, the receiving app will decide
         // what to do with it.
-        share.putExtra(Intent.EXTRA_SUBJECT, "Here is VideoCon TV repair document prepared by 247around");
-        share.putExtra(Intent.EXTRA_TEXT, "Here is VideoCon TV repair document prepared by 247around"+"\n"+link);
+        share.putExtra(Intent.EXTRA_SUBJECT, "Here is document prepared by 247around");
+        share.putExtra(Intent.EXTRA_TEXT, "Here is document prepared by 247around"+"\n"+link);
 
         startActivity(Intent.createChooser(share, "Share link!"));
 

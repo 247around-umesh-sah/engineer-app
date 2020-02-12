@@ -97,7 +97,7 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
         this.tile8 = this.view.findViewById(R.id.tile8);
         this.tile9 = this.view.findViewById(R.id.tile9);
         this.setTileValue(this.tile9, R.string.cancel_booking, R.drawable.cancel_booking, "Cancel", true);
-        this.setTileValue(this.tile5, R.string.comingSoon, R.drawable.brand_logo, "Update", false);
+        this.setTileValue(this.tile5, R.string.comingSoon, R.drawable.brandlogo, "Update", false);
         this.setTileValue(this.tile2, R.string.complete_booking, R.drawable.completing_booking, "Complete", true);
 
         this.setTileValue(this.tile8, R.string.techsupport, R.drawable.mobile, "Tech Support", false);
@@ -114,6 +114,7 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
 //        }
         this.tile1.setText("Call");
         misc = new Misc(getContext());
+      //  this.tile2.setEnabled(eoBooking.complete_allow);
         return this.view;
     }
 
@@ -131,15 +132,25 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.tile9:
-                bundle.putString("bookingID", eoBooking.bookingID);
-                this.updateFragment(bundle, new CancelBookingFragment(), getString(R.string.cancelBooking));
+                if(eoBooking.cancel_allow) {
+                    bundle.putString("bookingID", eoBooking.bookingID);
+                    this.updateFragment(bundle, new CancelBookingFragment(), getString(R.string.cancelBooking));
+                }else{
+                    Toast.makeText(getContext(), "You have already cancelled this booking", Toast.LENGTH_SHORT).show();
+
+                }
                 break;
             case R.id.tile5:
 //                bundle.putParcelable("eoBooking", eoBooking);
 //                this.updateFragment(bundle, new UpdateBookingFragment(), "Update Booking");
                 break;
             case R.id.tile6:
-                csanSparePartOrder();
+                if(canSparePartOrder()){
+                    openEditWarranty();
+                }else{
+                    showSpareRequestValidationMessage(this.eoBooking.message);
+                }
+              //  csanSparePartOrder();
 //                if(!(eoBooking.requestType.contains("Repair"))){
 //                   Toast.makeText(getContext(),getString(R.string.requestPartValidation),Toast.LENGTH_SHORT).show();
 //                   return;
@@ -152,8 +163,13 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
 //                    Toast.makeText(getContext(), "You can not complete booking from out side of booking pincode", Toast.LENGTH_SHORT).show();
 //                    return;
 //                }
-                bundle.putParcelable("eoBooking", eoBooking);
-                this.updateFragment(bundle, new CompleteBookingCategoryFragment(), getString(R.string.completeBooking));
+                if(eoBooking.complete_allow) {
+                    bundle.putParcelable("eoBooking", eoBooking);
+                    this.updateFragment(bundle, new CompleteBookingCategoryFragment(), getString(R.string.completeBooking));
+                }else{
+                    Toast.makeText(getContext(), "You are not allow to complete this booking", Toast.LENGTH_SHORT).show();
+//
+                }
                 break;
             case R.id.tile4:
                 //bundle.putString(BMAConstants.HEADER_TXT, "New Appointment");
@@ -206,11 +222,13 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("aaaaaa","BookingDEtail onActivityResult = "+data);
         if (data == null) {
             return;
         }
-
+        Log.d("aaaaaa","BookingDEtail onActivityResult completed  = "+ data.getBooleanExtra("completed",false));
         if(data.getBooleanExtra("isCancelled",false) || data.getBooleanExtra("completed",false)){
+            Log.d("aaaaaa","IF inside BookingDEtail onActivityResult = ");
             Intent intent=new Intent();
             intent.putExtra("isCancelled",true);
             getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
@@ -218,7 +236,16 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
         }
     }
 
+    private boolean canSparePartOrder(){
+        if(this.eoBooking.spare_eligibility!=null && this.eoBooking.spare_eligibility==0){
+            return false;
+        }
+            return true;
+
+    }
+
     private void csanSparePartOrder(){
+
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = BookingDetailFragment.this;
        // this.actionID = "engineerSparePartOrder";
@@ -245,19 +272,10 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
                     String spareFlag= responseObject.getString("spare_flag");
                     if(spareFlag!=null && spareFlag.equalsIgnoreCase("0")){
 
-                        BMAAlertDialog bmaAlertDialog=new BMAAlertDialog(getContext(),false,true){
-                            @Override
-                            public void onDefault() {
-                                super.onDefault();
-
-                            }
-                        };
-                        bmaAlertDialog.show(responseObject.get("message").toString());
+                       showSpareRequestValidationMessage(responseObject.get("message").toString());
                        // Toast.makeText(getContext(),getString(R.string.requestPartValidation),Toast.LENGTH_SHORT).show();
                     }else {
-                        Bundle bundle=new Bundle();
-                        bundle.putParcelable("eoBooking", eoBooking);
-                        this.updateFragment(bundle, new EditWarrantyBooking(),"Check Warranty");
+                       openEditWarranty();
                        // this.updateFragment(bundle, new SparePartsOrderFragment(), getString(R.string.spareParts));
                     }
                 }
@@ -266,4 +284,28 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
             }
         }
     }
+    private void openEditWarranty(){
+        Bundle bundle=new Bundle();
+        bundle.putParcelable("eoBooking", eoBooking);
+        this.updateFragment(bundle, new EditWarrantyBooking(),"Check Warranty");
+    }
+    private void showSpareRequestValidationMessage(String message){
+        BMAAlertDialog bmaAlertDialog=new BMAAlertDialog(getContext(),false,true){
+            @Override
+            public void onDefault() {
+                super.onDefault();
+
+            }
+        };
+        bmaAlertDialog.show(message);
+    }
+
+
+    private void setEOBookingTileView(){
+        //this.view.findViewById(R.id.partName).setBackgroundColor(getResources().getD);
+
+    }
+
+
+
 }

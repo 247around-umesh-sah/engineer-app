@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
@@ -38,7 +39,9 @@ import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.component.BMAFontViewField;
 import com.around.engineerbuddy.entity.EOBooking;
 import com.around.engineerbuddy.fragment.BMAFragment;
+import com.around.engineerbuddy.fragment.BMANotificationFragment;
 import com.around.engineerbuddy.fragment.CancelledBookingFragment;
+import com.around.engineerbuddy.fragment.CheckSparePartPrice;
 import com.around.engineerbuddy.fragment.FragmentLoader;
 import com.around.engineerbuddy.fragment.HeaderFragment;
 import com.around.engineerbuddy.fragment.ProfileFragment;
@@ -53,9 +56,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private FragmentManager fragmentManager;
     private Fragment fragment = null;
     public String engineerID, serviceCenterId, scAgentId;
-//    public ArrayList<EOBooking> todayMorningBooking = new ArrayList<>();
-//    public ArrayList<EOBooking> todayAfternoonBooking = new ArrayList<>();
-//    public ArrayList<EOBooking> todayEveningBooking = new ArrayList<>();
+    public ArrayList<EOBooking> todayMorningBooking = new ArrayList<>();
+   public ArrayList<EOBooking> todayAfternoonBooking = new ArrayList<>();
+   public ArrayList<EOBooking> todayEveningBooking = new ArrayList<>();
     public SharedPreferences sharedPrefs;
     SharedPreferences.Editor editor;
     private LocationManager mLocationManager;
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         this.engineerID = getIntent().getStringExtra("engineerID");
         this.serviceCenterId = getIntent().getStringExtra("service_center_id");
         this.scAgentId = getIntent().getStringExtra("scAgentID");
-        sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences();
+        sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         fragmentManager = getSupportFragmentManager();
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView profileImageName = headerView.findViewById(R.id.profileImageName);
-        this.agentName = MainActivityHelper.applicationHelper().getSharedPrefrences().getString("agent_name", "");
+        this.agentName = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("agent_name", "");
         profileImageName.setText(agentName);
 
 
@@ -140,7 +143,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         }
                     };
                     bmaAlertDialog.show("Are you sure you want to logout?");
+                }else  if (id == R.id.notification) {
+                    fragment = new BMANotificationFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(BMAConstants.HEADER_TXT, getString(R.string.notification));
+                    bundle.putString(BMAConstants.menu_id, getString(R.string.notification));
+                    fragment.setArguments(bundle);
+                    MainActivity.this.updateFragment(fragment, true);
+                }else  if (id == R.id.checkSparePrice) {
+                    fragment = new CheckSparePartPrice();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(BMAConstants.HEADER_TXT, getString(R.string.checkSparePrice));
+                    bundle.putString(BMAConstants.menu_id, getString(R.string.checkSparePrice));
+                    fragment.setArguments(bundle);
+                    MainActivity.this.updateFragment(fragment, true);
                 }
+
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 assert drawer != null;
@@ -151,7 +169,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     private void resetDeviceData() {
-        MainActivityHelper.applicationHelper().getSharedPrefrences().edit().clear().commit();
+        String deviceToken= MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.NOTIF_INFO).getString("device_firebase_token",null);
+        MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).edit().clear().commit();
+        SharedPreferences.Editor editor= MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.NOTIF_INFO).edit();
+        editor.putString("device_firebase_token", deviceToken);
+        editor.commit();
     }
 
     public boolean closeDrawers() {
@@ -212,6 +234,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onBackPressed() {
+        Log.d("aaaaa","MainActivity onback pressesd= "+getPageFragment());
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -252,12 +275,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     public String getServiceCenterId() {
-        return MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", "");
+        return MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", "");
 
     }
 
     public String getEngineerId() {
-        return MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", "");
+        return MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", "");
 
     }
 
@@ -362,8 +385,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d("aaaaa","MAinactivity onRequestPermissionsResult");
+        if (getPageFragment() != null)
+            getPageFragment().onRequestPermissionsResult( requestCode,permissions, grantResults);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("aaaaa","MainActivity0");
         if (getPageFragment() != null)
             getPageFragment().onActivityResult(requestCode, resultCode, data);
     }

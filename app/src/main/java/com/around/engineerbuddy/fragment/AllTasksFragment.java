@@ -58,6 +58,7 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.view = inflater.inflate(R.layout.all_task_fragment, container, false);
         //  BMAmplitude.saveUserAction("AllTaskFragment","AllTaskFragment");
+        Log.d("aaaaaa","oncreaterow");
         this.swipeRefresh=this.view.findViewById(R.id.swipeRefresh);
         this.missedBookingLayout = this.view.findViewById(R.id.missedLayout);
         this.tomorrowBookingLayout = this.view.findViewById(R.id.tomorroBookingLayout);
@@ -74,6 +75,7 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
         this.searchIcon = this.view.findViewById(R.id.searchIcon);
         this.searchfield = this.view.findViewById(R.id.serachField);
         this.closureProgressBar.setProgress(0);
+
         //  this.closureProgressBar.setProgress(82);
         this.incentiveProgressBar = this.view.findViewById(R.id.incentiveProgressBar);
         this.incentiveProgressBar.setProgress(0);
@@ -129,6 +131,7 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
 //            batteryLevel=batteryPct*100;
 //            Log.d("aaaaaa","SetUserVisible Battery Status  = "+batteryLevel);
             getRequest();
+            Log.d("aaaaaa","setUservisible");
                }
     }
     private void getRequest(){
@@ -136,14 +139,14 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
         httpRequest.delegate = AllTasksFragment.this;
         this.actionID = "engineerHomeScreen";
         //  Log.d("aaaaaaa"," All Task engineerID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID","abcfegd")+"    service id = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
-        httpRequest.execute(actionID, MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null), getMainActivity().getPinCode());//,batteryLevel+"");
+        httpRequest.execute(actionID, MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null), getMainActivity().getPinCode());//,batteryLevel+"");
 
     }
 
     private void dataToView() {
         if (this.eoAllBookingTask != null) {
-            this.missedBookingCount.setText(eoAllBookingTask.getBookingCount(this.eoAllBookingTask.missedBookingsCount));
-            this.tomorrowBookingCount.setText(eoAllBookingTask.getBookingCount(this.eoAllBookingTask.tomorrowBookingsCount));
+            this.missedBookingCount.setText(eoAllBookingTask.getBookingCount(this.eoAllBookingTask.missedBooking.size()));
+            this.tomorrowBookingCount.setText(eoAllBookingTask.getBookingCount(this.eoAllBookingTask.tomorrowBooking.size()));
             this.morningBookingCount.setText(eoAllBookingTask.getBookingCount(this.eoAllBookingTask.todayMorningBooking.size()));
             this.afternoonBookingCount.setText(eoAllBookingTask.getBookingCount(this.eoAllBookingTask.todayAfternoonBooking.size()));
             this.eveningBookingCount.setText(eoAllBookingTask.getBookingCount(this.eoAllBookingTask.todayEveningBooking.size()));
@@ -180,13 +183,16 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
                     if (this.actionID.equalsIgnoreCase("engineerHomeScreen")) {
                         String res = jsonObject.getString("response");
                         eoAllBookingTask = BMAGson.store().getObject(EOAllBookingTask.class, res);
-//                        getMainActivity().todayMorningBooking = eoAllBookingTask.todayMorningBooking;
-//                        getMainActivity().todayAfternoonBooking = eoAllBookingTask.todayAfternoonBooking;
-//                        getMainActivity().todayEveningBooking = eoAllBookingTask.todayEveningBooking;
+                        getMainActivity().todayMorningBooking = eoAllBookingTask.todayMorningBooking;
+                        getMainActivity().todayAfternoonBooking = eoAllBookingTask.todayAfternoonBooking;
+                        getMainActivity().todayEveningBooking = eoAllBookingTask.todayEveningBooking;
                         this.dataToView();
                     } else {
                         ArrayList<EOBooking> searchedBookingList = BMAGson.store().getList(EOBooking.class, jsonObject.getJSONObject("response").getString("Bookings"));
                         openSearchedBookingPage(searchedBookingList);
+                        this.closureProgressBar.setProgress(0);
+                        this.feedBackProgressBar.setProgress(0);
+                        this.incentiveProgressBar.setProgress(0);
                     }
 
 
@@ -220,7 +226,7 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
                 }
             };
 
-            bmaAlertDialog.show("Something went wrong");
+            bmaAlertDialog.show("Server Error");
         }
 
     }
@@ -230,26 +236,35 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
         int id = v.getId();
         Bundle bundle = new Bundle();
 
+
         switch (id) {
             case R.id.missedLayout:
-                if (this.eoAllBookingTask == null || this.eoAllBookingTask.missedBookingsCount == 0) {
+                if (this.eoAllBookingTask == null || this.eoAllBookingTask.missedBooking.size() == 0) {
                     Snackbar.make(this.view.findViewById(R.id.allTaskfragment), getString(R.string.missedBookingValidation), Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+                this.closureProgressBar.setProgress(0);
+                this.feedBackProgressBar.setProgress(0);
+                this.incentiveProgressBar.setProgress(0);
                 BMAmplitude.saveUserAction("MissedBooking", "MissedBookingLayout");
                 bundle.putString(BMAConstants.HEADER_TXT, getString(R.string.missedBooking));
                 bundle.putBoolean("isMissed", true);
+                bundle.putParcelableArrayList("missedbooking",this.eoAllBookingTask.missedBooking);
                 TomorrowFragment tomorrowFragment1 = new TomorrowFragment();
                 tomorrowFragment1.setArguments(bundle);
                 getMainActivity().updateFragment(tomorrowFragment1, true);
                 break;
             case R.id.tomorroBookingLayout:
-                if (this.eoAllBookingTask == null || this.eoAllBookingTask.tomorrowBookingsCount == 0) {
+                if (this.eoAllBookingTask == null || this.eoAllBookingTask.tomorrowBooking.size() == 0) {
                     Snackbar.make(this.view.findViewById(R.id.allTaskfragment), getString(R.string.noTomorrowBookingValidation), Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+                this.closureProgressBar.setProgress(0);
+                this.feedBackProgressBar.setProgress(0);
+                this.incentiveProgressBar.setProgress(0);
                 BMAmplitude.saveUserAction("TomorrowBooking", "TomorrowBookingLayout");
                 bundle.putString(BMAConstants.HEADER_TXT, getString(R.string.tomorrowBooking));
+                bundle.putParcelableArrayList("tomorrowBooking",this.eoAllBookingTask.tomorrowBooking);
                 TomorrowFragment tomorrowFragment = new TomorrowFragment();
                 tomorrowFragment.setArguments(bundle);
                 getMainActivity().updateFragment(tomorrowFragment, true);
@@ -259,22 +274,28 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
                     Snackbar.make(this.view.findViewById(R.id.allTaskfragment), getString(R.string.noMorningBooking), Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+                this.closureProgressBar.setProgress(0);
+                this.feedBackProgressBar.setProgress(0);
+                this.incentiveProgressBar.setProgress(0);
                 FragmentLoader fragmentLoader = new FragmentLoader();
                 fragmentLoader.index = 0;
                 bundle.putString(BMAConstants.menu_id, "home");
                 fragmentLoader.setArguments(bundle);
-                getMainActivity().updateFragment(fragmentLoader, false);
+                getMainActivity().updateFragment(fragmentLoader, true);
                 break;
             case R.id.afternoonLayout:
                 if (this.eoAllBookingTask == null || this.eoAllBookingTask.todayAfternoonBooking.size() == 0) {
                     Snackbar.make(this.view.findViewById(R.id.allTaskfragment), getString(R.string.noNoonBooking), Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+                this.closureProgressBar.setProgress(0);
+                this.feedBackProgressBar.setProgress(0);
+                this.incentiveProgressBar.setProgress(0);
                 FragmentLoader fragmentLoader1 = new FragmentLoader();
                 fragmentLoader1.index = 1;
                 bundle.putString(BMAConstants.menu_id, "home");
                 fragmentLoader1.setArguments(bundle);
-                getMainActivity().updateFragment(fragmentLoader1, false);
+                getMainActivity().updateFragment(fragmentLoader1, true);
                 // getMainActivity().loadtabFragment(1);
                 break;
             case R.id.eveningLayout:
@@ -282,11 +303,14 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
                     Snackbar.make(this.view.findViewById(R.id.allTaskfragment), getString(R.string.noEveningBookingValidation), Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+                this.closureProgressBar.setProgress(0);
+                this.feedBackProgressBar.setProgress(0);
+                this.incentiveProgressBar.setProgress(0);
                 FragmentLoader fragmentLoader2 = new FragmentLoader();
                 fragmentLoader2.index = 2;
                 bundle.putString(BMAConstants.menu_id, "home");
                 fragmentLoader2.setArguments(bundle);
-                getMainActivity().updateFragment(fragmentLoader2, false);
+                getMainActivity().updateFragment(fragmentLoader2, true);
                 break;
             case R.id.searchIcon:
                 String inputValue=this.searchfield.getText().toString().trim();
@@ -303,6 +327,9 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
             case R.id.incentiveRelativeLayout:
                 if(this.eoAllBookingTask!=null && this.eoAllBookingTask.incentive!=null && this.eoAllBookingTask.incentive.length()>0 && Integer.valueOf(this.eoAllBookingTask.incentive)>0){
                 openIncentivePage();
+                    this.closureProgressBar.setProgress(0);
+                    this.feedBackProgressBar.setProgress(0);
+                    this.incentiveProgressBar.setProgress(0);
             }
                 break;
         }
@@ -335,7 +362,7 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
         httpRequest.delegate = AllTasksFragment.this;
         this.actionID = "searchData";
         //  Log.d("aaaaaaa"," All Task engineerID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID","abcfegd")+"    service id = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
-        httpRequest.execute(this.actionID, MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null), filterStr, getMainActivity().getPinCode());//,batteryLevel+"");
+        httpRequest.execute(this.actionID, MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null), filterStr, getMainActivity().getPinCode());//,batteryLevel+"");
 
     }
 

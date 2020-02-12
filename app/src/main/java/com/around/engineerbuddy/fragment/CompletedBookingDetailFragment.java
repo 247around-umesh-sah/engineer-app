@@ -285,7 +285,7 @@ public class CompletedBookingDetailFragment extends BMAFragment {
             partType.setText(eoSpareConsumptionStatus.spare_parts_requested_type);
             status.setText(eoSpareConsumptionStatus.spare_status);
 
-            if (eoSpareConsumptionStatus.consumed_status.equalsIgnoreCase("Wrong part received")) {
+            if (eoSpareConsumptionStatus.consumed_status!=null && eoSpareConsumptionStatus.consumed_status.equalsIgnoreCase("Wrong part received")) {
                 wrongPartLayout.setVisibility(View.VISIBLE);
                 childView.findViewById(R.id.wrongPartDropDownIcon).setVisibility(View.GONE);
                 childView.findViewById(R.id.wrongPartNumberlayout).setVisibility(View.GONE);

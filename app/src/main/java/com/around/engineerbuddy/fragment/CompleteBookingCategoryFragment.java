@@ -341,7 +341,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         requestData.put("solution", eoSelectedSymptomDefect.solution_id);
         requestData.put("closing_remark", eoSelectedSymptomDefect.remarks);
         requestData.put("amount_paid", paymentsAmount);
-        requestData.put("sc_agent_id", MainActivityHelper.applicationHelper().getSharedPrefrences().getString("scAgentID", null));
+        requestData.put("sc_agent_id", MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("scAgentID", null));
 
         requestData.put("appliance_broken", this.selectedProductDetail.getbookingProductUnit().isProductBroken);
         requestData.put("purchase_date", this.selectedProductDetail.getbookingProductUnit().purchase_date);

@@ -16,6 +16,7 @@ import com.around.engineerbuddy.MainActivityHelper;
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.component.EOProfile;
+import com.around.engineerbuddy.util.BMAConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,7 +83,7 @@ public class ProfileFragment extends BMAFragment {
     private void loadData() {
         httpRequest = new HttpRequest(getContext(), true);
         httpRequest.delegate = ProfileFragment.this;
-        httpRequest.execute("engineerProfile", MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null));
+        httpRequest.execute("engineerProfile", MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null));
     }
 
     @Override

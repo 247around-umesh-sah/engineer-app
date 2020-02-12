@@ -37,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -253,6 +254,7 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
             misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serverConnectionFailedMsg);
             httpRequest.progress.dismiss();
         }
+
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.amplitude.api.Amplitude;
 import com.around.engineerbuddy.helper.ApplicationHelper;
+import com.around.engineerbuddy.util.BMAConstants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +23,7 @@ public class BMAmplitude {
         ApplicationHelper applicationHelper = MainActivityHelper.applicationHelper();
         SharedPreferences sharedPrefs=null;
         if (applicationHelper != null) {
-            sharedPrefs = applicationHelper.getSharedPrefrences();
+            sharedPrefs = applicationHelper.getSharedPrefrences(BMAConstants.LOGIN_INFO);
         }
         ////Uncomment when release upgrading on live
         if (sharedPrefs != null) {

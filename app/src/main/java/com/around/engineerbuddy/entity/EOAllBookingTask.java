@@ -11,6 +11,8 @@ public class EOAllBookingTask extends BMAObject {
     public ArrayList<EOBooking> todayMorningBooking=new ArrayList<>();
     public ArrayList<EOBooking> todayAfternoonBooking=new ArrayList<>();
     public ArrayList<EOBooking> todayEveningBooking=new ArrayList<>();
+    public ArrayList<EOBooking> missedBooking=new ArrayList<>();
+    public ArrayList<EOBooking> tomorrowBooking=new ArrayList<>();
     public String rating;
     public String incentive;
      @SerializedName("same_day_closure")

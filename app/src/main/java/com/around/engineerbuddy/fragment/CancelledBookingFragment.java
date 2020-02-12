@@ -71,8 +71,8 @@ public class CancelledBookingFragment extends BMAFragment {
         httpRequest = new HttpRequest(getContext(), true);
         httpRequest.delegate = CancelledBookingFragment.this;
         String status = isCancelledBooking ? "Cancelled" : "Completed";
-        Log.d("aaaaa","eid = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null)+"   ScID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
-        httpRequest.execute("engineerBookingsByStatus", MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null), status);
+        Log.d("aaaaa","eid = "+MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null)+"   ScID = "+MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null));
+        httpRequest.execute("engineerBookingsByStatus", MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null), status);
 
 
     }

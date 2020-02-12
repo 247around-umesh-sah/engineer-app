@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.activity.MainActivity;
 import com.around.engineerbuddy.component.BMAUrlSelectionDialog;
+import com.around.engineerbuddy.util.BMAConstants;
 import com.around.engineerbuddy.util.BMAUIUtil;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -45,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
         setContentView(R.layout.activity_login);
         //MainActivityHelper.setApplicationObj(this);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences();//getSharedPreferences(SplashActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO);//getSharedPreferences(SplashActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
         cd = new ConnectionDetector(this);
         misc = new Misc(this);
@@ -53,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
 
         phone_number = (EditText) findViewById(R.id.phonenumber);
         password = (EditText) findViewById(R.id.password);
-        this.loginAppLogo=findViewById(R.id.loginAppLogo);
+        this.loginAppLogo = findViewById(R.id.loginAppLogo);
 
         login_button = (Button) findViewById(R.id.login_button);
         BMAUIUtil.setBackgroundRect(login_button, getResources().getColor(R.color.colorPrimary), R.dimen._50dp);
@@ -122,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
             @Override
             public void onClick(View v) {
                 ttlTapToOpenAppUrlDlg++;
-                if(ttlTapToOpenAppUrlDlg>=10){
+                if (ttlTapToOpenAppUrlDlg >= 10) {
                     openAppUrlDialog();
                 }
             }
@@ -146,12 +147,12 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
      * @param view View
      */
     public void loginProcess(View view) {
-        if (phone_number.getText().toString().trim().length() == 0 ) {
+        if (phone_number.getText().toString().trim().length() == 0) {
             Toast.makeText(LoginActivity.this, getString(R.string.userIDValidation), Toast.LENGTH_SHORT).show();
             return;
 
         }
-        if(password.getText().toString().trim().length() == 0){
+        if (password.getText().toString().trim().length() == 0) {
             Toast.makeText(LoginActivity.this, getString(R.string.passwordValidation), Toast.LENGTH_SHORT).show();
             return;
         }
@@ -161,9 +162,12 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
                 if (cd.isConnectingToInternet()) {
                     boolean permissionGrant = misc.checkAndLocationRequestPermissions();
                     if (permissionGrant) {
+
+                        String deviceToken = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.NOTIF_INFO).getString("device_firebase_token", "devicetoken");
+                        Log.d("zzzzz", "deviceToken is = " + deviceToken);
                         httpRequest = new HttpRequest(LoginActivity.this, true);
                         httpRequest.delegate = LoginActivity.this;
-                        httpRequest.execute("engineerLogin", phone_number.getText().toString(), password.getText().toString());
+                        httpRequest.execute("engineerLogin", phone_number.getText().toString(), password.getText().toString(),deviceToken);
                     } else {
                         Toast.makeText(LoginActivity.this, R.string.askGPSPermission, Toast.LENGTH_SHORT).show();
                     }
@@ -224,7 +228,7 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
 
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    SharedPreferences.Editor editor = MainActivityHelper.applicationHelper().getSharedPrefrences().edit();
+                    SharedPreferences.Editor editor = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).edit();
                     editor.putString("service_center_id", response.getString("service_center_id"));
                     editor.putString("engineerID", response.getString("entity_id"));
                     editor.putString("agent_name", response.getString("agent_name"));
@@ -254,9 +258,10 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
             httpRequest.progress.dismiss();
         }
     }
-    private void openAppUrlDialog(){
-        BMAUrlSelectionDialog bmaUrlSelectionDialog=new BMAUrlSelectionDialog(this);
+
+    private void openAppUrlDialog() {
+        BMAUrlSelectionDialog bmaUrlSelectionDialog = new BMAUrlSelectionDialog(this);
         bmaUrlSelectionDialog.show();
-        ttlTapToOpenAppUrlDlg=0;
+        ttlTapToOpenAppUrlDlg = 0;
     }
 }

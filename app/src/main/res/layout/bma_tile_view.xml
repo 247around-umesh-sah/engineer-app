@@ -19,7 +19,6 @@
                 android:id="@+id/tileContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/card_gradient_color"
                 android:orientation="vertical">
 
                 <TextView

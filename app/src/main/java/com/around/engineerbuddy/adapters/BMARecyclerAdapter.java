@@ -30,7 +30,7 @@ public class BMARecyclerAdapter extends RecyclerView.Adapter   {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            convertedView = LayoutInflater.from(context).inflate(layoutId, viewGroup, false);
+        convertedView = LayoutInflater.from(context).inflate(layoutId, viewGroup, false);
         return new ViewHolder(convertedView);
     }
 

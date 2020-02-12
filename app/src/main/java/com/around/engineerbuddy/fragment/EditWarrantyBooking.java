@@ -122,7 +122,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         httpRequest.delegate = EditWarrantyBooking.this;
         // Log.d("aaaaaa", "partnerID = " + eoBooking.partnerID + "        " + eoBooking.serviceID);
         this.actionID = "warrantyCheckerAndCallTypeData";
-        httpRequest.execute(this.actionID, this.eoBooking.bookingID, this.eoBooking.partnerID, this.eoBooking.serviceID);
+        httpRequest.execute(this.actionID, this.eoBooking.bookingID, this.eoBooking.partnerID, this.eoBooking.serviceID,eoBooking.primaryContact);
 
     }
 
@@ -311,6 +311,16 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         if(eoWarrantyChecker!=null && eoWarrantyChecker.serviceCategory!=null) {
             checkbox.setEnabled(eoWarrantyChecker.serviceCategory.equalsIgnoreCase("Spare Parts") ? false : true);
         }
+        if(this.eoSparePartWarrantyChecker.parents!=null && this.eoSparePartWarrantyChecker.parents.size()>0){
+            checkbox.setEnabled(false);
+        }
+        if(eoWarrantyChecker.serviceCategory!=null && eoWarrantyChecker.serviceCategory.equalsIgnoreCase("Repeat Booking") ){
+            if(this.eoSparePartWarrantyChecker.parents!=null && this.eoSparePartWarrantyChecker.parents.size()==0 ){
+                checkbox.setEnabled(false);
+            }else{
+                checkbox.setEnabled(true);
+            }
+        }
         checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -320,6 +330,9 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                 //  checkBox.setChecked(checkBox.isChecked());
             }
         });
+        if(this.eoSparePartWarrantyChecker.eoWarrantyCheckerBookingDetail.repeat_booking_flag){
+            checkbox.setEnabled(false);
+        }
 
 
     }
@@ -717,7 +730,7 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         httpRequest.delegate = EditWarrantyBooking.this;
         this.actionID = "submitWarrantyCheckerAndEditCallType";
 
-        httpRequest.execute(this.actionID, eoBooking.bookingID, selectModel.getText().toString(), selectPurchaseDate.getText().toString(), BMAGson.store().toJson(brandMap1), BMAGson.store().toJson(serviceCategoryMap), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("scAgentID", null));
+        httpRequest.execute(this.actionID, eoBooking.bookingID, selectModel.getText().toString(), selectPurchaseDate.getText().toString(), BMAGson.store().toJson(brandMap1), BMAGson.store().toJson(serviceCategoryMap), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("scAgentID", null));
 
 
     }

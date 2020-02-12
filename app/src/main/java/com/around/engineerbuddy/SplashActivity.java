@@ -20,6 +20,7 @@ import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.activity.MainActivity;
 import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.helper.ApplicationHelper;
+import com.around.engineerbuddy.util.BMAConstants;
 import com.google.firebase.crash.FirebaseCrash;
 
 import org.jsoup.Jsoup;
@@ -44,7 +45,7 @@ public class SplashActivity extends AppCompatActivity {
         MainActivityHelper.setApplicationHelper(new ApplicationHelper(getApplicationContext()));
 //        sharedPrefs = getSharedPreferences(SplashActivity.MyPREFERENCES,
 //                Context.MODE_PRIVATE);
-        sharedPrefs=MainActivityHelper.applicationHelper().getSharedPrefrences();
+        sharedPrefs=MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO);
 
         building = findViewById(R.id.building);
         scooter = findViewById(R.id.scooter);
@@ -143,7 +144,7 @@ public class SplashActivity extends AppCompatActivity {
                 return;
 
             }
-            Log.d("aaaaaa","  BEFORE  playversion = "+s);
+           // Log.d("aaaaaa","  BEFORE  playversion = "+s);
             Double playStoreVersion=Double.parseDouble(s);
             String playVersion=s;
             String versionCode="";
@@ -151,12 +152,12 @@ public class SplashActivity extends AppCompatActivity {
             try {
                 PackageInfo packageInfo=getPackageManager().getPackageInfo(getPackageName(),0);
                 versionCode=packageInfo.versionName;
-                Log.d("aaaaaa","versionNAME NAME = "+packageInfo.versionName);
+              //  Log.d("aaaaaa","versionNAME NAME = "+packageInfo.versionName);
 
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
-            Log.d("aaaaaa","versionCode = "+versionCode+"    playversion = "+playStoreVersion);
+           // Log.d("aaaaaa","versionCode = "+versionCode+"    playversion = "+playStoreVersion);
 
             if(playVersion.equalsIgnoreCase(versionCode)){
                 checkUserLogin();
@@ -196,6 +197,10 @@ public class SplashActivity extends AppCompatActivity {
  //Log.d("aaaaaa","versionCode = "+newVersion);       }
     }
     private void checkUserLogin(){
+        String phonenumbersp=sharedPrefs.getString("phoneNumber",null);
+        String engineerIDSP = sharedPrefs.getString("engineerID",null);
+        Log.d("aaaaaa","userLogin un = "+phonenumbersp);
+        Log.d("aaaaaa","userLogin ei = "+engineerIDSP);
         Thread timerThread = new Thread() {
             public void run() {
                 try {
@@ -204,7 +209,8 @@ public class SplashActivity extends AppCompatActivity {
                     e.printStackTrace();
                 } finally {
 
-                    if (sharedPrefs.contains("isLogin")) {
+                    Log.d("aaaaaa","issharepreef = "+sharedPrefs.contains("isLogin"));
+                    if (sharedPrefs.contains("isLogin") && phonenumbersp!=null) {
                         Intent search = new Intent(SplashActivity.this, MainActivity.class);//SearchActivity.class);
                         startActivity(search);
                         finish();

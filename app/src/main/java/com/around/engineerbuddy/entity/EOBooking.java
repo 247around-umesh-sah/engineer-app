@@ -47,10 +47,17 @@ public class EOBooking extends BMAObject {
     public String booking_close_status;
     public Location destLocation;
     public String current_status;
+    public String internal_status;
     public String partner_incentive;
     public String service_center_booking_action_status;
     public boolean allow_reshedule=true;
+    public boolean complete_allow=true;
+    public boolean cancel_allow=true;
+    public String alternate_phone_number;
    // public String booking_remarks;
+
+    public Integer spare_eligibility;
+       public String message;
 
 
 }

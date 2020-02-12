@@ -878,7 +878,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         bundle.putString("unitDetailKey", this.eoCompleteProductdetail.bookingUnitDetails.quantity.get(0).unit_id);
         //bundle.putBoolean("isBrokenProduct", this.productBorkenStatus.isChecked());
         bundle.putParcelableArrayList("prices", this.eoCompleteProductdetail.prices);
-        this.updateFragment(bundle, new AddMoreProductDetailFragment(), getString(R.string.addProduct));
+      // this.updateFragment(bundle, new AddMoreProductDetailFragment(), getString(R.string.addProduct));
     }
 
     public void updateFragment(Bundle bundle, Fragment fragment, String headerText) {
@@ -1027,7 +1027,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         //  intent.putExtra("purchaseDate", this.selectDate.getText().toString());
         // intent.putExtra("isBrokenProduct", this.productBorkenStatus.isChecked());
         intent.putExtra("completeCatogryPageName", "productDetail");
-        Log.d("aaaaaa","productDetailisconsumption = "+this.eoCompleteProductdetail.is_consumption_required);
+      //  Log.d("aaaaaa","productDetailisconsumption = "+this.eoCompleteProductdetail.is_consumption_required);
         intent.putExtra("isConsumptionrequired", this.eoCompleteProductdetail.is_consumption_required);
         intent.putExtra("pod",selectPOD);
         intent.putExtra("modelNumber",modelNumber);
@@ -1043,36 +1043,37 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 
     private void setInvoiceAndSerialPic(EOSpareParts eoSpareParts,boolean isInvoice){
 
-
         if(isInvoice && eoSpareParts.invoice_pic!=null) {
+            Log.d("aaaaa","isINVOICE IFFF  = "+isInvoice);
             Picasso.with(getContext()).load(eoSpareParts.invoice_pic).into(invoiceNoPic);
         }
         if(!isInvoice && eoSpareParts.serial_number_pic!=null) {
+            Log.d("aaaaa","isINVOICE  IF NOT = "+isInvoice);
             // Glide.with(mContext).load(imgID).asBitmap().override(1080, 600).into(mImageView);
             Picasso.with(getContext()).load(eoSpareParts.serial_number_pic).into(serialNoPic);
         }
-        Thread thread = new Thread(new Runnable() {
+            Thread thread = new Thread(new Runnable() {
 
-            @Override
-            public void run() {
-                try  {
-                    EOCompleteProductQuantity qnty= selectedCompleteDetail.getbookingProductUnit().quantity.get(0);
-                    if(isInvoice){
-                        Log.d("aaaaaa","invoice pic = "+getBitmapFromURL(eoSpareParts.invoice_pic));
-                        qnty.invoicePic = getBitmapFromURL(eoSpareParts.invoice_pic);
-                    }else {
-                        Log.d("aaaaaa","invoice pic = "+getBitmapFromURL(eoSpareParts.invoice_pic));
-                        qnty.serialNoPic = getBitmapFromURL(eoSpareParts.serial_number_pic);
+                @Override
+                public void run() {
+                    try {
+                        EOCompleteProductQuantity qnty = selectedCompleteDetail.getbookingProductUnit().quantity.get(0);
+                        if (isInvoice) {
+                          //  Log.d("aaaaaa", "invoice pic = " + getBitmapFromURL(eoSpareParts.invoice_pic));
+                            qnty.invoicePic = getBitmapFromURL(eoSpareParts.invoice_pic);
+                        } else {
+                           // Log.d("aaaaaa", "invoice pic = " + getBitmapFromURL(eoSpareParts.invoice_pic));
+                            qnty.serialNoPic = getBitmapFromURL(eoSpareParts.serial_number_pic);
+                        }
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
 
-        thread.start();
+            thread.start();
 
         /// if(eoSpareParts.serial_number!=null)
         //  enterSerialNo.setText(eoSpareParts.serial_number);

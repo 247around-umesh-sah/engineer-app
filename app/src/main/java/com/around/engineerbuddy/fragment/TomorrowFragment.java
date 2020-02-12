@@ -69,6 +69,8 @@ public class TomorrowFragment extends BMAFragment {
     // ProgressBar progressBar;
     BookingInfo bookingInfo;
     BMARecyclerAdapter bmaRecyclerAdapter;
+    public ArrayList<EOBooking> missedBooking=new ArrayList<>();
+    public ArrayList<EOBooking> tomorrowBooking=new ArrayList<>();
     //////pk.eyJ1IjoidWtzYWgiLCJhIjoiY2p2cW5iaHZnMHlpYjQ0cWw4M2Y3eDRwcyJ9.MPePwKBaJVKg4BTHhYgMFA
 
 
@@ -81,6 +83,8 @@ public class TomorrowFragment extends BMAFragment {
     public void onAttach(Context context) {
 
         this.isMissed = getArguments().getBoolean("isMissed");
+        this.missedBooking=getArguments().getParcelableArrayList("missedbooking");
+        this.tomorrowBooking=getArguments().getParcelableArrayList("tomorrowBooking");
         super.onAttach(context);
     }
 
@@ -112,16 +116,16 @@ public class TomorrowFragment extends BMAFragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(bmaRecyclerAdapter);
-        if(bookingInfo==null) {
-            loadData();
-        }else{
+      //  if(bookingInfo==null) {
+           // loadData();
+       // }else{
             this.dataToView(false);
-        }
+       // }
 
         return this.view;
     }
 
-    HttpRequest httpRequest;
+   HttpRequest httpRequest;
 
 
     @Override
@@ -232,7 +236,7 @@ public class TomorrowFragment extends BMAFragment {
     private void loadData() {
         httpRequest = new HttpRequest(getContext(), true);
         httpRequest.delegate = TomorrowFragment.this;
-        httpRequest.execute(isMissed ? "missedBookings" : "tommorowBookings", MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null),getMainActivity().getPinCode());
+        httpRequest.execute(isMissed ? "missedBookings" : "tommorowBookings", MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null),getMainActivity().getPinCode());
     }
 
     @Override
@@ -298,13 +302,13 @@ public class TomorrowFragment extends BMAFragment {
 //        if(isSetDistance) {
 //            this.updateDistance();
 //        }
-        this.httpRequest.progress.dismiss();
+      //  this.httpRequest.progress.dismiss();
 
     }
 
 
     public void noitifyDataSetChangedAdapter(){
-        httpRequest.progress.dismiss();
+       // httpRequest.progress.dismiss();
         this.bmaRecyclerAdapter.notifyDataSetChanged();
     }
 
@@ -312,7 +316,8 @@ public class TomorrowFragment extends BMAFragment {
 
 
     public ArrayList<EOBooking> getBookingList() {
-        return this.bookingInfo != null ? isMissed ? this.bookingInfo.missedBooking : this.bookingInfo.tomorrowBooking : new ArrayList<>();
+       return isMissed ? this.missedBooking!=null ? this.missedBooking : new ArrayList<>() : this.tomorrowBooking!=null ? this.tomorrowBooking : new ArrayList<>();
+                // return this.bookingInfo != null ?    isMissed ? this.bookingInfo.missedBooking : this.bookingInfo.tomorrowBooking : new ArrayList<>();
 
     }
     private ArrayList<EOBooking> getBookingArray(){
@@ -423,13 +428,13 @@ int position;
         }
 
         if(data.getBooleanExtra("isCancelled",false)) {
-            if (this.getBookingList().size() == 1) {
+//            if (this.getBookingList().size() == 1) {
 
                 getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, new Intent());
                 getFragmentManager().popBackStack();
-            } else {
-                loadData();
-            }
+//            } else {
+//                //loadData();
+//            }
         }
     }
 }

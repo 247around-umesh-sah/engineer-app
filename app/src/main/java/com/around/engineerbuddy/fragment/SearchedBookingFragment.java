@@ -126,7 +126,7 @@ public class SearchedBookingFragment extends BMAFragment {
 
         BMAmplitude.saveUserAction("SearchedBooking", "SearchedBooking");
         EOBooking eoBooking = (EOBooking) rowObject;
-        dateLayout.setBackgroundColor(eoBooking.current_status.equalsIgnoreCase("Cancelled") ? BMAUIUtil.getColor(R.color.blue_black) : BMAUIUtil.getColor(R.color.missedBookingcolor));
+        dateLayout.setBackgroundColor(eoBooking.internal_status.equalsIgnoreCase(BMAConstants.INTERNAL_SATATUS_CANCELLED) || eoBooking.current_status.equalsIgnoreCase("Cancelled") ? BMAUIUtil.getColor(R.color.blue_black) : BMAUIUtil.getColor(R.color.missedBookingcolor));
         TextView name = itemView.findViewById(R.id.name);
         TextView address = itemView.findViewById(R.id.address);
         TextView brandName = itemView.findViewById(R.id.brandName);
@@ -342,18 +342,22 @@ public class SearchedBookingFragment extends BMAFragment {
         }
 
         if (data.getBooleanExtra("isCancelled", false)) {
-            if (this.getBookingList().size() == 1) {
+          //  if (this.getBookingList().size() == 1) {
 
                 getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, new Intent());
                 getFragmentManager().popBackStack();
-            } else {
-                getSearchedData();
-            }
+//            } else {
+//                getSearchedData();
+//            }
         }
     }
 
     public boolean isEditBooking(EOBooking eoBooking) {
 
+        if(eoBooking.internal_status.equalsIgnoreCase(BMAConstants.INTERNAL_SATATUS_CANCELLED)){
+            Toast.makeText(getContext(), "You can not edit this booking due to " + eoBooking.current_status + " status ", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         if (eoBooking.current_status.equalsIgnoreCase("Pending") || eoBooking.current_status.equalsIgnoreCase("Rescheduled")) {
             return true;
         }
@@ -369,7 +373,7 @@ public class SearchedBookingFragment extends BMAFragment {
         httpRequest.delegate = SearchedBookingFragment.this;
         // this.actionID = "searchData";
         //  Log.d("aaaaaaa"," All Task engineerID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID","abcfegd")+"    service id = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
-        httpRequest.execute("searchData", MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null), filterStr, getMainActivity().getPinCode());//,batteryLevel+"");
+        httpRequest.execute("searchData", MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null), filterStr, getMainActivity().getPinCode());//,batteryLevel+"");
 
     }
 

@@ -1,5 +1,6 @@
 package com.around.engineerbuddy.fragment;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.adapters.CustomFragmentPageAdapter;
+import com.around.engineerbuddy.util.BMAConstants;
 
 
 public class FragmentLoader extends BMAFragment {
@@ -70,5 +72,12 @@ public int index=3;
 
     public BMAFragment getFragmentAtIndex(int index) {
         return this.customFragmentPageAdapter != null ? this.customFragmentPageAdapter.getItem(index) : null;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.getCurrentFragment().onActivityResult(requestCode, resultCode, data);
+       Log.d("aaaaaa","onActitivity FragmentLoader = "+data);
     }
 }

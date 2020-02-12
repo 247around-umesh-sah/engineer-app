@@ -22,6 +22,7 @@ import com.around.engineerbuddy.adapters.BMARecyclerAdapter;
 import com.around.engineerbuddy.adapters.CancelBookingAdapter;
 import com.around.engineerbuddy.entity.EOUrl;
 import com.around.engineerbuddy.fragment.BMAFragment;
+import com.around.engineerbuddy.util.BMAConstants;
 import com.around.engineerbuddy.util.BMAFileUtil;
 
 import java.util.ArrayList;
@@ -46,13 +47,13 @@ public class BMAUrlSelectionDialog extends Dialog implements BMARecyclerAdapter.
         this.cancelButton = findViewById(R.id.cancelButton);
         this.submitButton = findViewById(R.id.submitButton);
         this.setCanceledOnTouchOutside(false);
-        editor = MainActivityHelper.applicationHelper().getSharedPrefrences().edit();
+        editor = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).edit();
         //SharedPreferences.Editor editor = MainActivityHelper.applicationHelper().getSharedPrefrences().edit();
 
 //        if (this.getWindow() != null) {
 //            this.getWindow().setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
 //        }
-        String urlPrimaryKey = MainActivityHelper.applicationHelper().getSharedPrefrences().getString("urlKey", null);
+        String urlPrimaryKey = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("urlKey", null);
         urlList= BMAFileUtil.objectListFromFile("ssoconfig.json",EOUrl.class);
 
         if(urlPrimaryKey!=null && urlPrimaryKey.length()>0) {
@@ -102,7 +103,7 @@ public class BMAUrlSelectionDialog extends Dialog implements BMARecyclerAdapter.
             @Override
             public void onClick(View v) {
                 BMAUrlSelectionDialog.this.dismiss();
-                Log.d("aaaaaa", "cancelPK = " + MainActivityHelper.applicationHelper().getSharedPrefrences().getString("urlKey", null));
+                Log.d("aaaaaa", "cancelPK = " + MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("urlKey", null));
             }
         });
         this.submitButton.setOnClickListener(new View.OnClickListener() {

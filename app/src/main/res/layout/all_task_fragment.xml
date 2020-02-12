@@ -7,10 +7,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/_45dp"
+        android:minHeight="@dimen/_40dp"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/_10dp"
+        android:paddingRight="@dimen/_10dp"
         android:background="@color/colorPrimary">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
         <EditText
             android:id="@+id/serachField"
             android:layout_width="wrap_content"
@@ -30,9 +35,10 @@
             android:id="@+id/searchIcon"
             android:layout_width="@dimen/_30dp"
             android:layout_height="@dimen/_30dp"
-            android:background="@drawable/searchicon"
+            android:background="@drawable/search_gray_icon"
             android:layout_marginTop="@dimen/_5dp"
             android:layout_marginRight="@dimen/_10dp"/>
+        </LinearLayout>
     </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"

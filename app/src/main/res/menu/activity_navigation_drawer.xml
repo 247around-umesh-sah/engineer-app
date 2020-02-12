@@ -17,11 +17,20 @@
             android:id="@+id/cancelled_booking"
             android:icon="@drawable/cancelled_profile_icon"
             android:title="Cancelled Bookings" />
-
+        <item
+            android:id="@+id/notification"
+            android:icon="@drawable/bell_icon"
+            android:title="Notification" />
+        <item
+            android:id="@+id/checkSparePrice"
+            android:icon="@drawable/cancelled_profile_icon"
+            android:visible="false"
+            android:title="Spare Price" />
         <item
             android:id="@+id/profile"
             android:icon="@drawable/profile_icon"
             android:title="Profile" />
+
 
     </group>
 

@@ -274,7 +274,7 @@ public class NewAppointmentFragment extends BMAFragment implements View.OnClickL
         httpRequest = new HttpRequest(getContext(), true);
         httpRequest.delegate = NewAppointmentFragment.this;
         this.actionID="updateBookingByEngineer";
-        httpRequest.execute(this.actionID,this.eoBooking.bookingID,selectAppointmentReason.getText().toString().trim(),Problemdescriptionedittext.getText().toString().trim(),selectedDate.getText().toString().trim(), this.eoBooking.partnerID, MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
+        httpRequest.execute(this.actionID,this.eoBooking.bookingID,selectAppointmentReason.getText().toString().trim(),Problemdescriptionedittext.getText().toString().trim(),selectedDate.getText().toString().trim(), this.eoBooking.partnerID, MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null));
 
     }
     private boolean isSelectAllFields(){

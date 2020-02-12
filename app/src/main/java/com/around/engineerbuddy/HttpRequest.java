@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.activity.MainActivity;
+import com.around.engineerbuddy.util.BMAConstants;
 
 import org.json.JSONObject;
 
@@ -31,10 +32,10 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
     //public static String base_url = "http://stag.aroundhomzapp.com/engineerApi";
 
     //Testing URL
-  // public static String base_url = "http://testapp.247around.com/engineerApi";
+   // public static String base_url = "http://testapp.247around.com/engineerApi";
 
     ///Live Url
-    static String base_url = "https://aroundhomzapp.com/engineerApi";
+     static String base_url = "https://aroundhomzapp.com/engineerApi";
 
 
     //Kenstar
@@ -123,16 +124,16 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        String urlkey=MainActivityHelper.applicationHelper().getSharedPrefrences().getString("urlKey", null);
-        Log.d("aaaaa","URL: KEY = "+urlkey);
-        if(urlkey!=null){
-            if(urlkey.equalsIgnoreCase("1")){
-                base_url="http://testapp.247around.com/engineerApi";
-            }else{
-                base_url="https://aroundhomzapp.com/engineerApi";
+        String urlkey = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("urlKey", null);
+        Log.d("aaaaa", "URL: KEY = " + urlkey);
+        if (urlkey != null) {
+            if (urlkey.equalsIgnoreCase("1")) {
+                base_url = "http://testapp.247around.com/engineerApi";
+            } else {
+                base_url = "https://aroundhomzapp.com/engineerApi";
             }
         }
-        Log.d("aaaaa","URL: = "+base_url);
+        Log.d("aaaaa", "URL: = " + base_url);
         progress = new ProgressDialog(context);
         progress.setMessage(context.getString(R.string.loading));
         progress.setIndeterminate(true);
@@ -151,7 +152,7 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
             delegate.processFinish(result);
         } else if (result != null) {
             String[] serverResp = result.split(":");
-            String serverResponse = "Something Went Wrong";
+            String serverResponse = "Server Error";// "Something Went Wrong";
             if (serverResponse != null && serverResp.length > 0 && serverResp.length > 1) {
                 serverResponse = "Server Error : " + serverResp[1];
             }

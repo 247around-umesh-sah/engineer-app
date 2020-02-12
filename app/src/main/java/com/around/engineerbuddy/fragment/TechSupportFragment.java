@@ -65,6 +65,9 @@ public class TechSupportFragment extends BMAFragment implements View.OnClickList
             techSupportName.setText(eoBooking.name);
             techSupportNumber.setText(eoBooking.bookingAddress);
             techSupportList.add(eoBooking.primaryContact);
+            if(eoBooking.alternate_phone_number!=null && eoBooking.alternate_phone_number.length()>0){
+                techSupportList.add(eoBooking.alternate_phone_number);
+            }
             this.dataToView();
         }
 

@@ -258,6 +258,7 @@ public class SparePartConsumptionFragment extends BMAFragment {
                     selectReason.setText(selectedItems.getDetail1());
                     EOSpareConsumptionStatus eoSpareConsumptionStatus = (EOSpareConsumptionStatus) selectedItems.tag;
                     selectReason.setTag(eoSpareConsumptionStatus.id);
+                    selectReason.setError(null);
                     if (eoSpareConsumptionStatus.tag.equalsIgnoreCase("wrong_part_received")) {
                         EOSpareCosumptionRequest eoSpareCosumptionRequest = cosumptionArray.get(position);
                         eoSpareCosumptionRequest.consumed_spare_tag = eoSpareConsumptionStatus.tag;
@@ -363,6 +364,13 @@ public class SparePartConsumptionFragment extends BMAFragment {
                         this.recyclerView.scrollToPosition(eoSpareCosumptionRequest.position);
 
                     }
+                   View errorItemView=this.recyclerView.findViewHolderForAdapterPosition(eoSpareCosumptionRequest.position).itemView;
+                    TextView errorSelectReason = errorItemView.findViewById(R.id.selectConsumptionReason);
+                    LinearLayout selecttReasonlayout=errorItemView.findViewById(R.id.selectreasonLayout);
+                    errorSelectReason.setError("error");
+
+
+
                     Toast.makeText(getContext(), "Please select Cosumption Reason ", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (eoSpareCosumptionRequest.consumed_spare_tag.equalsIgnoreCase("wrong_part_received")) {

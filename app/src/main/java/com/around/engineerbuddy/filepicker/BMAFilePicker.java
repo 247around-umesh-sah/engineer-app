@@ -7,11 +7,13 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.around.engineerbuddy.entity.EODocumentType;
+
 import java.io.File;
 import java.io.IOException;
 
 public class BMAFilePicker  {
-    public static void openDownLoadFile(Context context){
+    public static void openDownLoadFile(Context context, EODocumentType eoDocumentType){
 
 //        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"Downloads");
 //        Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -24,7 +26,7 @@ public class BMAFilePicker  {
                 //Get Download Directory File
                 File apkStorage = new File(
                         Environment.getExternalStorageDirectory() + "/"
-                                + "downloads");
+                                + "downloads");///"+eoDocumentType.documentDescription+eoDocumentType.documentType);
 
                 //If file is not present then display Toast
                 if (!apkStorage.exists())
@@ -44,12 +46,16 @@ public class BMAFilePicker  {
 
 
                     Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                  //  Intent intent = new Intent(Intent.ACTION_VIEW);
                     Log.d("aaaaaa","absolute path = "+Environment.getExternalStorageDirectory().getAbsolutePath());
-                    Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath()
-                            + "/" +"downloads");
-                    intent.setDataAndType(uri, "file/*");
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    context.startActivity(Intent.createChooser(intent, "Open Downloads Folder"));
+                    Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath());
+                          //  + "/" +"downloads");// +
+                            //"/"+eoDocumentType.documentDescription+eoDocumentType.documentType);
+                    Log.d("aaaaa","view  = "+uri.getPath());
+                    intent.setDataAndType(uri, "application/pdf");
+                    //intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);//(Intent.createChooser(intent, "Open Downloads Folder"));
                 }
 
             } else

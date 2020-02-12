@@ -10,4 +10,5 @@ public class EOWarrantyCheckerBookingDetail extends BMAObject {
     public ArrayList<ArrayList<EOCompleteProductQuantity>> prices = new ArrayList<>();
     @SerializedName("is_repeat")
     public String isRepeat;
+    public boolean repeat_booking_flag;
 }

@@ -4,13 +4,13 @@
     "url": "https://gssoqa.ersaltametrics.com/GlobalSSO/",
     "primaryKey":"1"
 
+
   },
   {
     "EnvironmentID": "Live",
     "url": "https://gsso.ersaltametrics.com/GlobalSSO/",
     "primaryKey":"2",
     "isChecked": true
-
   }
 
 ]

@@ -54,9 +54,11 @@ public class AfternoonTasksFragment extends BMAFragment {
         this.nodataToDisplayLayout = this.view.findViewById(R.id.nodataToDisplayLayout);
         loadRecyclerView();
 //        BMAmplitude.saveUserAction("AfternoonTask","AfterNoonTask");
-//        if (getMainActivity().todayAfternoonBooking.size() == 0) {
-//            nodataToDisplayLayout.setVisibility(View.VISIBLE);
-//        }else {
+        if (getMainActivity().todayAfternoonBooking.size() == 0) {
+            nodataToDisplayLayout.setVisibility(View.VISIBLE);
+        }else {
+        nodataToDisplayLayout.setVisibility(View.GONE);
+        }
 //
 //            loadRecyclerView();
 ////            bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), getMainActivity().todayAfternoonBooking, recyclerView, this, R.layout.tomorrow_item_row);
@@ -67,10 +69,12 @@ public class AfternoonTasksFragment extends BMAFragment {
         return this.view;
     }
     private void loadRecyclerView(){
-        bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), getBookingArray(), recyclerView, this, R.layout.tomorrow_item_row);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(bmaRecyclerAdapter);
+        if(recyclerView!=null) {
+            bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), getBookingArray(), recyclerView, this, R.layout.tomorrow_item_row);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setAdapter(bmaRecyclerAdapter);
+        }
     }
 
     @Override
@@ -80,72 +84,79 @@ public class AfternoonTasksFragment extends BMAFragment {
 //                if(nodataToDisplayLayout!=null)
 //                    nodataToDisplayLayout.setVisibility(View.VISIBLE);
 //            }else if(recyclerView!=null) {
-//                loadRecyclerView();
+            if(nodataToDisplayLayout!=null) {
+                if (getMainActivity().todayAfternoonBooking.size() == 0) {
+                    nodataToDisplayLayout.setVisibility(View.VISIBLE);
+                } else {
+                    nodataToDisplayLayout.setVisibility(View.GONE);
+                }
+            }
+                loadRecyclerView();
 
                 //this.updateDistance();
            // }
-            getRequest();
+          //  getRequest();
         }
     }
-    HttpRequest httpRequest;
-    private void getRequest(){
-        httpRequest = new HttpRequest(getMainActivity(), true);
-        httpRequest.delegate = AfternoonTasksFragment.this;
-        // this.actionID = "engineerHomeScreen";
-        //  Log.d("aaaaaaa"," All Task engineerID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID","abcfegd")+"    service id = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
-        httpRequest.execute("todaysSlotBookings", MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null), getMainActivity().getPinCode(),"1PM-4PM");
-
-    }
-
-    @Override
-    public void processFinish(String response) {
-        httpRequest.progress.dismiss();
-        if (response.contains("data")) {
-            JSONObject jsonObjectHttpReq;
-
-            try {
-                jsonObjectHttpReq = new JSONObject(response);
-
-                final JSONObject jsonObject = jsonObjectHttpReq.getJSONObject("data");
-                String statusCode = jsonObject.getString("code");
-                if (statusCode.equals("0000")) {
-                    httpRequest.progress.dismiss();
-                    String res = jsonObject.getString("response");
-                    this.todayAfternoonBooking = BMAGson.store().getList(EOBooking.class, res);
-                    //  this.bookingInfo = BMAGson.store().getObject(BookingInfo.class, jsonObject);
-                    if(this.todayAfternoonBooking!=null && this.todayAfternoonBooking.size()>0) {
-                        loadRecyclerView();
-                    }else{
-                        nodataToDisplayLayout.setVisibility(View.VISIBLE);
-                    }
-
-
-                }
-            } catch (JSONException e) {
-                httpRequest.progress.dismiss();
-                BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
-
-
-                    @Override
-                    public void onWarningDismiss() {
-                        super.onWarningDismiss();
-                    }
-                };
-                bmaAlertDialog.show(R.string.loginFailedMsg);
-            }
-        }else{
-            httpRequest.progress.dismiss();
-            BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
-
-
-                @Override
-                public void onWarningDismiss() {
-                    super.onWarningDismiss();
-                }
-            };
-            bmaAlertDialog.show(getString(R.string.somethingWentWrong));
-        }
-    }
+//    HttpRequest httpRequest;
+//    private void getRequest(){
+//        httpRequest = new HttpRequest(getMainActivity(), true);
+//        httpRequest.delegate = AfternoonTasksFragment.this;
+//        // this.actionID = "engineerHomeScreen";
+//        //  Log.d("aaaaaaa"," All Task engineerID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID","abcfegd")+"    service id = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
+//        httpRequest.execute("todaysSlotBookings", MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null), getMainActivity().getPinCode(),"1PM-4PM");
+//
+//    }
+//
+//    @Override
+//    public void processFinish(String response) {
+//        httpRequest.progress.dismiss();
+//        if (response.contains("data")) {
+//            JSONObject jsonObjectHttpReq;
+//
+//            try {
+//                jsonObjectHttpReq = new JSONObject(response);
+//
+//                final JSONObject jsonObject = jsonObjectHttpReq.getJSONObject("data");
+//                String statusCode = jsonObject.getString("code");
+//                if (statusCode.equals("0000")) {
+//                    httpRequest.progress.dismiss();
+//                    String res = jsonObject.getString("response");
+//                    this.todayAfternoonBooking = BMAGson.store().getList(EOBooking.class, res);
+//                    //  this.bookingInfo = BMAGson.store().getObject(BookingInfo.class, jsonObject);
+//                    if(this.todayAfternoonBooking!=null && this.todayAfternoonBooking.size()>0) {
+//                        loadRecyclerView();
+//                    }else{
+//                        nodataToDisplayLayout.setVisibility(View.VISIBLE);
+//                    }
+//
+//
+//                }
+//            } catch (JSONException e) {
+//                httpRequest.progress.dismiss();
+//                BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
+//
+//
+//                    @Override
+//                    public void onWarningDismiss() {
+//                        super.onWarningDismiss();
+//                    }
+//                };
+//                bmaAlertDialog.show(R.string.loginFailedMsg);
+//            }
+//        }else{
+//            httpRequest.progress.dismiss();
+//            BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
+//
+//
+//                @Override
+//                public void onWarningDismiss() {
+//                    super.onWarningDismiss();
+//                }
+//            };
+//            bmaAlertDialog.show(getString(R.string.somethingWentWrong));
+//        }
+//    }
 
     @Override
     public <T> void createRow(RecyclerView.ViewHolder viewHolder, View itemView, T rowObject, int position) {
@@ -249,7 +260,7 @@ public class AfternoonTasksFragment extends BMAFragment {
 
 
     public ArrayList<EOBooking> getBookingList() {
-        return this.todayAfternoonBooking;
+        return getMainActivity().todayAfternoonBooking;
 
     }
     private ArrayList<EOBooking> getBookingArray(){
@@ -261,18 +272,19 @@ public class AfternoonTasksFragment extends BMAFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("aaaaaa","Afternoon  onActivityResult = "+data);
         if (data == null ) {
             return;
         }
-
+        Log.d("aaaaaa","BookingDEtail onActivityResult isva = "+data.getBooleanExtra("isCancelled",false));
         if(data.getBooleanExtra("isCancelled",false)) {
-            if (this.getBookingList().size() == 1) {
-
-                getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, new Intent());
-                getFragmentManager().popBackStack();
-            } else {
-                getRequest();
-            }
+           // if (this.getBookingList().size() == 1) {
+            getMainActivity().redirectToHomeMenu();
+//                getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, new Intent());
+//                getFragmentManager().popBackStack();
+//            } else {
+//                getRequest();
+//            }
         }
     }
 

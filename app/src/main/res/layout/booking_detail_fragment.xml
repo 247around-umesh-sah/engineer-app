@@ -675,8 +675,8 @@
                             android:layout_marginLeft="1dp"
                             android:layout_weight="1"
                             android:minHeight="@dimen/_135dp"
-                            app:imgHeight="@dimen/_40dp"
-                            app:imgWidth="@dimen/_40dp">
+                            app:imgHeight="@dimen/_60dp"
+                            app:imgWidth="@dimen/_60dp">
 
                         </com.around.engineerbuddy.component.BMATileView>
 
