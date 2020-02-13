@@ -35,7 +35,7 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
    // public static String base_url = "http://testapp.247around.com/engineerApi";
 
     ///Live Url
-     static String base_url = "https://aroundhomzapp.com/engineerApi";
+    static String base_url = "https://aroundhomzapp.com/engineerApi";
 
 
     //Kenstar

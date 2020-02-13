@@ -193,6 +193,7 @@ public class GetToken {
         jsonData.put("token", token);
         jsonData.put("requestUrl", subUrl);
         jsonData.put("deviceId", deviceId);
+        jsonData.put("app_version", appVersion);
 
         return new Gson().toJson(jsonData);
     }

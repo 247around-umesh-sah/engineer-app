@@ -174,13 +174,14 @@ public class SplashActivity extends AppCompatActivity {
                                // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
 
                             }
-                        }).setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                               checkUserLogin();
-                            }
-                        }
-                )
+                        })
+//                        .setNegativeButton("Cancel",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                               checkUserLogin();
+//                            }
+//                        }
+//                )
                         .show();
             }
 //                BMAAlertDialog bmaAlertDialog=new BMAAlertDialog(getApplicationContext(),true,false){
