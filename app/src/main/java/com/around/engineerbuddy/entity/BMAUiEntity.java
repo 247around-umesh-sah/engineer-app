@@ -1,5 +1,6 @@
 package com.around.engineerbuddy.entity;
 
+// This entity class is used to some specific declare data key of related all object
 public class BMAUiEntity extends BMAObject {
 
 
@@ -168,6 +169,7 @@ public class BMAUiEntity extends BMAObject {
         return super.equals(obj);
     }
 
+    // This is custome method with one argument of title as string to set title in object.
     public static BMAUiEntity uiEntity(String title) {
         BMAUiEntity entity = new BMAUiEntity();
         entity.setTitle(title);

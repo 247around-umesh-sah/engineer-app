@@ -107,7 +107,7 @@ public class HelpingDocumentFragment extends BMAFragment {
                                 return true;
                             case R.id.share:
                                 //handle menu2 click
-                                sharedLink(eoDocumentType.file);
+                                sharedLink(eoDocumentType);
                                 return true;
                             case R.id.view:
                                 Intent intent=new Intent(getMainActivity(), VideoViewActivity.class);
@@ -177,15 +177,15 @@ public class HelpingDocumentFragment extends BMAFragment {
         }
         return R.drawable.pdf_white;
     }
-    private void sharedLink(String link){
+    private void sharedLink( EODocumentType eoDocumentType){
         Intent share = new Intent(android.content.Intent.ACTION_SEND);
         share.setType("text/plain");
         share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 
         // Add data to the intent, the receiving app will decide
         // what to do with it.
-        share.putExtra(Intent.EXTRA_SUBJECT, "Here is document prepared by 247around");
-        share.putExtra(Intent.EXTRA_TEXT, "Here is document prepared by 247around"+"\n"+link);
+        share.putExtra(Intent.EXTRA_SUBJECT, "Here is document of "+eoDocumentType.brand+" for "+eoDocumentType.request_type+" prepared by 247around");
+        share.putExtra(Intent.EXTRA_TEXT, "Here is document of "+eoDocumentType.brand+" for "+eoDocumentType.request_type+" prepared by 247around"+"\n"+eoDocumentType.file);
 
         startActivity(Intent.createChooser(share, "Share link!"));
 

@@ -153,14 +153,22 @@
             android:textColor="#8C8C8C"
             android:textSize="@dimen/_15dp"
             android:hint="Enter Serial No."/>
+        <com.around.engineerbuddy.component.BMAFontViewField
+            android:id="@+id/scannericon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".1"
+            android:gravity="center"
+            android:textSize="@dimen/_25dp"
+            android:visibility="gone"
+            android:text="@string/icon_camera"/>
         <!--<engineerbuddyddy.component.BMAFontViewField-->
             <!--android:id="@+id/serialNoDropDownIcon"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="match_parent"-->
             <!--android:gravity="center"-->
             <!--android:text="@string/icon_sort_down"-->
             <!--android:background="#FFFFFF"-->
-            <!--android:layout_weight=".1"-->
             <!--android:textColor="#2A3F54"-->
             <!--android:textSize="@dimen/_25dp" />-->
 

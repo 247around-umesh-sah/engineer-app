@@ -52,7 +52,6 @@ public class BMANotificationFragment extends BMAFragment {
     }
     private void loadRecyclerView(){
 
-
         BMARecyclerAdapter bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(),getNotificationList(), recyclerView, this, R.layout.notification_item);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -89,7 +88,7 @@ public class BMANotificationFragment extends BMAFragment {
                     String res = jsonObject.getString("response");
                     this.eoNotification = BMAGson.store().getObject(EONotification.class, res);
                     //  this.bookingInfo = BMAGson.store().getObject(BookingInfo.class, jsonObject);
-                    if (this.eoNotification != null) {
+                    if (this.eoNotification != null && this.eoNotification.notifications.size()>0) {
                         this.noDataToDisplay.setVisibility(View.GONE);
                         this.dataToView();
                        // if(this.getBookingList().size()==0) {
@@ -124,7 +123,7 @@ public class BMANotificationFragment extends BMAFragment {
                     super.onWarningDismiss();
                 }
             };
-            bmaAlertDialog.show(getString(R.string.somethingWentWrong));
+            bmaAlertDialog.show("Server error");
         }
     }
 
@@ -182,7 +181,6 @@ public class BMANotificationFragment extends BMAFragment {
                 d.dismiss();
             }
         });
-
         d.show();
     }
 }

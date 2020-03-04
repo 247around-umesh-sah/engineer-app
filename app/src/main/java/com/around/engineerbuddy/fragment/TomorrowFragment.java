@@ -430,8 +430,12 @@ int position;
         if(data.getBooleanExtra("isCancelled",false)) {
 //            if (this.getBookingList().size() == 1) {
 
+            if(getTargetFragment()!=null) {
                 getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, new Intent());
-                getFragmentManager().popBackStack();
+                if(getFragmentManager()!=null) {
+                    getFragmentManager().popBackStack();
+                }
+            }
 //            } else {
 //                //loadData();
 //            }

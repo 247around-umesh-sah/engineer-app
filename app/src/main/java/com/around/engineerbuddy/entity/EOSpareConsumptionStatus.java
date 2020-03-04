@@ -1,5 +1,6 @@
 package com.around.engineerbuddy.entity;
 
+ //This entity class declare all data key related to spare Consumption status
 public class EOSpareConsumptionStatus extends BMAObject {
     public String id;
     public String consumed_status;

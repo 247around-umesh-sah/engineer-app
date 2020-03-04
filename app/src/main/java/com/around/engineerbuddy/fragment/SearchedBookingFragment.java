@@ -355,7 +355,7 @@ public class SearchedBookingFragment extends BMAFragment {
     public boolean isEditBooking(EOBooking eoBooking) {
 
         if(eoBooking.internal_status.equalsIgnoreCase(BMAConstants.INTERNAL_SATATUS_CANCELLED)){
-            Toast.makeText(getContext(), "You can not edit this booking due to " + eoBooking.current_status + " status ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "You can not edit this booking due to " + eoBooking.internal_status + " status ", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (eoBooking.current_status.equalsIgnoreCase("Pending") || eoBooking.current_status.equalsIgnoreCase("Rescheduled")) {

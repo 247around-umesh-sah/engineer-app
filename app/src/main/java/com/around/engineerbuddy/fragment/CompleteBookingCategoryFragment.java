@@ -68,6 +68,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     EOBooking eoBooking;
     Misc misc;
     Button submitButton;
+    int i=0;
 
     @Override
     public void onAttach(Context context) {
@@ -90,7 +91,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         this.tile4 = this.view.findViewById(R.id.tile4);
         this.tile5 = this.view.findViewById(R.id.tile5);
         this.tile6 = this.view.findViewById(R.id.tile6);
-        submitButton= this.view.findViewById(R.id.submitButton);
+        submitButton = this.view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +101,10 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         this.bindTile();
         setTileBackgroundView();
         misc = new Misc(getContext());
+        if(i==0) {
+            openProductDetailPage();
+            i++;
+        }
         return this.view;
     }
 
@@ -137,6 +142,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     private void setTileBackgroundView() {
         if (eoSelectedSymptomDefect != null) {
             this.tile3.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
+
         }
         if ((selectedProductDetail != null && !isConsumptionrequired) || (selectedCosumption != null && selectedCosumption.size() > 0)) {
             this.tile2.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
@@ -147,9 +153,77 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         }
         if (selectedProductDetail != null) {
             this.tile1.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
+
         }
         if (paymentsAmount != null) {
             this.tile4.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
+        }
+
+
+
+
+        if(callbackPageName.equalsIgnoreCase("productDetail")){
+            if (isConsumptionrequired) {
+                    if (selectedCosumption == null || selectedCosumption.size() == 0) {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("eoBooking", eoBooking);
+                        this.updateFragment(bundle, new SparePartConsumptionFragment(), "Spare Part");
+                        callbackPageName="";
+                        return;
+                    }
+                } else {
+
+                    if (this.eoSelectedSymptomDefect == null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("eoBooking", eoBooking);
+                        this.updateFragment(bundle, new SymptomFragment(), getString(R.string.symptoms));
+                        callbackPageName="";
+                        return;
+                    }
+                }
+
+        }
+        if(callbackPageName.equalsIgnoreCase("spareConsumption")){
+            if(selectedCosumption==null){
+                return;
+            }
+            if (this.eoSelectedSymptomDefect == null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("eoBooking", eoBooking);
+                    this.updateFragment(bundle, new SymptomFragment(),getString(R.string.symptoms));
+                callbackPageName="";
+                return;
+                }
+
+        }
+        if(callbackPageName.equalsIgnoreCase("symptom")){
+            if(eoSelectedSymptomDefect==null){
+                return;
+            }
+            if(paymentsAmount==null) {
+                Bundle bundle=new Bundle();
+                bundle.putParcelable("eoBooking", eoBooking);
+                if (selectedProductDetail != null) {
+                    bundle.putParcelable("productDetail", selectedProductDetail);
+                }
+                this.updateFragment(bundle, new CheckoutFragment(), "Payment Details");
+                callbackPageName="";
+                return;
+            }
+
+        }
+        if(callbackPageName.equalsIgnoreCase("paymentDetail")){
+            if(paymentsAmount==null){
+                return;
+            }
+            if(customerSignatureBitmap==null){
+                Bundle bundle=new Bundle();
+                bundle.putParcelable("eoBooking", eoBooking);
+
+                this.updateFragment(bundle, new CustomerInput(), "Customer Input");
+                callbackPageName="";
+                return;
+            }
         }
 //        if(eoSelectedSymptomDefect!=null){
 //            this.tile2.setBoaderViewColor(BMAUIUtil.getColor(R.color.green_tile));
@@ -161,21 +235,22 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         Bundle bundle = new Bundle();
         switch (v.getId()) {
             case R.id.tile1:
-                bundle.putParcelable("eoBooking", eoBooking);
-                if (addMoreProductDetail != null)
-                    bundle.putString("addMoreProductDetail", addMoreProductDetail);
-                if (selectedProductDetail != null) {
-                    bundle.putParcelable("productDetail", selectedProductDetail);
-                }
-                bundle.putBoolean("isCompletePage", true);
-                if (selectpurchadeDate != null) {
-                    bundle.putString("pod", selectpurchadeDate);
-                }
-                if (modelNumber != null) {
-                    bundle.putParcelable("modelNumber", modelNumber);
-                }
-
-                this.updateFragment(bundle, new EditWarrantyBooking(), "Warranty Checker");
+                openProductDetailPage();
+//                bundle.putParcelable("eoBooking", eoBooking);
+//                if (addMoreProductDetail != null)
+//                    bundle.putString("addMoreProductDetail", addMoreProductDetail);
+//                if (selectedProductDetail != null) {
+//                    bundle.putParcelable("productDetail", selectedProductDetail);
+//                }
+//                bundle.putBoolean("isCompletePage", true);
+//                if (selectpurchadeDate != null) {
+//                    bundle.putString("pod", selectpurchadeDate);
+//                }
+//                if (modelNumber != null) {
+//                    bundle.putParcelable("modelNumber", modelNumber);
+//                }
+//
+//                this.updateFragment(bundle, new EditWarrantyBooking(), "Warranty Checker");
                 break;
             case R.id.tile3:
 
@@ -237,6 +312,24 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         }
     }
 
+    private void openProductDetailPage(){
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("eoBooking", eoBooking);
+        if (addMoreProductDetail != null)
+            bundle.putString("addMoreProductDetail", addMoreProductDetail);
+        if (selectedProductDetail != null) {
+            bundle.putParcelable("productDetail", selectedProductDetail);
+        }
+        bundle.putBoolean("isCompletePage", true);
+        if (selectpurchadeDate != null) {
+            bundle.putString("pod", selectpurchadeDate);
+        }
+        if (modelNumber != null) {
+            bundle.putParcelable("modelNumber", modelNumber);
+        }
+
+        this.updateFragment(bundle, new EditWarrantyBooking(), "Warranty Checker");
+    }
     public void updateFragment(Bundle bundle, Fragment fragment, String headerText) {
         this.updateFragment(bundle, fragment, headerText, null);
     }
@@ -252,7 +345,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     Bitmap customerSignatureBitmap;
 
     String addMoreProductDetail;
-    boolean  isCash;
+    boolean isCash;
     EOCompleteProductdetail selectedProductDetail;
     String paymentsAmount;
     EOModelNumber modelNumber;
@@ -261,12 +354,69 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     ArrayList<EOSpareCosumptionRequest> selectedCosumption = new ArrayList<>();
     boolean isConsumptionrequired;
 
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (data == null || data.getStringExtra("completeCatogryPageName") == null) {
+//            return;
+//        }
+//        switch (data.getStringExtra("completeCatogryPageName")) {
+//            case "productDetail":
+//                selectedProductDetail = data.getParcelableExtra("productDetail");
+//                modelNumber = data.getParcelableExtra("modelNumber");
+//                selectpurchadeDate = data.getStringExtra("pod");
+//                eoSpareParts = data.getParcelableExtra("eoSparePart");
+//                addMoreProductDetail = data.getStringExtra("AddMoreproductDetail");
+//                isConsumptionrequired = data.getBooleanExtra("isConsumptionrequired", false);
+//                if (isConsumptionrequired) {
+//                    if (selectedCosumption == null || selectedCosumption.size() == 0) {
+//                        Bundle bundle = new Bundle();
+//                        bundle.putParcelable("eoBooking", eoBooking);
+//                        this.updateFragment(bundle, new SparePartConsumptionFragment(), "Spare Part");
+//                    }
+//                } else {
+//
+//                    if (this.eoSelectedSymptomDefect == null) {
+//                        Bundle bundle = new Bundle();
+//                        bundle.putParcelable("eoBooking", eoBooking);
+//                        this.updateFragment(bundle, new SymptomFragment(), getString(R.string.symptoms));
+//                    }
+//                }
+//                break;
+//            case "spareConsumption":
+//                selectedCosumption = data.getParcelableArrayListExtra("spareConsumption");
+//                if (this.eoSelectedSymptomDefect == null) {
+//                    Bundle bundle = new Bundle();
+//                    bundle.putParcelable("eoBooking", eoBooking);
+//                    this.updateFragment(bundle, new SymptomFragment(), getString(R.string.symptoms));
+//                }
+//                break;
+//
+//            case "symptom":
+//                this.eoSelectedSymptomDefect = data.getParcelableExtra("selectedEOSymptomDefect");
+//                break;
+//            case "paymentDetail":
+//                this.paymentsAmount = data.getStringExtra("paymentsAmount");
+//                this.isCash = data.getBooleanExtra("isCash", false);
+//                break;
+//            case "customerInput":
+//                this.customerSignatureBitmap = data.getParcelableExtra("customerSignature");
+//                break;
+//
+//
+//        }
+//    }
+
+    String callbackPageName="";
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("aaaaa","onACtivitttttt");
         if (data == null || data.getStringExtra("completeCatogryPageName") == null) {
             return;
         }
-        switch (data.getStringExtra("completeCatogryPageName")) {
+
+        callbackPageName=data.getStringExtra("completeCatogryPageName");
+        switch (callbackPageName) {
             case "productDetail":
                 selectedProductDetail = data.getParcelableExtra("productDetail");
                 modelNumber = data.getParcelableExtra("modelNumber");
@@ -274,6 +424,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 eoSpareParts = data.getParcelableExtra("eoSparePart");
                 addMoreProductDetail = data.getStringExtra("AddMoreproductDetail");
                 isConsumptionrequired = data.getBooleanExtra("isConsumptionrequired", false);
+
 
                 break;
             case "spareConsumption":
@@ -422,7 +573,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = CompleteBookingCategoryFragment.this;
-        httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData),getMainActivity().getEngineerId());
+        httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData), getMainActivity().getEngineerId());
 
     }
 
@@ -493,8 +644,6 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     }
 
     String SN_DIRECTORY = Environment.getExternalStorageDirectory() + "/AroundSerialNO/";
-
-
 
 
     public String onCaptureImageResult(Bitmap thumbnail) {

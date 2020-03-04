@@ -23,11 +23,12 @@ import com.around.engineerbuddy.helper.ApplicationHelper;
 import com.around.engineerbuddy.util.BMAConstants;
 import com.google.firebase.crash.FirebaseCrash;
 
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity implements ApiResponse {
     public static final String MyPREFERENCES = "MyPrefs";
     private SharedPreferences sharedPrefs;
     ImageView scooter;
@@ -36,12 +37,15 @@ public class SplashActivity extends AppCompatActivity {
     TextView versionCode;
     private static int SPLASH_TIME_OUT = 500;
     Context context;
+    HttpRequest httpRequest;
+    String appVersionCode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        FirebaseCrash.log("Activity created");
+        //FirebaseCrash.log("Activity created");
         MainActivityHelper.setApplicationHelper(new ApplicationHelper(getApplicationContext()));
 //        sharedPrefs = getSharedPreferences(SplashActivity.MyPREFERENCES,
 //                Context.MODE_PRIVATE);
@@ -52,7 +56,8 @@ public class SplashActivity extends AppCompatActivity {
         poles =  findViewById(R.id.poles);
         try {
             this.versionCode=findViewById(R.id.versionCode);
-                 this.versionCode.setText("Version : "+getPackageManager().getPackageInfo(getPackageName(),0).versionName);
+            this.appVersionCode=getPackageManager().getPackageInfo(getPackageName(),0).versionName;
+                 this.versionCode.setText("Version : "+this.appVersionCode);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -94,12 +99,66 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
-        new VersionCodeTask().execute();
+      //  new VersionCodeTask().execute();
+//         misc = new Misc(this);
+//        misc.checkAndLocationRequestPermissions();
+//
+        checkForUpDateApp();
         //checkUserLogin();
 
 
 
     }
+    // this method is used send hit to server API for getting Response of APP Upgrade
+    private void checkForUpDateApp(){
+
+        ConnectionDetector cd=new ConnectionDetector(this);
+        if(cd.isConnectingToInternet()) {
+            this.httpRequest = new HttpRequest(SplashActivity.this, true);
+            httpRequest.delegate = SplashActivity.this;
+            httpRequest.execute("checkForUpgrade");
+        }else {
+            Misc misc=new Misc(this);
+            misc.NoConnection();
+        }
+
+
+    }
+
+    @Override
+    public void processFinish(String httpReqResponse) {
+        this.httpRequest.progress.dismiss();
+       // Log.d("aaaaaa", "outPut =" + httpReqResponse);
+        if (httpReqResponse.contains("data")) {
+            JSONObject jsonObjectHttpReq;
+
+            try {
+                jsonObjectHttpReq = new JSONObject(httpReqResponse);
+
+                final JSONObject jsonObject = jsonObjectHttpReq.getJSONObject("data");
+                String statusCode = jsonObject.getString("code");
+                if (statusCode.equals("0000")) {
+                 //   httpRequest.progress.dismiss();
+
+                    JSONObject response = new JSONObject(jsonObject.getString("response"));
+                    String config_value=response.getString("config_value");
+                    if(config_value!=null && config_value.length()>0){
+                        showUpgradeAppDialog(config_value);
+                    }else {
+                     checkUserLogin();
+                    }
+                }else if(statusCode.equals("9998")){
+                    checkUserLogin();
+                }
+            } catch (Exception e) {
+               // checkUserLogin();
+            }
+
+        }else {
+            checkUserLogin();
+        }
+    }
+
     class VersionCodeTask extends AsyncTask<Void,String,String>{
      //   final String url = "https://androidquery.appspot.com/api/market?app="+getPackageName();
 
@@ -197,6 +256,8 @@ public class SplashActivity extends AppCompatActivity {
 
  //Log.d("aaaaaa","versionCode = "+newVersion);       }
     }
+
+    // this method is used to check user login if already login then open MainActivity otherwise Login screen.
     private void checkUserLogin(){
         String phonenumbersp=sharedPrefs.getString("phoneNumber",null);
         String engineerIDSP = sharedPrefs.getString("engineerID",null);
@@ -224,5 +285,58 @@ public class SplashActivity extends AppCompatActivity {
             }
         };
         timerThread.start();
+    }
+
+    // this method used to show App Upgrade dialog by checking condition hard or sft upgrade
+
+    private void showUpgradeAppDialog(String softHardUpgrade){
+        if(softHardUpgrade.equalsIgnoreCase("0")){
+            new android.support.v7.app.AlertDialog.Builder(SplashActivity.this)
+                    .setTitle("New version available,\nPlease Update.")
+                    .setMessage("247Around Engineer buddy")
+                    .setCancelable(false)
+                    .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Whatever...
+                            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + context.getPackageName())));
+                            // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
+
+                        }
+                    })
+                        .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                               checkUserLogin();
+                            }
+                        }
+                )
+                    .show();
+
+        }else if(softHardUpgrade.equalsIgnoreCase("1")){
+            new android.support.v7.app.AlertDialog.Builder(SplashActivity.this)
+                    .setTitle("New version available,\nPlease Update.")
+                    .setMessage("247Around Engineer buddy")
+                    .setCancelable(false)
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Whatever...
+                            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + context.getPackageName())));
+                            // startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
+
+                        }
+                    })
+//                        .setNegativeButton("Cancel",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                               checkUserLogin();
+//                            }
+//                        }
+//                )
+                    .show();
+        }
+
+
     }
 }

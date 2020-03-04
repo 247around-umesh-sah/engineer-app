@@ -25,8 +25,10 @@ import android.widget.Toast;
 import com.around.engineerbuddy.ApiResponse;
 import com.around.engineerbuddy.BMAGson;
 import com.around.engineerbuddy.BMAmplitude;
+import com.around.engineerbuddy.ConnectionDetector;
 import com.around.engineerbuddy.HttpRequest;
 import com.around.engineerbuddy.MainActivityHelper;
+import com.around.engineerbuddy.Misc;
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.entity.EOAllBookingTask;
@@ -135,12 +137,19 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
                }
     }
     private void getRequest(){
-        httpRequest = new HttpRequest(getMainActivity(), true);
-        httpRequest.delegate = AllTasksFragment.this;
-        this.actionID = "engineerHomeScreen";
-        //  Log.d("aaaaaaa"," All Task engineerID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID","abcfegd")+"    service id = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
-        httpRequest.execute(actionID, MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null), getMainActivity().getPinCode());//,batteryLevel+"");
+        ConnectionDetector cd=new ConnectionDetector(getMainActivity());
 
+        if(cd.isConnectingToInternet()) {
+            httpRequest = new HttpRequest(getMainActivity(), true);
+            httpRequest.delegate = AllTasksFragment.this;
+            this.actionID = "engineerHomeScreen";
+            //  Log.d("aaaaaaa"," All Task engineerID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID","abcfegd")+"    service id = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
+            httpRequest.execute(actionID, MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null), getMainActivity().getPinCode());//,batteryLevel+"");
+        }else{
+            Misc misc=new Misc(getMainActivity());
+            misc.NoConnection();
+
+        }
     }
 
     private void dataToView() {

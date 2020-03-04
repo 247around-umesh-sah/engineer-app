@@ -36,7 +36,7 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
     String actionID;
     private EOBooking eoBooking;
     EditText selectSympton,selectDefect,selectSolution,closingRemarks;
-   // BMAFontViewField symptomDropDownIcon,defectDropDownIcon,solutionDropDownIcon;
+    // BMAFontViewField symptomDropDownIcon,defectDropDownIcon,solutionDropDownIcon;
     ArrayList<EOSymptomDefect> symptomsList=new ArrayList<>();
     ArrayList<EOSymptomDefect> solutionList=new ArrayList<>();
     EOSymtoms eoSymptoms;
@@ -66,7 +66,7 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
         this.defectLayout=this.view.findViewById(R.id.defectLayout);
         this.solutionLayout=this.view.findViewById(R.id.solutionLayout);
         if(this.eoBooking.bookingRemarks!=null)
-        bookingRemarks.setText(this.eoBooking.bookingRemarks);
+            bookingRemarks.setText(this.eoBooking.bookingRemarks);
         this.closingRemarks=this.view.findViewById(R.id.Problemdescriptionedittext);
         this.submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,9 +139,9 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
                 String statusCode = jsonObject.getString("code");
                 if (statusCode.equals("0000")) {
                     if (this.actionID.equalsIgnoreCase("symptomCompleteBooking") ) {
-                      //  String responseData = (new JSONObject(jsonObject.getString("response")).getString("symptoms"));
+                        //  String responseData = (new JSONObject(jsonObject.getString("response")).getString("symptoms"));
                         this.eoSymptoms = BMAGson.store().getObject(EOSymtoms.class, jsonObject.getString("response"));
-                       // String responseData = (new JSONObject(jsonObject.getString("response")).getString("sparePartsOrder"));
+                        // String responseData = (new JSONObject(jsonObject.getString("response")).getString("sparePartsOrder"));
 //                        this.eoSparePartsOrder = BMAGson.store().getObject(EOSparePartsOrder.class, responseData);
 //                        if (this.eoSparePartsOrder != null && this.eoSparePartsOrder.modelNumberList.size() < 1) {
 //                            selectModel.setEnabled(true);
@@ -216,7 +216,7 @@ public class SymptomFragment extends BMAFragment implements View.OnClickListener
                     getdefectCompleteBookingRequest(symptom.id);
                 }else if(getSymptonList().size()==1){
                     BMAUiEntity bmaUiEntity=getSymptonList().get(0);
-                            selectSympton.setText(bmaUiEntity.getDetail1());
+                    selectSympton.setText(bmaUiEntity.getDetail1());
                     EOSymptomDefect symptom= (EOSymptomDefect) bmaUiEntity.tag;
                     selectSympton.setTag(symptom);
                     selectedEOSymptomDefect.symptom=bmaUiEntity.getDetail1();

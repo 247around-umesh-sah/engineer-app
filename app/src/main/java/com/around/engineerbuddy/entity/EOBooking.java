@@ -4,6 +4,7 @@ import android.location.Location;
 
 import com.google.gson.annotations.SerializedName;
 
+//This entity class is used to declare data key value related to all booking
 public class EOBooking extends BMAObject {
     @SerializedName("booking_id")
     public String bookingID;
@@ -20,7 +21,7 @@ public class EOBooking extends BMAObject {
     public String bookingDate;
     @SerializedName("booking_pincode")
     public String pincode;
-    public String distnace="0.0";
+    public String distnace = "0.0";
     @SerializedName("booking_timeslot")
     public String bookingTimeSlot;
     @SerializedName("tech_support_number")
@@ -50,14 +51,17 @@ public class EOBooking extends BMAObject {
     public String internal_status;
     public String partner_incentive;
     public String service_center_booking_action_status;
-    public boolean allow_reshedule=true;
-    public boolean complete_allow=true;
-    public boolean cancel_allow=true;
+    public boolean allow_reshedule = true;
+    public boolean complete_allow = true;
+    public boolean cancel_allow = true;
     public String alternate_phone_number;
-   // public String booking_remarks;
+    // public String booking_remarks;
 
     public Integer spare_eligibility;
-       public String message;
+    public String message;
+    public String is_paid;
+
+    public boolean pre_consume_req;
 
 
 }

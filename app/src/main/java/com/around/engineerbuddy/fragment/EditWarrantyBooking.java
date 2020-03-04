@@ -755,7 +755,12 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
         bundle.putParcelable("modelNumber", getModelNumber());
         bundle.putParcelable("eoBooking", eoBooking);
         bundle.putParcelable("eoSpareParts", eoSparePartWarrantyChecker.eoSpareParts);
-        this.updateFragment(bundle, new SparePartsOrderFragment(), getString(R.string.spareParts));
+        if(this.eoBooking!=null && this.eoBooking.pre_consume_req){
+            this.updateFragment(bundle, new SpareConsumptionBeforeSpareRequest(), "Spare Consumption");
+        }else {
+            //this.updateFragment(bundle, new SpareConsumptionBeforeSpareRequest(), "Spare Consumption");
+            this.updateFragment(bundle, new SparePartsOrderFragment(), getString(R.string.spareParts));
+        }
     }
 
     private EOModelNumber getModelNumber() {

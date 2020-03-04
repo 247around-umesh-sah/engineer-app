@@ -21,6 +21,7 @@ public interface BMAConstants {
     String LOGIN_INFO = "loginInfo";
     String NOTIF_INFO = "notifInfo";
     int requestCode = 1111;
+    int scanCode = 0000;
     String INTERNAL_SATATUS_CANCELLED="InProcess_Cancelled";
 
 

@@ -50,6 +50,7 @@ import com.around.engineerbuddy.entity.EOBooking;
 import com.around.engineerbuddy.entity.EOModelNumber;
 import com.around.engineerbuddy.entity.EOPartName;
 import com.around.engineerbuddy.entity.EOPartType;
+import com.around.engineerbuddy.entity.EOSpareCosumptionRequest;
 import com.around.engineerbuddy.entity.EOSpareParts;
 import com.around.engineerbuddy.entity.EOSparePartsOrder;
 import com.around.engineerbuddy.util.BMAConstants;
@@ -86,7 +87,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
     ImageView serialNoPic, invoicePic;
     private HttpRequest httpRequest;
     ImageView frontDefectivePart, backDefectivePart;
-    BMAFontViewField selectPurchaseDateIcon, modelDropDownIcon;
+    BMAFontViewField selectPurchaseDateIcon, modelDropDownIcon,scannericon;
     TextView selectpurchaseDate;
     EditText selectModel, enterSerialNo, problemdescriptionedittext;
     private EOBooking eoBooking;
@@ -105,6 +106,9 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
     //   boolean isCheckedSpareWarranty;
     // String selectModelNumberCallType;
     String selectPOD;
+    String scanSerialNumber;
+    ArrayList<EOSpareCosumptionRequest> cosumptionArray = new ArrayList<>();
+
 
     @Override
     public void onAttach(Context context) {
@@ -113,6 +117,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         //  selectModelNumberCallType = getArguments().getString("modelNo");
         selectPOD = getArguments().getString("pod");
         modelNumber = getArguments().getParcelable("modelNumber");
+        cosumptionArray=getArguments().getParcelableArrayList( "consumptionArray");
     }
 
     @Nullable
@@ -134,8 +139,16 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         this.selectModel = this.view.findViewById(R.id.selectModel);
         this.enterSerialNo = this.view.findViewById(R.id.enterSerialNo);
         this.selectModelLayout = this.view.findViewById(R.id.selectModelLayout);
+        this.scannericon=this.view.findViewById(R.id.scannericon);
 
 
+        this.scannericon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Scannerfragment scannerfragment=new Scannerfragment();
+                getMainActivity().updateFragment(scannerfragment,true);
+            }
+        });
         ////warranty Checker
 
 
@@ -188,10 +201,20 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             selectPurchaseDateIcon.setEnabled(false);
         }
         this.modelDropDownIcon.setVisibility(View.INVISIBLE);
-        this.getModelData();
+       // if(this.eoSparePartsOrder==null) {
+            this.getModelData();
+        //}
         if (modelNumber != null) {
             selectModel.setTag(modelNumber);
         }
+       // Log.d("aaaaaa","scaned data ="+this.scanSerialNumber);
+       // //enterSerialNo.setText("gggggggggggggggggg");
+//        if(this.scanSerialNumber!=null){
+//            enterSerialNo.setText(this.scanSerialNumber);
+//            enterSerialNo.setHint(this.scanSerialNumber);
+//           // enterSerialNo.setEnabled(false);
+//        }
+        //Log.d("aaaaaa","scaned GET data ="+enterSerialNo.getText().toString());
         //   this.getPartTypeData();
         return this.view;
     }
@@ -240,7 +263,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
     public void processFinish(String response) {
         // super.processFinish(respononse);
         Log.d("bbbbbbb", "response  = " + response);
-        httpRequest.progress.dismiss();
+
         if (response.contains("data")) {
             JSONObject jsonObjectHttpReq;
 
@@ -260,7 +283,12 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 //                        }
 
                     // } else
-                    if (this.actionID.equalsIgnoreCase("engineerSparePartOrder")) {
+                    if(this.actionID.equalsIgnoreCase("submitPrevPartsConsumption")){
+                       // httpRequest.progress.dismiss();
+                        sendToServer();
+                    }
+                    else if (this.actionID.equalsIgnoreCase("engineerSparePartOrder")) {
+                        httpRequest.progress.dismiss();
                         String responseData = (new JSONObject(jsonObject.getString("response")).getString("sparePartsOrder"));
                         this.eoSparePartsOrder = BMAGson.store().getObject(EOSparePartsOrder.class, responseData);
                         if (this.eoSparePartsOrder != null) {
@@ -293,9 +321,11 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 
                         }
                     } else if (this.actionID.equalsIgnoreCase("partTypeOnModelNumber")) {
+                        httpRequest.progress.dismiss();
                         String responseData = (new JSONObject(jsonObject.getString("response")).getString("partTypeList"));
                         partTypeList = BMAGson.store().getList(EOPartType.class, responseData);
                     } else if (this.actionID.equalsIgnoreCase("sparePartName")) {
+                        httpRequest.progress.dismiss();
                         partNameList = BMAGson.store().getList(EOPartName.class, jsonObject.getString("response"));
                         if (partNameList == null || partNameList.size() == 0) {
                             EditText selectedPartName = selectedPartTypeChildView.findViewById(R.id.selectPartName);
@@ -312,6 +342,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
 
                         }
                     } else if (this.actionID.equalsIgnoreCase("submitSparePartsOrder")) {
+                        httpRequest.progress.dismiss();
                         BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext()) {
                             @Override
                             public void onDefault() {
@@ -328,6 +359,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                     }
 
                 } else {
+                    httpRequest.progress.dismiss();
                     BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
                         @Override
                         public void onWarningDismiss() {
@@ -338,8 +370,18 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                     bmaAlertDialog.show(jsonObject.getString("result"));
                 }
             } catch (Exception e) {
-
+                httpRequest.progress.dismiss();
             }
+        }else{
+            httpRequest.progress.dismiss();
+            BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
+                @Override
+                public void onWarningDismiss() {
+                    super.onWarningDismiss();
+                }
+
+            };
+            bmaAlertDialog.show("Server Error");
         }
     }
 
@@ -504,7 +546,11 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                 if (!isSelectAllField()) {
                     if (!partsObject.containsKey(partNumberCounter)) {
                         //  if(checkQuantity()){
-                        sendToServer();
+                        if(this.eoBooking!=null && this.eoBooking.pre_consume_req && this.cosumptionArray!=null && this.cosumptionArray.size()>0){
+                            submitRequestToServer();
+                        }else{
+                            sendToServer();
+                        }
                         // }
 
                         return;
@@ -522,7 +568,11 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                     partsObject.put(partNumberCounter, BMAGson.store().toJson(partsMap));
                 }
 
-                sendToServer();
+                if(this.eoBooking!=null && this.eoBooking.pre_consume_req && this.cosumptionArray!=null && this.cosumptionArray.size()>0){
+                    submitRequestToServer();
+                }else {
+                    sendToServer();
+                }
 
                 break;
         }
@@ -702,6 +752,20 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
       //  Log.d("aaaaa","spare Fragment ="+mCurrentPhotoPath);
+        if(data!=null && data.getStringExtra("scan")!=null) {
+
+             scanSerialNumber=data.getStringExtra("content");
+//             enterSerialNo.setText(scanSerialNumber);
+//             enterSerialNo.setHint(scanSerialNumber);
+           // enterSerialNo.setText(scanSerialNumber);
+            Log.d("aaaaa","setComnetvt = "+scanSerialNumber);
+
+
+
+            return;
+        }
+
+
         File file = new File(mCurrentPhotoPath);
         Bitmap imageBitmap = null;
         try {
@@ -789,7 +853,9 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             e.printStackTrace();
         }
         if(thumbnail==null){
-            thumbnail=getBitmapFromURL(uri.toString());
+            String uriString=uri.toString();
+            thumbnail=getBitmapFromURL(uriString);
+            Log.d("aaaaa","thumbnail = "+thumbnail);
             if(thumbnail==null)
             return null;
         }
@@ -931,6 +997,8 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         requestData.put("model_number", selectModel.getText().toString().trim());
         requestData.put("dop", selectpurchaseDate.getText().toString().trim());
         requestData.put("serial_number", enterSerialNo.getText().toString().trim());
+       //   Log.d("aaaaaa", "submit SERAIL NUMBER   = " +enterSerialNo.getText().toString().trim());
+
 
         Log.d("aaaaaaa","GSON  = "+BMAGson.store().toJson(requestData));
         for (Map.Entry<Integer, String> entry : partsObject.entrySet()) {
@@ -949,12 +1017,15 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
        // Log.d("aaaaaa", "partList = " + BMAGson.store().toJson(partList));
 
         requestData.put("part", partList);
+        if(httpRequest!=null){
+            this.httpRequest.progress.dismiss();
+        }
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = SparePartsOrderFragment.this;
         this.actionID = "submitSparePartsOrder";
         //Log.d("aaaaaa","aentID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("scAgentID", null));
         //Toast.makeText(getContext(), "submitSparePartsOrder", Toast.LENGTH_SHORT).show();
-        httpRequest.execute("submitSparePartsOrder", BMAGson.store().toJson(requestData), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("scAgentID", null));
+       httpRequest.execute("submitSparePartsOrder", BMAGson.store().toJson(requestData), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("scAgentID", null));
 
 
 //    },
@@ -1036,14 +1107,11 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             Log.d("aaaaaa","vale = "+value);
             if (key.equalsIgnoreCase("quantity")) {
                 if (getPartString != null) {
-                    Log.d("aaaaaa","partmap valu!=null = "+partsMap.get("quantity"));
                     HashMap<String, Object> getPartsMap = BMAGson.store().getObject(HashMap.class, getPartString);
                     getPartsMap.put("quantity", value);
-                    Log.d("aaaaaa","partmap valu!=nulllllll = "+getPartsMap.get("quantity"));
                     partsObject.put(getKey, BMAGson.store().toJson(getPartsMap));
                 } else {
                     partsMap.put("quantity", value);
-                    Log.d("aaaaaa","partmap valu = "+partsMap.get("quantity"));
                 }
             }
             if (key.equalsIgnoreCase("selectedPartName")) {
@@ -1059,24 +1127,52 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             }
         }
     }
-
     public static Bitmap getBitmapFromURL(String src) {
         try {
+            Log.d("aaaaa","getBitmapURl CALL = ");
             URL url = new URL(src);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
+            Log.d("aaaaa","input = "+input);
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
+            int width = myBitmap.getWidth();
+            int height = myBitmap.getHeight();
+
+            float bitmapRatio = (float)width / (float) height;
+            if (bitmapRatio > 1) {
+                width = 500;
+                height = (int) (width / bitmapRatio);
+            } else {
+                height = 500;
+                width = (int) (height * bitmapRatio);
+            }
+            return Bitmap.createScaledBitmap(myBitmap, width, height, true);
+
+            //  return myBitmap;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
+//    public static Bitmap getBitmapFromURL(String src) {
+//        try {
+//            URL url = new URL(src);
+//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//            connection.setDoInput(true);
+//            connection.connect();
+//            InputStream input = connection.getInputStream();
+//            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+//            return myBitmap;
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     private void setInvoiceAndSerialPic(EOSpareParts eoSpareParts) {
-
+        Log.d("aaaaa","setInvoiceAndSerialPic "+eoSpareParts.serial_number_pic);
 
         if (eoSpareParts.invoice_pic != null) {
             Picasso.with(getContext()).load(eoSpareParts.invoice_pic).into(invoicePic);
@@ -1091,8 +1187,10 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
                 try {
                     //Your code goes here
 
+                    Log.d("aaaaa","serial selevcted no "+Uri.parse(eoSpareParts.serial_number_pic));
+                    Log.d("aaaaa","getBitmap "+getBitmapFromURL(eoSpareParts.serial_number_pic));
                     SparePartsOrderFragment.this.selectedSerialNoImageUri = Uri.parse(eoSpareParts.serial_number_pic);
-                    Log.d("aaaaaa","run serialUR i = "+ SparePartsOrderFragment.this.selectedSerialNoImageUri);
+                    //Log.d("aaaaaa","run serialUR i = "+ SparePartsOrderFragment.this.selectedSerialNoImageUri);
                     SparePartsOrderFragment.this.selectedInvoiceImageUri = Uri.parse(eoSpareParts.invoice_pic);
 
                 } catch (Exception e) {
@@ -1277,5 +1375,16 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         AlertDialog dialog = alert.create();
         dialog.show();
     }
+    //this method is used to submit request with selected data
+    private void submitRequestToServer(){
 
+        HashMap<String, Object> requestData = new HashMap<>();
+        requestData.put("spares_data",cosumptionArray);
+        httpRequest = new HttpRequest(getMainActivity(), true);
+        httpRequest.delegate = SparePartsOrderFragment.this;
+        this.actionID="submitPrevPartsConsumption";
+        //openSparePartOrderPage(cosumptionArray);
+          httpRequest.execute(this.actionID, BMAGson.store().toJson(requestData));
+
+    }
 }

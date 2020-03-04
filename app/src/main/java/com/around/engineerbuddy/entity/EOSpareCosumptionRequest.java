@@ -1,5 +1,7 @@
 package com.around.engineerbuddy.entity;
 
+
+// This entity class denote spare related data key value to parse into json Object
 public class EOSpareCosumptionRequest extends BMAObject {
    public String spare_id;
      public String consumed_spare_status_id;

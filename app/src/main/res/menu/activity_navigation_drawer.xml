@@ -23,8 +23,8 @@
             android:title="Notification" />
         <item
             android:id="@+id/checkSparePrice"
-            android:icon="@drawable/cancelled_profile_icon"
-            android:visible="false"
+            android:icon="@drawable/spareprice"
+            android:visible="true"
             android:title="Spare Price" />
         <item
             android:id="@+id/profile"

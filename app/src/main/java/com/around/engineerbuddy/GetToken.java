@@ -177,6 +177,21 @@ public class GetToken {
             case "partnerAppliances":
                 partnerAppliances(urlParameters,params);
                 break;
+            case "partnerappliancesModels":
+                partnerappliancesModels(urlParameters,params);
+                break;
+            case "partnerappliancesModelsPartTypes":
+                partnerappliancesModelsPartTypes(urlParameters,params);
+                break;
+            case "partnerappliancesModelsPartTypesInventory":
+                partnerappliancesModelsPartTypesInventory(urlParameters,params);
+                break;
+            case "submitPrevPartsConsumption":
+                submitPrevPartsConsumption(urlParameters,params);
+                break;
+
+
+
 
 
 
@@ -184,8 +199,13 @@ public class GetToken {
 
         String token = generateToken(urlParameters, subUrl);
         Map<String, String> jsonData = new HashMap<>();
-
-        String deviceId = new DeviceInfo(this.context).bindIds();
+        Log.d("aaaaa","BEFORE deviceinfo= ");
+        DeviceInfo deviceInfo1 = new DeviceInfo(this.context);
+        Log.d("aaaaa","deviceinfo= "+deviceInfo1);
+        String deviceId=null;
+        if(deviceInfo1!=null &&  !(this.context instanceof SplashActivity)) {
+            deviceId = deviceInfo1.bindIds();
+        }
 
         String requestId = UUID.randomUUID().toString();
 
@@ -674,6 +694,10 @@ public class GetToken {
         try {
 
             urlParameters.put("booking_id", params[1]);
+            if( params[2]!=null) {
+                urlParameters.put("pre_consume_req", params[2]);
+            }
+
 
 
         } catch (Exception e) {
@@ -807,6 +831,72 @@ public class GetToken {
 
         return urlParameters;
     }
+    public Map<String, String> partnerappliancesModels(Map<String, String> urlParameters,
+                                                 String[] params) {
+        try {
+            urlParameters.put("service_id", params[1]);
+            urlParameters.put("partner_id", params[2]);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+    public Map<String, String> partnerappliancesModelsPartTypes(Map<String, String> urlParameters,
+                                                       String[] params) {
+        try {
+            urlParameters.put("service_id", params[1]);
+            urlParameters.put("partner_id", params[2]);
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+    public Map<String, String> partnerappliancesModelsPartTypesInventory(Map<String, String> urlParameters,
+                                                                String[] params) {
+        try {
+            urlParameters.put("service_id", params[1]);
+            urlParameters.put("partner_id", params[2]);
+
+            urlParameters.put("part_type", params[3]);
+
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+    public Map<String, String> submitPrevPartsConsumption(Map<String, String> urlParameters,
+                                                                         String[] params) {
+        try {
+            urlParameters.put("submitPreviousPartsConsumption", params[1]);
+
+
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+
+
 
 
 

@@ -88,7 +88,7 @@ public class IncentiveFragment extends BMAFragment {
                 }
             };
 
-            bmaAlertDialog.show("Something went wrong");
+            bmaAlertDialog.show("Server Error");
         }
     }
     private void dataToView(){
@@ -104,10 +104,19 @@ public class IncentiveFragment extends BMAFragment {
         TextView serviceType = itemView.findViewById(R.id.serviceType);
         TextView requestType = itemView.findViewById(R.id.requestType);
         TextView earnings = itemView.findViewById(R.id.earnings);
+        TextView earningsStatus = itemView.findViewById(R.id.earningsStatus);
+        if(eoBooking.is_paid.equalsIgnoreCase("1")){
+            earningsStatus.setText("PAID");
+            earningsStatus.setTextColor(getResources().getColor(R.color.white));
+        }else{
+            earningsStatus.setVisibility(View.INVISIBLE);
+        }
+
         bookingId.setText(eoBooking.bookingID);
         serviceType.setText(eoBooking.services);
         requestType.setText(eoBooking.requestType);
         earnings.setText("₹ "+eoBooking.partner_incentive);
+
 
     }
 

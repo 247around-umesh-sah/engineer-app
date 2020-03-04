@@ -106,7 +106,8 @@ public class CustomerInput extends BMAFragment implements View.OnClickListener {
         // customerDetail.setText("Customer Signature");
         customerDetail.setVisibility(View.GONE);
         name.setText(eoBooking.name);
-        address.setText(eoBooking.bookingAddress);
+        if(eoBooking.bookingAddress!=null)
+        address.setText(eoBooking.bookingAddress.trim());
         brandName.setText(eoBooking.applianceBrand);
         applianceName.setText(eoBooking.services);
         capacityOfApliance.setText(eoBooking.applianceCapacity);

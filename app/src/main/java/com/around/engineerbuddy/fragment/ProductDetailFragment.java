@@ -40,6 +40,7 @@ import android.widget.Toast;
 import com.around.engineerbuddy.BMAGson;
 import com.around.engineerbuddy.HttpRequest;
 import com.around.engineerbuddy.R;
+import com.around.engineerbuddy.activity.MainActivity;
 import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.component.BMAFontViewField;
 import com.around.engineerbuddy.component.BMASelectionDialog;
@@ -209,7 +210,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 
         }
     }
-
+    EditText enterSerialNumber;
     private void addMoreProductLayout(LayoutInflater inflater, EOCompleteProductQuantity eoCompleteProductQuantity, EOCompleteProductQuantity eselectedCompleteProductQuantity) throws JSONException {
         View childView = inflater.inflate(R.layout.product_item_layout, null, false);
 
@@ -217,13 +218,28 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         BMAFontViewField modelDropDownIcon = childView.findViewById(R.id.modeldropDownIcon);
         modelDropDownIcon.setVisibility(View.INVISIBLE);
         LinearLayout modelLayout = childView.findViewById(R.id.modelLayout);
-        EditText enterSerialNumber = childView.findViewById(R.id.enterSerialNumber);
+        enterSerialNumber = childView.findViewById(R.id.enterSerialNumber);
         enterSerialNumber.setTag(counter);
         LinearLayout enterSerialNoLayout = childView.findViewById(R.id.enterSerialNoLayout);
         LinearLayout serialNumberPhotoLayout = childView.findViewById(R.id.serialNumberPhotoLayout);
         LinearLayout datePurchaseLayout = childView.findViewById(R.id.dateLayout);
         childView.findViewById(R.id.modelLayout).setVisibility(counter == 0 ? View.VISIBLE : View.GONE);
         childView.findViewById(R.id.invoiceNumberPhotoLayout).setVisibility(counter == 0 ? View.VISIBLE : View.GONE);
+        BMAFontViewField scannericon=childView.findViewById(R.id.scannericon);
+        scannericon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                IntentIntegrator scanIntegrator = new IntentIntegrator(getMainActivity());
+//                scanIntegrator.initiateScan();
+                Scannerfragment scannerfragment=new Scannerfragment();
+                Bundle bundle=new Bundle();
+                bundle.putString(BMAConstants.HEADER_TXT, "Barcode Scan");
+                scannerfragment.setArguments(bundle);
+                getMainActivity().updateFragment(scannerfragment,true);
+//                Intent intent = new Intent(getMainActivity(), ScanActivity.class);
+//                startActivity(intent);
+            }
+        });
         if (counter == 0) {
             this.selectDate = childView.findViewById(R.id.selectpurchaseDate);
             datePurchaseLayout.setVisibility(View.VISIBLE);
@@ -639,7 +655,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
             inVoicePic=seraialNumPic;
             dispatchTakePictureIntent(requestCode);
         }
-       ///// Intent galleryIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        ///// Intent galleryIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 //        = new Intent(Intent.ACTION_PICK,
 //                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         ////startActivityForResult(galleryIntent, requestCode);
@@ -680,6 +696,31 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("aaaaa", "rsultcode = " + resultCode);
+        if(data!=null && data.getStringExtra("scan")!=null) {
+            String scanContent=data.getStringExtra("content");
+//            IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+//            if (scanningResult != null) {
+//                String scanContent = scanningResult.getContents();
+//                String scanFormat = scanningResult.getFormatName();
+
+                enterSerialNumber.setText(scanContent);
+                enterSerialNumber.setEnabled(false);
+                EOCompleteProductQuantity selectCompleteProduct = selectedCompleteDetail.getbookingProductUnit().quantity.get(0);
+                selectCompleteProduct.serialNumber=scanContent;
+//            formatTxt.setText("FORMAT: " + scanFormat);
+//            contentTxt.setText("CONTENT: " + scanContent);
+
+                Log.d("aaaaa", "scanResult= " + scanContent.toString());
+//            } else {
+//                Toast toast = Toast.makeText(getContext(),
+//                        "No scan data received!", Toast.LENGTH_SHORT);
+//                toast.show();
+//            }
+            return;
+        }
+
+
         File file = new File(mCurrentPhotoPath);
         Bitmap bitmap = null;
         try {
@@ -707,7 +748,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         }
 //        frontDefectiveBitmap=null;
 //        backDefectiveBitmap=null;
-      //  Uri fileUri=data.getData();
+        //  Uri fileUri=data.getData();
 //        if (data.getExtras() == null || data.getExtras().get("data") == null) {
 //            return;
 //        }
@@ -730,9 +771,9 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 
 
 
-      // Bitmap newBit=getResizeBitmap(bitmap);
+        // Bitmap newBit=getResizeBitmap(bitmap);
         //Bitmap newBit=BITMAP_RESIZER(bitmap,600,600);
-       // Log.d("aaaaaa","category = "+bitmap.getWidth()+"    Product bitmap height ="+bitmap.getHeight());
+        // Log.d("aaaaaa","category = "+bitmap.getWidth()+"    Product bitmap height ="+bitmap.getHeight());
         switch (requestCode) {
             case 1:
                 if(bitmap!=null) {
@@ -870,7 +911,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         }
 
     }
-//14S1831804A6EV102538
+    //14S1831804A6EV102538
     private void addMoreProduct() {
         Bundle bundle = new Bundle();
         bundle.putParcelable("productDetail", this.selectedCompleteDetail);
@@ -878,7 +919,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         bundle.putString("unitDetailKey", this.eoCompleteProductdetail.bookingUnitDetails.quantity.get(0).unit_id);
         //bundle.putBoolean("isBrokenProduct", this.productBorkenStatus.isChecked());
         bundle.putParcelableArrayList("prices", this.eoCompleteProductdetail.prices);
-      // this.updateFragment(bundle, new AddMoreProductDetailFragment(), getString(R.string.addProduct));
+        // this.updateFragment(bundle, new AddMoreProductDetailFragment(), getString(R.string.addProduct));
     }
 
     public void updateFragment(Bundle bundle, Fragment fragment, String headerText) {
@@ -1027,7 +1068,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         //  intent.putExtra("purchaseDate", this.selectDate.getText().toString());
         // intent.putExtra("isBrokenProduct", this.productBorkenStatus.isChecked());
         intent.putExtra("completeCatogryPageName", "productDetail");
-      //  Log.d("aaaaaa","productDetailisconsumption = "+this.eoCompleteProductdetail.is_consumption_required);
+        //  Log.d("aaaaaa","productDetailisconsumption = "+this.eoCompleteProductdetail.is_consumption_required);
         intent.putExtra("isConsumptionrequired", this.eoCompleteProductdetail.is_consumption_required);
         intent.putExtra("pod",selectPOD);
         intent.putExtra("modelNumber",modelNumber);
@@ -1052,28 +1093,28 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
             // Glide.with(mContext).load(imgID).asBitmap().override(1080, 600).into(mImageView);
             Picasso.with(getContext()).load(eoSpareParts.serial_number_pic).into(serialNoPic);
         }
-            Thread thread = new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
 
-                @Override
-                public void run() {
-                    try {
-                        EOCompleteProductQuantity qnty = selectedCompleteDetail.getbookingProductUnit().quantity.get(0);
-                        if (isInvoice) {
-                          //  Log.d("aaaaaa", "invoice pic = " + getBitmapFromURL(eoSpareParts.invoice_pic));
-                            qnty.invoicePic = getBitmapFromURL(eoSpareParts.invoice_pic);
-                        } else {
-                           // Log.d("aaaaaa", "invoice pic = " + getBitmapFromURL(eoSpareParts.invoice_pic));
-                            qnty.serialNoPic = getBitmapFromURL(eoSpareParts.serial_number_pic);
-                        }
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            @Override
+            public void run() {
+                try {
+                    EOCompleteProductQuantity qnty = selectedCompleteDetail.getbookingProductUnit().quantity.get(0);
+                    if (isInvoice) {
+                        //  Log.d("aaaaaa", "invoice pic = " + getBitmapFromURL(eoSpareParts.invoice_pic));
+                        qnty.invoicePic = getBitmapFromURL(eoSpareParts.invoice_pic);
+                    } else {
+                        // Log.d("aaaaaa", "invoice pic = " + getBitmapFromURL(eoSpareParts.invoice_pic));
+                        qnty.serialNoPic = getBitmapFromURL(eoSpareParts.serial_number_pic);
                     }
-                }
-            });
 
-            thread.start();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start();
 
         /// if(eoSpareParts.serial_number!=null)
         //  enterSerialNo.setText(eoSpareParts.serial_number);

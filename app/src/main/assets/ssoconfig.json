@@ -1,8 +1,9 @@
 [
   {
     "EnvironmentID": "Test",
-    "url": "https://gssoqa.ersaltametrics.com/GlobalSSO/",
-    "primaryKey":"1"
+    "url": "http://testapp.247around.com/engineerApi",
+    "primaryKey":"1",
+    "isChecked": true
 
 
 
@@ -10,12 +11,20 @@
   },
   {
     "EnvironmentID": "Live",
-    "url": "https://gsso.ersaltametrics.com/GlobalSSO/",
-    "primaryKey":"2",
-    "isChecked": true
+    "url": "https://aroundhomzapp.com/engineerApi",
+    "primaryKey":"2"
+
+
+
+  },
+  {
+    "EnvironmentID": "Test CRM",
+    "url": "http://testaroundcrm.247around.com/engineerApi",
+    "primaryKey":"3"
 
 
 
   }
+
 
 ]

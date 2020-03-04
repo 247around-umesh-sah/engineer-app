@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class BMARecyclerAdapter extends RecyclerView.Adapter   {
@@ -60,5 +61,18 @@ public class BMARecyclerAdapter extends RecyclerView.Adapter   {
         <T> void createRow(RecyclerView.ViewHolder viewHolder,View itemView, T rowObject, int position);
 
         <T> void createHeader(View convertView, T rowObject);
+    }
+    public HashMap<Integer, RecyclerView.ViewHolder> holderHashMap = new HashMap<>();
+    @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        holderHashMap.put(holder.getAdapterPosition(),holder);
+        super.onViewDetachedFromWindow(holder);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        holderHashMap.remove(holder.getAdapterPosition());
+        super.onViewAttachedToWindow(holder);
+
     }
 }

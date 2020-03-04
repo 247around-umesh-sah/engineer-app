@@ -257,6 +257,30 @@
 
             </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/consumptionReasonlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:paddingTop="@dimen/_10dp">
+            <com.around.engineerbuddy.component.BMACardView
+                android:id="@+id/consumptionreasonCardView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_150dp"
+                android:background="@drawable/rect_drawable"
+                android:layout_marginTop="@dimen/_10dp">
+                <EditText
+                    android:id="@+id/consumptionRemarksdittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_8dp"
+                    android:background="@color/transparentWhite"
+                    android:gravity="top|left"
+                    android:hint="Enter Consumption Remarks"
+                    android:paddingLeft="@dimen/_3dp"
+                    android:textSize="@dimen/_14dp"/>
+            </com.around.engineerbuddy.component.BMACardView>
+        </LinearLayout>
         </LinearLayout>
     </com.around.engineerbuddy.component.BMACardView>
 

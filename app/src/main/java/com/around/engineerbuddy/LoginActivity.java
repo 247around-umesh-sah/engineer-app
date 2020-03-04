@@ -156,6 +156,10 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
             Toast.makeText(LoginActivity.this, getString(R.string.passwordValidation), Toast.LENGTH_SHORT).show();
             return;
         }
+        if(!(cd.isConnectingToInternet())){
+            misc.NoConnection();
+            return;
+        }
         if (isValidPhone(phone_number.getText().toString())) {
             String passwordText = password.getText().toString();
             if (!passwordText.isEmpty()) {
@@ -164,7 +168,8 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
                     if (permissionGrant) {
 
                         String deviceToken = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.NOTIF_INFO).getString("device_firebase_token", "devicetoken");
-                        Log.d("zzzzz", "deviceToken is = " + deviceToken);
+
+                        Log.d("aaaaa","device Token = "+deviceToken);
                         httpRequest = new HttpRequest(LoginActivity.this, true);
                         httpRequest.delegate = LoginActivity.this;
                         httpRequest.execute("engineerLogin", phone_number.getText().toString(), password.getText().toString(),deviceToken);

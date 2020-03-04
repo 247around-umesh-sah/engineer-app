@@ -64,7 +64,10 @@
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity -->
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ScanActivity"
+            android:screenOrientation="portrait" /><!-- <activity -->
         <!-- android:name=".activity.NavigationMapActivity" -->
         <!-- android:theme="@style/AppTheme.NoActionBar" -->
         <!-- android:screenOrientation="portrait" -->
