@@ -3,6 +3,7 @@ package com.around.engineerbuddy;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,7 +19,11 @@ import com.around.engineerbuddy.activity.MainActivity;
 import com.around.engineerbuddy.component.BMAUrlSelectionDialog;
 import com.around.engineerbuddy.util.BMAConstants;
 import com.around.engineerbuddy.util.BMAUIUtil;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
     //Mobile Number validation Pattern
     private static final Pattern sPattern = Pattern.compile("^[6-9]{1}[0-9]{9}$");
     public ConnectionDetector cd;
-    public EditText phone_number, password;
+    public EditText phone_number, password,showHidePassword;
     public Button login_button;
     public Misc misc;
     public SharedPreferences sharedPrefs;
@@ -57,6 +62,8 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
         this.loginAppLogo = findViewById(R.id.loginAppLogo);
 
         login_button = (Button) findViewById(R.id.login_button);
+       // this.showHidePassword=findViewById(R.id.showHidePassword);
+     //   this.showHidePassword.setOn
         BMAUIUtil.setBackgroundRect(login_button, getResources().getColor(R.color.colorPrimary), R.dimen._50dp);
         phone_number.addTextChangedListener(new TextWatcher() {
 
@@ -128,6 +135,22 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
                 }
             }
         });
+        try {
+
+
+           // InstanceID instanceID = InstanceID.getInstance(this);
+            FirebaseInstanceId firebaseInstanceId=FirebaseInstanceId.getInstance().getInstance();
+            String token= firebaseInstanceId.getToken();
+            Log.d("aaaaa", "Failed to complete token refresh = "+ token);
+
+//            String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
+//                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+//
+//            Log.i(TAG, "GCM Registration Token: " + token);
+
+        }catch (Exception e) {
+            //Log.d(TAG, "Failed to complete token refresh", e);
+        }
 
     }
 

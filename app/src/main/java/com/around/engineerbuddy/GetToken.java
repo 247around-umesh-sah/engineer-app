@@ -357,10 +357,15 @@ public class GetToken {
 
             String engineerID = params[1];
             String serviceCenetrID = params[2];
+            String fireBaseToken = params[4];
 
             urlParameters.put("service_center_id", serviceCenetrID);
             urlParameters.put("engineer_id", engineerID);
             urlParameters.put("engineer_pincode", params[3]);
+
+                urlParameters.put("device_firebase_token", fireBaseToken);
+
+
          //   urlParameters.put("deviceBattery", params[4]);
 
 

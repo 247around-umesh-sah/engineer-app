@@ -11,7 +11,7 @@ public class BMAApplication extends Application {
         super.onCreate();
 
            // FirebaseCrash.report("");
-            FirebaseCrash.log("");
+           // FirebaseCrash.log("");
         Log.d("aaaaa","BMAApplication");
         new Thread.UncaughtExceptionHandler(){
             @Override

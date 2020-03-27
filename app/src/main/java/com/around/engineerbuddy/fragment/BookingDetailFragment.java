@@ -145,6 +145,10 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
 //                this.updateFragment(bundle, new UpdateBookingFragment(), "Update Booking");
                 break;
             case R.id.tile6:
+                if(this.eoBooking!=null && this.eoBooking.spares!=null && this.eoBooking.spares.size()>0) {
+                    openSpareDetailsPage();
+                    return;
+                }
                 if(canSparePartOrder()){
                     openEditWarranty();
                 }else{
@@ -288,6 +292,11 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
         Bundle bundle=new Bundle();
         bundle.putParcelable("eoBooking", eoBooking);
         this.updateFragment(bundle, new EditWarrantyBooking(),"Check Warranty");
+    }
+    private void openSpareDetailsPage(){
+        Bundle bundle=new Bundle();
+        bundle.putParcelable("eoBooking", eoBooking);
+        this.updateFragment(bundle, new SpareDetailsFragment(),"Spare Details");
     }
     private void showSpareRequestValidationMessage(String message){
         BMAAlertDialog bmaAlertDialog=new BMAAlertDialog(getContext(),false,true){

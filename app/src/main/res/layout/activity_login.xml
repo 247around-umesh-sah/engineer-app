@@ -1,8 +1,8 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     tools:context=".LoginActivity"
     tools:ignore="ContentDescription">
@@ -43,7 +43,7 @@
                 tools:ignore="UselessParent">
                 <LinearLayout
                     android:layout_width="@dimen/_270dp"
-                    android:layout_height="@dimen/_40dp"
+                    android:layout_height="@dimen/_50dp"
                     android:orientation="horizontal"
                     android:gravity="center"
                     >
@@ -76,7 +76,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="@dimen/_270dp"
-                    android:layout_height="@dimen/_40dp"
+                    android:layout_height="@dimen/_50dp"
                     android:layout_marginTop="@dimen/_10dp"
                     android:orientation="horizontal">
                     <com.around.engineerbuddy.component.BMAFontViewField
@@ -94,16 +94,31 @@
                         android:layout_marginLeft="@dimen/_15dp"
                         android:background="@drawable/login_rounded_drawable"
                         >
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/prompt_password"
+                            android:paddingBottom="@dimen/_15dp"
+                            app:passwordToggleEnabled="true">
+
+
 
                     <EditText
                         android:id="@+id/password"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:hint="@string/prompt_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:inputType="textPassword"
                         android:layout_marginLeft="@dimen/_15dp"
                         android:background="@color/transparentWhite"
                         android:layout_weight="1"/>
+                        </android.support.design.widget.TextInputLayout>
+                        <!--<com.around.engineerbuddy.component.BMAFontViewField-->
+                            <!--android:id="@+id/showHidePassword"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:text="@string/icon_key"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textSize="@dimen/_18dp"/>-->
                     </LinearLayout>
                 </LinearLayout>
 

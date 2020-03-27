@@ -15,4 +15,5 @@ public class EOSparePartWarrantyChecker extends BMAObject {
     public EOSpareParts eoSpareParts;
 
     public ArrayList<EORepairBooking> parents=new ArrayList<>();
+    public boolean partner_invoice_id;
 }

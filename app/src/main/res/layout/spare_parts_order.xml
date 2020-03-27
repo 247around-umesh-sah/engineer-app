@@ -160,7 +160,7 @@
             android:layout_weight=".1"
             android:gravity="center"
             android:textSize="@dimen/_25dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:text="@string/icon_camera"/>
         <!--<engineerbuddyddy.component.BMAFontViewField-->
             <!--android:id="@+id/serialNoDropDownIcon"-->

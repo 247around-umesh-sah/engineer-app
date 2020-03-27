@@ -43,6 +43,7 @@ public class EOCompleteProductQuantity extends BMAObject {
     public String serialNumber;
     public String selectedPOD;
     public String newUnitId;
+    public String partner_invoice_id;
 
 
 

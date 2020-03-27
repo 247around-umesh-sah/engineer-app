@@ -2,6 +2,7 @@ package com.around.engineerbuddy.fragment;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -34,7 +35,9 @@ import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.entity.EOAllBookingTask;
 import com.around.engineerbuddy.entity.EOBooking;
 import com.around.engineerbuddy.entity.EoWrongPart;
+import com.around.engineerbuddy.helper.ApplicationHelper;
 import com.around.engineerbuddy.util.BMAConstants;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
@@ -140,11 +143,27 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
         ConnectionDetector cd=new ConnectionDetector(getMainActivity());
 
         if(cd.isConnectingToInternet()) {
+            String token="";
+            ApplicationHelper applicationHelper=MainActivityHelper.applicationHelper();
+            if(applicationHelper!=null) {
+                SharedPreferences sharedPreferences = applicationHelper.getSharedPrefrences(BMAConstants.NOTIF_INFO);
+                String deviceToken = sharedPreferences.getString("device_firebase_token", "devicetoken");
+                if (deviceToken == null) {
+                    try {
+                        FirebaseInstanceId firebaseInstanceId = FirebaseInstanceId.getInstance().getInstance();
+                        token = firebaseInstanceId.getToken();
+
+                    } catch (Exception e) {
+                    }
+                } else {
+                    token = deviceToken;
+                }
+            }
             httpRequest = new HttpRequest(getMainActivity(), true);
             httpRequest.delegate = AllTasksFragment.this;
             this.actionID = "engineerHomeScreen";
             //  Log.d("aaaaaaa"," All Task engineerID = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("engineerID","abcfegd")+"    service id = "+MainActivityHelper.applicationHelper().getSharedPrefrences().getString("service_center_id", null));
-            httpRequest.execute(actionID, MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null), getMainActivity().getPinCode());//,batteryLevel+"");
+            httpRequest.execute(actionID, MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("engineerID", null), MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("service_center_id", null), getMainActivity().getPinCode(),token);//,batteryLevel+"");
         }else{
             Misc misc=new Misc(getMainActivity());
             misc.NoConnection();

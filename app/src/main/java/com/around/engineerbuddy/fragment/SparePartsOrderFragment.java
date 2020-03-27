@@ -45,6 +45,7 @@ import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.component.BMACardView;
 import com.around.engineerbuddy.component.BMAFontViewField;
 import com.around.engineerbuddy.component.BMASelectionDialog;
+import com.around.engineerbuddy.component.ScannerDialog;
 import com.around.engineerbuddy.entity.BMAUiEntity;
 import com.around.engineerbuddy.entity.EOBooking;
 import com.around.engineerbuddy.entity.EOModelNumber;
@@ -145,8 +146,19 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         this.scannericon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Scannerfragment scannerfragment=new Scannerfragment();
-                getMainActivity().updateFragment(scannerfragment,true);
+                new ScannerDialog(getContext()){
+                    @Override
+                    public void onConfirmdata(String scanData) {
+                        super.onConfirmdata(scanData);
+                        if(scanData!=null){
+                            enterSerialNo.setText(scanData);
+                            enterSerialNo.setEnabled(false);
+                         Log.d("aaaaa","csnadDATATA= "+scanData);
+                        }
+                    }
+                }.show();
+//                Scannerfragment scannerfragment=new Scannerfragment();
+//                getMainActivity().updateFragment(scannerfragment,true);
             }
         });
         ////warranty Checker
@@ -971,7 +983,7 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
         requestData.put("days", 0);
         requestData.put("service_center_id", getMainActivity().getServiceCenterId());
 
-        requestData.put("reason", this.problemdescriptionedittext.getText().toString().trim());
+        requestData.put("reason_text", this.problemdescriptionedittext.getText().toString().trim());
         EOModelNumber eoModelNumber = (EOModelNumber) selectModel.getTag();
         if (eoModelNumber != null) {
             requestData.put("model_number_id", eoModelNumber.id);
@@ -980,7 +992,6 @@ public class SparePartsOrderFragment extends BMAFragment implements View.OnClick
             if (this.eoSparePartsOrder.eoSpareParts.invoice_pic != null) {
 
                 String invoicepic=onCaptureImageResult(this.selectedSerialNoImageUri);
-                Log.d("aaaaaa","REQUEST invoice pic = "+invoicepic);
                 requestData.put("existing_purchase_invoice", invoicepic);
             } else {
                 requestData.put("invoice_number_pic_exist", onCaptureImageResult(this.selectedInvoiceImageUri));

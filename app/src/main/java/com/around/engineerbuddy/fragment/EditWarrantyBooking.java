@@ -321,6 +321,10 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                 checkbox.setEnabled(true);
             }
         }
+//            if(eoWarrantyChecker.partner_invoice_id!=null && eoWarrantyChecker.partner_invoice_id.trim().length()>0){
+//                checkbox.setEnabled(false);
+//        }
+
         checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -394,9 +398,11 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                     if (unitDetailQuantity.price_tags.equalsIgnoreCase(eoCompleteProductQuantity.serviceCategory)) {
                         eoWarrantyChecker.amount = unitDetailQuantity.amountDue;
                         eoWarrantyChecker.isCheckBoxChecked = true;
+                       // eoWarrantyChecker.partner_invoice_id=unitDetailQuantity.partner_invoice_id;
 
                         break;
                     }
+
                 }
                 if (eoWarrantyChecker.amount == null) {
                     eoWarrantyChecker.amount = eoCompleteProductQuantity.amountDue;

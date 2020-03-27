@@ -4,6 +4,8 @@ import android.location.Location;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 //This entity class is used to declare data key value related to all booking
 public class EOBooking extends BMAObject {
     @SerializedName("booking_id")
@@ -62,6 +64,9 @@ public class EOBooking extends BMAObject {
     public String is_paid;
 
     public boolean pre_consume_req;
+    public boolean action_flag;
+    public String message_flag;
+    public ArrayList<EOSpareDetails>spares=new ArrayList<>();
 
 
 }
