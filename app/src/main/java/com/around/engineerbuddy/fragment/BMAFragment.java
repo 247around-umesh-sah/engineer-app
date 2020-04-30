@@ -115,7 +115,7 @@ public class BMAFragment extends Fragment implements ApiResponse, BMARecyclerAda
             //Log.d("aaaaaa", "latitude..... = " + addressList.get(0).getLatitude() + "      longitude..#### = " + addressList.get(0).getLongitude());
             if (addressList != null && addressList.size() > 0) {
                 Address addressLoc = addressList.get(0);
-//                Log.d("aaaaa","addressLoc= "+addressLoc);
+            //    Log.d("aaaaa","addressLoc (1)= "+addressList.get(1));
                 location = new Location(LocationManager.GPS_PROVIDER);
                 location.setLatitude(addressLoc.getLatitude());
                 location.setLongitude(addressLoc.getLongitude());

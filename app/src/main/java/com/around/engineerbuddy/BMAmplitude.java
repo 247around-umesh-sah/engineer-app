@@ -27,8 +27,8 @@ public class BMAmplitude {
         }
         ////Uncomment when release upgrading on live
         if (sharedPrefs != null) {
-//            trackingUserID = sharedPrefs.getString("phoneNumber", null);
-//            Amplitude.getInstance().initialize(context, "b39da78062e88c864e971422bbe0fa2f", trackingUserID).enableForegroundTracking(application);
+            trackingUserID = sharedPrefs.getString("phoneNumber", null);
+            Amplitude.getInstance().initialize(context, "b39da78062e88c864e971422bbe0fa2f", trackingUserID).enableForegroundTracking(application);
         }
     }
     public static void saveUserAction(String pageTitle,String clickOnAction){
@@ -49,8 +49,8 @@ public class BMAmplitude {
             //////// // Amplitude.getInstance().setUserProperties(eventProperties);
 
             //Uncomment when we release upgrading on live
-//            Amplitude.getInstance().logEvent(eventProperties.toString());
-//            Amplitude.getInstance().setUserProperties(eventProperties);
+            Amplitude.getInstance().logEvent(eventProperties.toString());
+            Amplitude.getInstance().setUserProperties(eventProperties);
 
         }
 

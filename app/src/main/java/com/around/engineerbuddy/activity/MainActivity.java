@@ -42,6 +42,7 @@ import com.around.engineerbuddy.fragment.BMAFragment;
 import com.around.engineerbuddy.fragment.BMANotificationFragment;
 import com.around.engineerbuddy.fragment.CancelledBookingFragment;
 import com.around.engineerbuddy.fragment.CheckSparePartPrice;
+import com.around.engineerbuddy.fragment.CovidFragment;
 import com.around.engineerbuddy.fragment.FragmentLoader;
 import com.around.engineerbuddy.fragment.HeaderFragment;
 import com.around.engineerbuddy.fragment.ProfileFragment;
@@ -157,7 +158,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                     bundle.putString(BMAConstants.menu_id, getString(R.string.checkSparePrice));
                     fragment.setArguments(bundle);
                     MainActivity.this.updateFragment(fragment, true);
+                }else  if (id == R.id.covid) {
+                    fragment = new CovidFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(BMAConstants.HEADER_TXT, "Covid 19");
+                    bundle.putString(BMAConstants.menu_id,"Covid19");
+                    fragment.setArguments(bundle);
+                    MainActivity.this.updateFragment(fragment, true);
                 }
+
 
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

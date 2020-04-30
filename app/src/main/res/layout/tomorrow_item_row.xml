@@ -14,6 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingTop="@dimen/_13dp">
 
     <com.around.engineerbuddy.component.BMACardView
@@ -247,6 +248,36 @@
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/covidLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/_8dp"
+                android:layout_below="@id/mainLayout"
+                android:paddingBottom="@dimen/_5dp"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <com.around.engineerbuddy.component.BMAFontViewField
+                    android:id="@+id/covidPinIcon"
+                    android:layout_width="@dimen/_22dp"
+                    android:layout_height="@dimen/_23dp"
+                    android:gravity="center"
+                    android:text="@string/icon_store"
+                    android:textColor="@color/red_dark_color"
+                    android:textSize="@dimen/_20dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10dp"
+                    android:textSize="@dimen/_16dp"
+                    android:text="Showing COVID-19 affected area">
+
+                </TextView>
             </LinearLayout>
 
             <TextView
@@ -267,7 +298,9 @@
 
             </TextView>
         </RelativeLayout>
+
     </com.around.engineerbuddy.component.BMACardView>
+
         </LinearLayout>
 
     <RelativeLayout
@@ -299,8 +332,10 @@
             android:padding="@dimen/_4dp"
             android:textColor="#FFFFFF"
 
-            android:background="@drawable/bottom_rounded"/></RelativeLayout>
+            android:background="@drawable/bottom_rounded"/>
+    </RelativeLayout>
 
     <!--</RelativeLayout>-->
+
 
 </RelativeLayout>

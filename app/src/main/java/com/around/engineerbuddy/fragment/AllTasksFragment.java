@@ -414,4 +414,6 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
         incentiveFragment.setArguments(bundle);
         getMainActivity().updateFragment(incentiveFragment, true);
     }
+
+
 }

@@ -67,6 +67,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CovidActivity"
             android:screenOrientation="portrait" /><!-- <activity -->
         <!-- android:name=".activity.NavigationMapActivity" -->
         <!-- android:theme="@style/AppTheme.NoActionBar" -->

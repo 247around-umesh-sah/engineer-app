@@ -67,6 +67,7 @@ public class EOBooking extends BMAObject {
     public boolean action_flag;
     public String message_flag;
     public ArrayList<EOSpareDetails>spares=new ArrayList<>();
+    public ArrayList<EOLatLong>covid_corrdinates=new ArrayList<>();
 
 
 }

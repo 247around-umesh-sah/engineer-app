@@ -56,19 +56,19 @@
         <attr name="outerPadding" format="dimension" />
     </declare-styleable>
     <!--<style name="NavigationMapRoute">-->
-        <!--&lt;!&ndash; Colors &ndash;&gt;-->
-        <!--<item name="routeColor">@color/mapboxBlue</item>-->
-        <!--<item name="routeModerateCongestionColor">@color/mapboxYellow</item>-->
-        <!--<item name="routeSevereCongestionColor">@color/mapboxPink</item>-->
-        <!--<item name="routeShieldColor">@color/mapboxWhite</item>-->
-        <!--&lt;!&ndash; Scales &ndash;&gt;-->
-        <!--<item name="routeScale">1.0</item>-->
+    <!--&lt;!&ndash; Colors &ndash;&gt;-->
+    <!--<item name="routeColor">@color/mapboxBlue</item>-->
+    <!--<item name="routeModerateCongestionColor">@color/mapboxYellow</item>-->
+    <!--<item name="routeSevereCongestionColor">@color/mapboxPink</item>-->
+    <!--<item name="routeShieldColor">@color/mapboxWhite</item>-->
+    <!--&lt;!&ndash; Scales &ndash;&gt;-->
+    <!--<item name="routeScale">1.0</item>-->
     <!--</style>-->
 
     <!--<style name="NavigationView" parent="Theme.AppCompat.NoActionBar">-->
-        <!--<item name="navigationViewPrimary">@color/mapboxWhite</item>-->
-        <!--<item name="navigationViewSecondary">@color/mapboxBlue</item>-->
-        <!--<item name="navigationViewAccent">@color/mapboxPink</item>-->
+    <!--<item name="navigationViewPrimary">@color/mapboxWhite</item>-->
+    <!--<item name="navigationViewSecondary">@color/mapboxBlue</item>-->
+    <!--<item name="navigationViewAccent">@color/mapboxPink</item>-->
     <!--</style>-->
     <style name="myFullscreenAlertDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">      //no actionbar, but status bar exists
         <item name="android:windowFullscreen">true</item>                       //remove status bar

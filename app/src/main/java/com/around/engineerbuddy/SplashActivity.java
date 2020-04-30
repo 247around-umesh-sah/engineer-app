@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.around.engineerbuddy.R;
+import com.around.engineerbuddy.activity.CovidActivity;
 import com.around.engineerbuddy.activity.MainActivity;
 import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.helper.ApplicationHelper;
@@ -259,32 +260,38 @@ public class SplashActivity extends AppCompatActivity implements ApiResponse {
 
     // this method is used to check user login if already login then open MainActivity otherwise Login screen.
     private void checkUserLogin(){
-        String phonenumbersp=sharedPrefs.getString("phoneNumber",null);
-        String engineerIDSP = sharedPrefs.getString("engineerID",null);
-        Log.d("aaaaaa","userLogin un = "+phonenumbersp);
-        Log.d("aaaaaa","userLogin ei = "+engineerIDSP);
-        Thread timerThread = new Thread() {
-            public void run() {
-                try {
-                    sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
 
-                    Log.d("aaaaaa","issharepreef = "+sharedPrefs.contains("isLogin"));
-                    if (sharedPrefs.contains("isLogin") && phonenumbersp!=null) {
-                        Intent search = new Intent(SplashActivity.this, MainActivity.class);//SearchActivity.class);
-                        startActivity(search);
-                        finish();
-                    } else {
-                        Intent login = new Intent(SplashActivity.this, LoginActivity.class);
-                        startActivity(login);
-                        finish();
-                    }
-                }
-            }
-        };
-        timerThread.start();
+        Intent login = new Intent(SplashActivity.this, CovidActivity.class);
+        startActivity(login);
+        finish();
+        return;
+
+//        String phonenumbersp=sharedPrefs.getString("phoneNumber",null);
+//        String engineerIDSP = sharedPrefs.getString("engineerID",null);
+//        Log.d("aaaaaa","userLogin un = "+phonenumbersp);
+//        Log.d("aaaaaa","userLogin ei = "+engineerIDSP);
+//        Thread timerThread = new Thread() {
+//            public void run() {
+//                try {
+//                    sleep(2000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } finally {
+//
+//                    Log.d("aaaaaa","issharepreef = "+sharedPrefs.contains("isLogin"));
+//                    if (sharedPrefs.contains("isLogin") && phonenumbersp!=null) {
+//                        Intent search = new Intent(SplashActivity.this, MainActivity.class);//SearchActivity.class);
+//                        startActivity(search);
+//                        finish();
+//                    } else {
+//                        Intent login = new Intent(SplashActivity.this, LoginActivity.class);
+//                        startActivity(login);
+//                        finish();
+//                    }
+//                }
+//            }
+//        };
+//        timerThread.start();
     }
 
     // this method used to show App Upgrade dialog by checking condition hard or sft upgrade
