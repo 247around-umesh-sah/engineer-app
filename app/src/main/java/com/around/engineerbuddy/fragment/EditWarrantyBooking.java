@@ -109,9 +109,9 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
 
         return this.view;
     }
-
+    BMARecyclerAdapter bmaRecyclerAdapter;
     private void dataToView() {
-        BMARecyclerAdapter bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), callTypeList, recyclerView, this, R.layout.edit_call_type);
+         bmaRecyclerAdapter = new BMARecyclerAdapter(getContext(), callTypeList, recyclerView, this, R.layout.edit_call_type);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(bmaRecyclerAdapter);
@@ -301,19 +301,24 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
             requestTypeLayout.setVisibility(View.VISIBLE);
             headerView.setVisibility(View.GONE);
         }
+        Log.d("aaaaaa","call");
         TextView callTypeText = itemView.findViewById(R.id.callTypeText);
         TextView callTypeCustomerCharges = itemView.findViewById(R.id.callTypeCustomerCharges);
         CheckBox checkbox = itemView.findViewById(R.id.editTypeCheckBox);
         callTypeText.setText(eoWarrantyChecker.serviceCategory);
         callTypeCustomerCharges.setText(eoWarrantyChecker.amount);
         checkbox.setChecked(eoWarrantyChecker.isCheckBoxChecked);
-        checkbox.setTag(eoWarrantyChecker);
-        if(eoWarrantyChecker!=null && eoWarrantyChecker.serviceCategory!=null) {
-            checkbox.setEnabled(eoWarrantyChecker.serviceCategory.equalsIgnoreCase("Spare Parts") ? false : true);
+        if((eoWarrantyChecker.serviceCategory!=null && !eoWarrantyChecker.serviceCategory.equalsIgnoreCase("Repeat Booking")) ) {
+            checkbox.setEnabled(!eoWarrantyChecker.isEnable);
+            Log.d("aaaaaa","repeat call = "+eoWarrantyChecker.isEnable);
         }
-        if(this.eoSparePartWarrantyChecker.parents!=null && this.eoSparePartWarrantyChecker.parents.size()>0){
+        checkbox.setTag(eoWarrantyChecker);
+        if(eoWarrantyChecker!=null && eoWarrantyChecker.serviceCategory!=null && eoWarrantyChecker.serviceCategory.equalsIgnoreCase("Spare Parts")) {
             checkbox.setEnabled(false);
         }
+//        if(this.eoSparePartWarrantyChecker.parents!=null && this.eoSparePartWarrantyChecker.parents.size()>0){
+//            checkbox.setEnabled(false);
+//        }
         if(eoWarrantyChecker.serviceCategory!=null && eoWarrantyChecker.serviceCategory.equalsIgnoreCase("Repeat Booking") ){
             if(this.eoSparePartWarrantyChecker.parents!=null && this.eoSparePartWarrantyChecker.parents.size()==0 ){
                 checkbox.setEnabled(false);
@@ -331,6 +336,14 @@ public class EditWarrantyBooking extends BMAFragment implements View.OnClickList
                 CheckBox checkBox = (CheckBox) v;
                 EOWarrantyChecker selectObj = (EOWarrantyChecker) checkBox.getTag();
                 selectObj.isCheckBoxChecked = checkBox.isChecked();
+                if(selectObj.serviceCategory.equalsIgnoreCase("Repeat Booking")){
+                    for(EOWarrantyChecker eoWarrantyChecker1 :callTypeList){
+                        eoWarrantyChecker1.isEnable=checkBox.isChecked();
+                    }
+                    selectObj.isCheckBoxChecked=checkBox.isChecked();
+                    bmaRecyclerAdapter.notifyDataSetChanged();
+
+                }
                 //  checkBox.setChecked(checkBox.isChecked());
             }
         });

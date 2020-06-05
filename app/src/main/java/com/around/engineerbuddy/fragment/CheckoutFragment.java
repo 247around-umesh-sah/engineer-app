@@ -104,7 +104,7 @@ public class CheckoutFragment extends BMAFragment {
                 };
                 bmaAlertDialog.show();
                 bmaAlertDialog.fillInputField(totalAmount+"");
-                bmaAlertDialog.showInputField();
+                bmaAlertDialog.showInputField(getContext().getResources().getString(R.string.enterAmount));
 
             }
         });

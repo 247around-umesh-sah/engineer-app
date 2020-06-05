@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission
@@ -20,9 +21,7 @@
     <uses-permission
         android:name="android.permission.ACCESS_WIFI_STATE"
         android:required="false" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:required="false" />
+
     <uses-permission
         android:name="android.permission.CALL_PHONE"
         android:required="false" />
@@ -40,7 +39,7 @@
         <activity android:name=".activity.VideoViewActivity" /> <!-- <activity android:name=".activity.MainActivity" /> -->
         <activity
             android:name=".SplashActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,17 +59,17 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ScanActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <activity
             android:name=".activity.CovidActivity"
-            android:screenOrientation="portrait" /><!-- <activity -->
+            android:screenOrientation="fullSensor" /><!-- <activity -->
         <!-- android:name=".activity.NavigationMapActivity" -->
         <!-- android:theme="@style/AppTheme.NoActionBar" -->
         <!-- android:screenOrientation="portrait" -->

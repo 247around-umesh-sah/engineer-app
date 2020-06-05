@@ -33,6 +33,7 @@ import com.around.engineerbuddy.R;
 //import com.around.engineerbuddy.activity.NavigationMapActivity;
 import com.around.engineerbuddy.adapters.BMARecyclerAdapter;
 import com.around.engineerbuddy.component.BMAAlertDialog;
+import com.around.engineerbuddy.component.BMAFontViewField;
 import com.around.engineerbuddy.entity.BookingInfo;
 import com.around.engineerbuddy.entity.EOBooking;
 import com.around.engineerbuddy.entity.EOGeoAddressEntity;
@@ -138,6 +139,7 @@ public class TomorrowFragment extends BMAFragment {
         }
 
 
+
         EOBooking eoBooking = (EOBooking) rowObject;
         TextView name = itemView.findViewById(R.id.name);
         TextView address = itemView.findViewById(R.id.address);
@@ -191,6 +193,31 @@ public class TomorrowFragment extends BMAFragment {
 
         if (isMissed) {
             itemView.findViewById(R.id.dateLayout).setBackgroundColor(BMAUIUtil.getColor(R.color.missedBookingColor));
+        }
+        if(eoBooking.covid_zone!=null && eoBooking.covid_zone.size()>0){
+            itemView.findViewById(R.id.covidLayout).setVisibility(View.VISIBLE);
+            ImageView virusicon=itemView.findViewById(R.id.virusIcon);
+            TextView covidArea=itemView.findViewById(R.id.covidArea);
+           // covidIcon.setText(R.string.virus_icon);
+            TextView zone=itemView.findViewById(R.id.zone);
+        //    covidArea.setVisibility(View.VISIBLE);
+            String zoneString=eoBooking.covid_zone.get(0).zone_color;
+            if(zoneString.contains("Red") ||zoneString.contains("red") ){
+                zone.setText(zoneString + " Zone");
+                zone.setTextColor(BMAUIUtil.getColor(R.color.red_color));
+                virusicon.setBackground(getResources().getDrawable(R.drawable.red_virus));
+               // covidIcon.setTextColor(BMAUIUtil.getColor(R.color.red_color));
+
+            }else if(zoneString.contains("Green") ||zoneString.contains("green") ){
+                zone.setText(zoneString + " Zone");
+                zone.setTextColor(BMAUIUtil.getColor(R.color.green_color));
+                virusicon.setBackground(getResources().getDrawable(R.drawable.green_virus));
+            }else if(zoneString.contains("Orange") ||zoneString.contains("orange") ){
+                zone.setText(zoneString + " Zone");
+                zone.setTextColor(BMAUIUtil.getColor(R.color.orange_color));
+                virusicon.setBackground(getResources().getDrawable(R.drawable.orange_virus));
+            }
+
         }
 
         rowLayout.setOnClickListener(new View.OnClickListener() {

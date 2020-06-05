@@ -77,7 +77,7 @@ public class BMAMapFragment extends BMAFragment implements OnMapReadyCallback, L
         mapFragment.getMapAsync(this);
         View chileView = inflater.inflate(R.layout.tomorrow_item_row, null, false);
         TextView name = chileView.findViewById(R.id.name);
-        chileView.findViewById(R.id.covidLayout).setVisibility(View.VISIBLE);
+       // chileView.findViewById(R.id.covidLayout).setVisibility(View.VISIBLE);
         TextView address = chileView.findViewById(R.id.address);
         TextView brandName = chileView.findViewById(R.id.brandName);
         TextView serviceName = chileView.findViewById(R.id.serviceName);

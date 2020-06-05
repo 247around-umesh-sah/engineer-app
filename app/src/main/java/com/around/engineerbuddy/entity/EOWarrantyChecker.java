@@ -7,4 +7,5 @@ public class EOWarrantyChecker extends BMAObject {
     public boolean isCheckBoxChecked;
     public  boolean isHeader;
     public  String partner_invoice_id;
+    public  boolean isEnable;
 }

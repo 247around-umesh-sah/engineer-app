@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.around.engineerbuddy.BMAGson;
 import com.around.engineerbuddy.BMAmplitude;
@@ -26,10 +27,7 @@ import com.around.engineerbuddy.Misc;
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.adapters.CancelBookingAdapter;
 import com.around.engineerbuddy.component.BMAAlertDialog;
-import com.around.engineerbuddy.database.DataBaseClient;
-import com.around.engineerbuddy.database.EOEngineerBookingInfo;
-import com.around.engineerbuddy.database.EngineerBookingDao;
-import com.around.engineerbuddy.database.SaveEngineerBookingAction;
+import com.around.engineerbuddy.component.BMAOTPDialog;
 import com.around.engineerbuddy.util.BMAConstants;
 
 import org.json.JSONArray;
@@ -51,6 +49,8 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
     //BookingGetterSetter bookingList;
     EditText reasonForCancel;
     Button submit;
+    String actionID;
+    String otp;
 
     @Override
     public void onAttach(Context context) {
@@ -98,6 +98,7 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
         if (cd.isConnectingToInternet()) {
             httpRequest = new HttpRequest(getContext(), true);
             httpRequest.delegate = this;
+            actionID = "getCancellationReason";
             httpRequest.execute("getCancellationReason");
         } else {
             misc.NoConnection();
@@ -106,30 +107,38 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
         return this.view;
     }
 
-    public void processCancelBooking(View view) {
-        String selectedReason = "";
+  //  String selectedReason = "";
+  String selectedReasonID = "";
+    private boolean isSelectAllField(){
+        selectedReasonID = "";
         List<BookingGetterSetter> data = mAdapter.getCancellationReason();
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).getCheckedCancellationReason()) {
-                selectedReason = data.get(i).getCancellationReason();
+                selectedReasonID = data.get(i).getCancellationReasonID();
                 break;
             }
         }
 
-        if (selectedReason.equals("")) {
+        if (selectedReasonID.equals("")) {
             Snackbar.make(view, R.string.cancellationReasonRequired, Snackbar.LENGTH_LONG).show();
+            return false;
         } else if (this.reasonForCancel.getText().toString().trim().length() == 0) {
             Snackbar.make(view, R.string.remarksRequired, Snackbar.LENGTH_LONG).show();
-        } else {
+            return false;
+        }
+        return true;
+    }
+    public void processCancelBooking(View view) {
+
             String location = misc.getLocation();
             if (cd.isConnectingToInternet()) {
 
                 httpRequest = new HttpRequest(getContext(), true);
                 httpRequest.delegate = this;
+                actionID="cancelBookingByEngineer";
                 // Log.d("aaaaaa","booking id = "+bookingID)
-                httpRequest.execute("cancelBookingByEngineer", bookingID, selectedReason, location, this.reasonForCancel.getText().toString().trim());
+                httpRequest.execute("cancelBookingByEngineer", bookingID, selectedReasonID, location, this.reasonForCancel.getText().toString().trim());
             } else {
-
 
 
 //
@@ -156,8 +165,8 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
 //                    eoEngineerBookingInfo.setDescription(selectedReason);
 //                    eoEngineerBookingInfo.setEngineerLocation(location);
 //                    new SaveEngineerBookingAction(getContext(), eoEngineerBookingInfo);
-                    misc.NoConnection();
-                    return;
+                misc.NoConnection();
+                return;
 //                EOEngineerBookingInfo eoEngineerBookingInfo=new EOEngineerBookingInfo();
 //                eoEngineerBookingInfo.setActionNameOverBooking("cancelBookingByEngineer");
 //                eoEngineerBookingInfo.setReason( this.reasonForCancel.getText().toString().trim());
@@ -166,13 +175,15 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
 //                eoEngineerBookingInfo.setActionNameOverBooking(location);
 //                new SaveEngineerBookingAction(getContext(),eoEngineerBookingInfo);
 //                misc.NoConnection();
-            }
+
         }
     }
 
     @Override
     public void processFinish(String response) {
-        Log.d("aaaaaaa", "response = cancel = " + response);
+//        Log.d("aaaaaaa", "response = cancel = " + response);
+//        Toast.makeText(getContext(), "rsponse = " + response, Toast.LENGTH_SHORT).show();
+
         if (response.contains("data")) {
             JSONObject jsonObjectHttpReq;
 
@@ -182,11 +193,12 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
                 final JSONObject jsonObject = jsonObjectHttpReq.getJSONObject("data");
                 String statusCode = jsonObject.getString("code");
                 if (statusCode.equals("0000")) {
+
                     if (jsonObject.has("cancellationReason")) {
                         JSONArray posts = jsonObject.optJSONArray("cancellationReason");
                         for (int i = 0; i < posts.length(); i++) {
                             JSONObject post = posts.optJSONObject(i);
-                            cancellationReason.add(new BookingGetterSetter(post.optString("reason"), false));
+                            cancellationReason.add(new BookingGetterSetter(post.optString("reason"), false,post.optString("id")));
                         }
 
                         getActivity().runOnUiThread(new Runnable() {
@@ -199,6 +211,13 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
 
                             }
                         });
+                    } else if (this.actionID.equalsIgnoreCase("sendCancelRescheduleOTP")) {
+                       // this.actionID = null;
+                       // Toast.makeText(getContext(), "rsponse = " + response, Toast.LENGTH_LONG).show();
+                        this.otp=jsonObject.getString("response");
+                        httpRequest.progress.dismiss();
+                        showOTPDialog();
+
                     } else {
 //                        String rsult= jsonObject.getString("result");
 //                        if(rsult==null){
@@ -212,9 +231,9 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
                                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                      //  getMainActivity().updateFragment(new FragmentLoader(), false);
-                                        Intent intent=new Intent();
-                                        intent.putExtra("isCancelled",true);
+                                        //  getMainActivity().updateFragment(new FragmentLoader(), false);
+                                        Intent intent = new Intent();
+                                        intent.putExtra("isCancelled", true);
                                         getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
                                         getFragmentManager().popBackStack();
 
@@ -225,13 +244,13 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
                                 }).show();
                     }
 
-                }else if(statusCode.equalsIgnoreCase("0019")){
+                } else if (statusCode.equalsIgnoreCase("0019")) {
                     httpRequest.progress.dismiss();
-                    String rsult= jsonObject.getString("result");
-                    if(rsult==null){
-                        rsult="Booking can't be cancel";
+                    String rsult = jsonObject.getString("result");
+                    if (rsult == null) {
+                        rsult = "Booking can't be cancel";
                     }
-                    BMAAlertDialog bmaAlertDialog=new BMAAlertDialog(getContext(),false,true){
+                    BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
                         @Override
                         public void onCancelConfirmation() {
                             super.onCancelConfirmation();
@@ -239,7 +258,7 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
                     };
                     bmaAlertDialog.show(rsult);
 
-                }else {
+                } else {
                     misc.showDialog(R.string.serverConnectionFailedTitle, R.string.serverConnectionFailedMsg);
                     httpRequest.progress.dismiss();
                 }
@@ -257,8 +276,59 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
 
     }
 
+    private void getOTP() {
+        httpRequest = new HttpRequest(getContext(), true);
+        httpRequest.delegate = this;
+        actionID = "sendCancelRescheduleOTP";
+        httpRequest.execute("sendCancelRescheduleOTP", this.bookingID,"CANCEL");
+    }
+
+    View selectedView;
+
     @Override
     public void onClick(View v) {
-        processCancelBooking(v);
+        this.selectedView = v;
+        if(isSelectAllField()) {
+            processCancelBooking(v);
+            //getOTP();
+        }
+
+
+    }
+    BMAAlertDialog bmaAlertDialog;
+    private void showOTPDialog() {
+         bmaAlertDialog = new BMAAlertDialog(getContext(), true, false) {
+
+            @Override
+            public void onConfirmation(String inputValue) {
+                super.onConfirmation(inputValue);
+                if(inputValue.trim().length()>0){
+                    if (inputValue.equalsIgnoreCase(otp)) {
+                        bmaAlertDialog.dismiss();
+                        processCancelBooking(selectedView);
+                    }else{
+                        Toast.makeText(getContext(), "Please enter correct OTP or submit without  OTP", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+//                if (inputValue.trim().length() == 0) {
+//                    Toast.makeText(getContext(), "Please enter OTP", Toast.LENGTH_SHORT).show();
+//                    return;
+//                } else if (inputValue.equalsIgnoreCase(otp)) {
+//                    //Log.d("aaaaa","selected Otp = "+inputValue+"         OTP ="+otp);
+                    // cancel heat
+                    bmaAlertDialog.dismiss();
+                    processCancelBooking(selectedView);
+                }
+
+//                } else {
+//                    Toast.makeText(getContext(), "Wrong OTP entered", Toast.LENGTH_SHORT).show();
+//                }
+
+            }
+        };
+        bmaAlertDialog.show();
+        bmaAlertDialog.setTitle("Enter OTP");
+        // bmaAlertDialog.fillInputField(totalAmount+"");
+        bmaAlertDialog.showInputField("Enter OTP");
     }
 }

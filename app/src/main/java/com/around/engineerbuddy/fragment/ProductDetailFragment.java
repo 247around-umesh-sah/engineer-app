@@ -696,7 +696,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("aaaaa", "rsultcode = " + resultCode);
+        Log.d("aaaaa", "rsultcode = " + resultCode+"        reqst code ="+requestCode);
         if(data!=null && data.getStringExtra("scan")!=null) {
             String scanContent=data.getStringExtra("content");
 //            IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -721,32 +721,35 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
         }
 
 
+        Log.d("aaaaa", "phototpath = " + mCurrentPhotoPath);
         File file = new File(mCurrentPhotoPath);
+        Log.d("aaaaa", "file = " + file);
         Bitmap bitmap = null;
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), Uri.fromFile(file));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.d("aaaaa", "AfterTRYCATCH = = "+bitmap );
 //        if (bitmap != null) {
 //            Log.d("aaaaaaaa","imageBitmape width = "+bitmap.getWidth()+"   ...   height = "+bitmap.getHeight());
 //        }
 //        if (data == null) {
 //            return;
 //        }
-        if (data!=null && data.getStringExtra("addMorePart") != null) {
-            Intent intent = new Intent();
-            intent.putExtra("AddMoreproductDetail", data.getStringExtra("AddMoreproductDetail"));
-            EOCompleteProductdetail selectCompleteDetail = data.getParcelableExtra("productDetail");
-            intent.putExtra("productDetail", selectCompleteDetail);
-//            intent.putExtra("selectDate", data.getStringExtra("selectDate"));
-//            intent.putExtra("isBrokenProduct", data.getBooleanExtra("isBrokenProduct", false));
-            intent.putExtra("completeCatogryPageName", "productDetail");
-            getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
-            getFragmentManager().popBackStack();
-            return;
-        }
-//        frontDefectiveBitmap=null;
+//        if (data!=null && data.getStringExtra("addMorePart") != null) {
+//            Intent intent = new Intent();
+//            intent.putExtra("AddMoreproductDetail", data.getStringExtra("AddMoreproductDetail"));
+//            EOCompleteProductdetail selectCompleteDetail = data.getParcelableExtra("productDetail");
+//            intent.putExtra("productDetail", selectCompleteDetail);
+////            intent.putExtra("selectDate", data.getStringExtra("selectDate"));
+////            intent.putExtra("isBrokenProduct", data.getBooleanExtra("isBrokenProduct", false));
+//            intent.putExtra("completeCatogryPageName", "productDetail");
+//            getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
+//            getFragmentManager().popBackStack();
+//            return;
+//        }
+////        frontDefectiveBitmap=null;
 //        backDefectiveBitmap=null;
         //  Uri fileUri=data.getData();
 //        if (data.getExtras() == null || data.getExtras().get("data") == null) {
@@ -778,7 +781,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
             case 1:
                 if(bitmap!=null) {
                     //partsObject.get(0).put("serialNoPic", imageBitmap);
-
+                     Log.d("aaaaaa","switch case = ");
                     selectedCompleteDetail.getbookingProductUnit().quantity.get(0).serialNoPic = bitmap;
                     serialNuberPic.setImageBitmap(bitmap);
                 }
@@ -1223,6 +1226,7 @@ public class ProductDetailFragment extends BMAFragment implements View.OnClickLi
             if (photoFile != null) {
                 Uri photoURI = Uri.fromFile(photoFile);// FileProvider.getUriForFile(getContext(), "com.example.android.fileprovider", photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                Log.d("aaaaa","requestCodeonDispacthIntent = "+requestCode);
                 startActivityForResult(takePictureIntent, requestCode);
             }
         }

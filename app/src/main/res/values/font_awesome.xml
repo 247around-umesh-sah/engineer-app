@@ -175,6 +175,10 @@
     <string name="straight_icon" translatable="false">&#xf062;</string>
     <string name="map_marker_icon" translatable="false">&#xf3c5;</string>
     <string name="star_icon" translatable="false">&#xf005;</string>
+    <string name="virus_icon" translatable="false">&#xf974;</string>
+    <string name="bug_icon" translatable="false">&#xf188;</string>
+
+
 
 
 

@@ -48,6 +48,7 @@ public class NewAppointmentFragment extends BMAFragment implements View.OnClickL
     EOBooking eoBooking;
     EditText Problemdescriptionedittext;
     String actionID;
+    private String otp;
     ArrayList<EOBookingUpdateReason> reasonList = new ArrayList<>();
 
     @Override
@@ -115,16 +116,23 @@ public class NewAppointmentFragment extends BMAFragment implements View.OnClickL
                             @Override
                             public void onDefault() {
                                 super.onDefault();
+
                                 Intent intent= new Intent();
                                 intent.putExtra("completed",true);
-                                getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, new Intent());
+                                getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
                                 getFragmentManager().popBackStack();
                             }
 
 
                         };
                         bmaAlertDialog.show(jsonObject.get("result").toString());
-                    }else {
+                    }else if(this.actionID.equalsIgnoreCase("sendCancelRescheduleOTP")){
+                        this.actionID=null;
+                        otp=jsonObject.getString("response");
+                        showOTPDialog();
+
+                    }
+                    else {
 
                         String res = (new JSONObject(jsonObject.getString("response"))).getString("internal_status");
                         this.reasonList = BMAGson.store().getList(EOBookingUpdateReason.class, res);
@@ -181,6 +189,9 @@ public class NewAppointmentFragment extends BMAFragment implements View.OnClickL
                 openReasonSelectionPopUp();
                 break;
             case R.id.submitButton:
+//                if(isSelectAllFields()) {
+//                    getOTP();
+//                }
                 submitRequest();
                 break;
 
@@ -294,4 +305,48 @@ public class NewAppointmentFragment extends BMAFragment implements View.OnClickL
         }
         return true;
     }
+    private void getOTP(){
+        httpRequest = new HttpRequest(getContext(), true);
+        httpRequest.delegate = this;
+        actionID="sendCancelRescheduleOTP";
+        httpRequest.execute("sendCancelRescheduleOTP",this.eoBooking.bookingID,"RESCHEDULE");
+    }
+
+    BMAAlertDialog bmaAlertDialog;
+    private void showOTPDialog(){
+         bmaAlertDialog = new BMAAlertDialog(getContext(),true,false) {
+
+            @Override
+            public void onConfirmation(String inputValue) {
+                super.onConfirmation(inputValue);
+                if(inputValue.trim().length()>0){
+                    if (inputValue.equalsIgnoreCase(otp)) {
+                        bmaAlertDialog.dismiss();
+                        submitRequest();
+                    }else{
+                        Toast.makeText(getContext(), "Please enter correct OTP or submit without  OTP", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+//                if(inputValue.trim().length()==0){
+//                    Toast.makeText(getContext(),"Please enter OTP",Toast.LENGTH_SHORT).show();
+//                    return;
+//                }else if(inputValue .equalsIgnoreCase(otp)){
+                    // cancel heat
+                    bmaAlertDialog.dismiss();
+                    submitRequest();
+                }
+
+//                } else  {
+//                    Toast.makeText(getContext(),"Wrong OTP entered",Toast.LENGTH_SHORT).show();
+//                }
+
+            }
+        };
+        bmaAlertDialog.show();
+        bmaAlertDialog.setTitle("Enter OTP");
+        // bmaAlertDialog.fillInputField(totalAmount+"");
+        bmaAlertDialog.showInputField("Enter OTP");
+    }
+
+
 }

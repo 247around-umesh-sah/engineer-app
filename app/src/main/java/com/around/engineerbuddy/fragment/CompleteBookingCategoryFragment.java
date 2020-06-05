@@ -29,11 +29,6 @@ import com.around.engineerbuddy.Misc;
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.component.BMAAlertDialog;
 import com.around.engineerbuddy.component.BMATileView;
-import com.around.engineerbuddy.database.DataBaseClient;
-import com.around.engineerbuddy.database.DataBaseHelper;
-import com.around.engineerbuddy.database.EOEngineerBookingInfo;
-import com.around.engineerbuddy.database.EngineerBookingDao;
-import com.around.engineerbuddy.database.SaveEngineerBookingAction;
 import com.around.engineerbuddy.entity.EOBooking;
 import com.around.engineerbuddy.entity.EOCompleteProductQuantity;
 import com.around.engineerbuddy.entity.EOCompleteProductdetail;
@@ -573,6 +568,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
 
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = CompleteBookingCategoryFragment.this;
+       // Log.d("aaaaaa",BMAGson.store().toJson(requestData));
         httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData), getMainActivity().getEngineerId());
 
     }

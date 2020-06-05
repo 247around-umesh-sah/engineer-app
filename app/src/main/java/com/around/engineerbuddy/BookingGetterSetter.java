@@ -40,6 +40,7 @@ public class BookingGetterSetter extends BMAObject {
     public String cancellationReason;
     public Bitmap serialNoBitmap;
     public String bookingRemarks;
+    public String id;
 
     public BookingGetterSetter(String bookingID,
                                String services,
@@ -107,9 +108,10 @@ public class BookingGetterSetter extends BMAObject {
 
     }
 
-    public BookingGetterSetter(String cancellationReason, boolean checkedCancellationReason) {
+    public BookingGetterSetter(String cancellationReason, boolean checkedCancellationReason,String id) {
         this.cancellationReason = cancellationReason;
         this.checkedCancellationReason = checkedCancellationReason;
+        this.id=id;
     }
 
     public String getBookingID() {
@@ -210,6 +212,9 @@ public class BookingGetterSetter extends BMAObject {
 
     public String getCancellationReason() {
         return cancellationReason;
+    }
+    public String getCancellationReasonID() {
+        return this.id;
     }
 
     public boolean getCheckedCancellationReason() {

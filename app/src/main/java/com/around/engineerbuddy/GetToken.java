@@ -189,6 +189,10 @@ public class GetToken {
             case "submitPrevPartsConsumption":
                 submitPrevPartsConsumption(urlParameters,params);
                 break;
+            case "sendCancelRescheduleOTP":
+                sendCancelRescheduleOTP(urlParameters,params);
+                break;
+
 
 
 
@@ -197,6 +201,7 @@ public class GetToken {
 
         }
 
+        Log.d("aaaaa","url Parameter = "+urlParameters+"     suburl = "+subUrl);
         String token = generateToken(urlParameters, subUrl);
         Map<String, String> jsonData = new HashMap<>();
         Log.d("aaaaa","BEFORE deviceinfo= ");
@@ -900,6 +905,24 @@ public class GetToken {
 
         return urlParameters;
     }
+    public Map<String, String> sendCancelRescheduleOTP(Map<String, String> urlParameters,
+                                                          String[] params) {
+        try {
+            urlParameters.put("booking_id", params[1]);
+            urlParameters.put("tag", params[2]);
+
+
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+
 
 
 

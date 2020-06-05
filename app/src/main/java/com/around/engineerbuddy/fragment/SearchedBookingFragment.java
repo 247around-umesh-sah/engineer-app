@@ -146,6 +146,31 @@ public class SearchedBookingFragment extends BMAFragment {
         ImageView phone = itemView.findViewById(R.id.phone);
         ImageView mapIcon = itemView.findViewById(R.id.mapLocArrow);
         mapIcon.setTag(eoBooking);
+        if(eoBooking.covid_zone!=null && eoBooking.covid_zone.size()>0){
+            itemView.findViewById(R.id.covidLayout).setVisibility(View.VISIBLE);
+            ImageView virusicon=itemView.findViewById(R.id.virusIcon);
+            TextView covidArea=itemView.findViewById(R.id.covidArea);
+            // covidIcon.setText(R.string.virus_icon);
+            TextView zone=itemView.findViewById(R.id.zone);
+            //    covidArea.setVisibility(View.VISIBLE);
+            String zoneString=eoBooking.covid_zone.get(0).zone_color;
+            if(zoneString.contains("Red") ||zoneString.contains("red") ){
+                zone.setText(zoneString + " Zone");
+                zone.setTextColor(BMAUIUtil.getColor(R.color.red_color));
+                virusicon.setBackground(getResources().getDrawable(R.drawable.red_virus));
+                // covidIcon.setTextColor(BMAUIUtil.getColor(R.color.red_color));
+
+            }else if(zoneString.contains("Green") ||zoneString.contains("green") ){
+                zone.setText(zoneString + " Zone");
+                zone.setTextColor(BMAUIUtil.getColor(R.color.green_color));
+                virusicon.setBackground(getResources().getDrawable(R.drawable.green_virus));
+            }else if(zoneString.contains("Orange") ||zoneString.contains("orange") ){
+                zone.setText(zoneString + " Zone");
+                zone.setTextColor(BMAUIUtil.getColor(R.color.orange_color));
+                virusicon.setBackground(getResources().getDrawable(R.drawable.orange_virus));
+            }
+
+        }
         mapIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

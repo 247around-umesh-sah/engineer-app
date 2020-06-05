@@ -185,10 +185,10 @@ public class BMAAlertDialog  extends Dialog implements View.OnClickListener {
         return R.color.orangeLight;
     }
     public boolean isInputVisible;
-    public void showInputField(){
+    public void showInputField(String title){
         isInputVisible=true;
         tableRow1.setVisibility(View.GONE);
-        alertTextView.setText(getContext().getResources().getString(R.string.enterAmount));
+        alertTextView.setText(title);
         this.tableInputRow.setVisibility(View.VISIBLE);
     }
     public void fillInputField(String amount){
@@ -203,20 +203,25 @@ public class BMAAlertDialog  extends Dialog implements View.OnClickListener {
                 if(isInputVisible){
                     onConfirmation(txt_input.getText().toString().trim());
                 }else {
+                    //this.dismiss();
                     onConfirmation();
                 }
             } else if (v.getId() == cancelButton.getId()) {
+               // this.dismiss();
                 if (isConfirmation) {
                     onCancelConfirmation();
                 } else {
                     onNegativeConfirmation();
                 }
             } else if (v.getId() == optionalBtn.getId()) {
+               // this.dismiss();
                 onCancelConfirmation();
             }
         } else if (isWarning) {
+         //   this.dismiss();
             onWarningDismiss();
         } else {
+           // this.dismiss();
             onDefault();
         }
     }
