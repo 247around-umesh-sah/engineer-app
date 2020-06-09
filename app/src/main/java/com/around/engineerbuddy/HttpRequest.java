@@ -32,10 +32,10 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
     //public static String base_url = "http://stag.aroundhomzapp.com/engineerApi";
 
     //Testing URL
-    public static String base_url = "http://testapp.247around.com/engineerApi";
+   // public static String base_url = "http://testapp.247around.com/engineerApi";
 
     ///Live Url
-   // static String base_url = "https://aroundhomzapp.com/engineerApi";
+    static String base_url = "https://aroundhomzapp.com/engineerApi";
 
 
     //Kenstar
@@ -129,7 +129,7 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         String urlkey = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("urlKey", null);
-        Log.d("aaaaa", "URL: KEY = " + urlkey);
+       // Log.d("aaaaa", "URL: KEY = " + urlkey);
         if (urlkey != null) {
             if (urlkey.equalsIgnoreCase("1")) {
                 base_url = "http://testapp.247around.com/engineerApi";
@@ -155,6 +155,7 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
         super.onPostExecute(result);
 //        response.contains("data")
         Log.d("aaaaaa", "httpResponse = = = " + result);
+
         if (result.contains("data")) {
             delegate.processFinish(result);
         } else if (result != null) {

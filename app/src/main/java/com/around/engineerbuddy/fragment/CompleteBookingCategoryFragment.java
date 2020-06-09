@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.DrawableRes;
@@ -566,13 +567,15 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         BMAmplitude.saveUserAction("CompleteBookingcategory", "CompleteButton");
 
 
+        ConnectionDetector cd=new ConnectionDetector(getMainActivity());
+        cd.isConnectingToInternet();
         httpRequest = new HttpRequest(getMainActivity(), true);
         httpRequest.delegate = CompleteBookingCategoryFragment.this;
        // Log.d("aaaaaa",BMAGson.store().toJson(requestData));
         httpRequest.execute("completeBookingByEngineer", BMAGson.store().toJson(requestData), getMainActivity().getEngineerId());
 
     }
-
+    boolean isNetWork;
     @Override
     public void processFinish(String response) {
         httpRequest.progress.dismiss();
@@ -620,9 +623,13 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                         super.onWarningDismiss();
                     }
                 };
-                bmaAlertDialog.show("Something went wrong");
+                bmaAlertDialog.show("Data formation error");
             }
         } else {
+            isNetWork=true;
+            if(response!=null && response.contains("Unable to resolve host")){
+                isNetWork=false;
+            }
             this.submitButton.setEnabled(true);
             httpRequest.progress.dismiss();
             BMAAlertDialog bmaAlertDialog = new BMAAlertDialog(getContext(), false, true) {
@@ -631,9 +638,15 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                 @Override
                 public void onWarningDismiss() {
                     super.onWarningDismiss();
+                    if(isNetWork) {
+                        Intent intent = new Intent();
+                        intent.putExtra("completed", true);
+                        getTargetFragment().onActivityResult(getTargetRequestCode(), BMAConstants.requestCode, intent);
+                        getFragmentManager().popBackStack();
+                    }
                 }
             };
-            bmaAlertDialog.show("Ops Server Error");
+            bmaAlertDialog.show(isNetWork ? "Your Request has been submitted but response did not receive from server, please check booking status to confirm" : "No/Poor internet connection");
         }
 
 
@@ -648,6 +661,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 30, bytes);
+
 
 
         //Log.d("aaaaaa","category = "+thumbnail.getWidth()+"    bitmap height ="+thumbnail.getHeight());

@@ -47,6 +47,7 @@ import com.around.engineerbuddy.fragment.FragmentLoader;
 import com.around.engineerbuddy.fragment.HeaderFragment;
 import com.around.engineerbuddy.fragment.ProfileFragment;
 import com.around.engineerbuddy.util.BMAConstants;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     String agentName;
     Misc misc;
 
+    public FirebaseAnalytics mfireBaseAnalytics;
 
     public SharedPreferences.Editor getEditor() {
         return this.editor;
@@ -77,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        mfireBaseAnalytics=FirebaseAnalytics.getInstance(this);
+//        mfireBaseAnalytics.setUserId();
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         BMAmplitude.initializeAmplitude(this, getApplication());
         //  Amplitude.getInstance().initialize(this, "918de58d720e22307e6021fb157c964e").enableForegroundTracking(getApplication());
