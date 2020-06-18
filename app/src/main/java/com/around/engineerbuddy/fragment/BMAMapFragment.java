@@ -135,10 +135,12 @@ public class BMAMapFragment extends BMAFragment implements OnMapReadyCallback, L
                 if(eoBooking.destLocation==null){
                     eoBooking.destLocation = getLocation(eoBooking.pincode);
                 }
-                Uri gmmIntentUri = Uri.parse("google.navigation:q="+eoBooking.destLocation.getLatitude()+","+eoBooking.destLocation.getLongitude()+"&mode=l");
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
+                if(eoBooking.destLocation!=null) {
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + eoBooking.destLocation.getLatitude() + "," + eoBooking.destLocation.getLongitude() + "&mode=l");
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    startActivity(mapIntent);
+                }
             }
         });
         this.bbokingMapInfo.addView(chileView);

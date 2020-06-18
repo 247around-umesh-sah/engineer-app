@@ -79,8 +79,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        mfireBaseAnalytics=FirebaseAnalytics.getInstance(this);
-//        mfireBaseAnalytics.setUserId();
+        mfireBaseAnalytics=FirebaseAnalytics.getInstance(this);
+//        mfireBaseAnalytics.setUserId(getIntent().getStringExtra("userId"));
+//        Bundle bundleumesh=new Bundle();
+//        bundleumesh.putString("U_umesh"," Kumar ah");
+//        mfireBaseAnalytics.logEvent("logUmeshSah",bundleumesh);
+//        mfireBaseAnalytics.setUserProperty("heloUmesh ","sendlogUmesh");
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         BMAmplitude.initializeAmplitude(this, getApplication());
         //  Amplitude.getInstance().initialize(this, "918de58d720e22307e6021fb157c964e").enableForegroundTracking(getApplication());
@@ -101,8 +105,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView profileImageName = headerView.findViewById(R.id.profileImageName);
-        this.agentName = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("agent_name", "");
-        profileImageName.setText(agentName);
+        // SharedPreferences sharedPreferences= MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO);
+         if(sharedPrefs!=null) {
+             this.agentName = sharedPrefs.getString("agent_name", "");
+         }
+         if(agentName!=null) {
+             profileImageName.setText(agentName);
+         }
 
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

@@ -64,6 +64,13 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
 
         this.view.findViewById(R.id.bookingDetai_chargellayout).setVisibility(View.VISIBLE);
 
+        if(eoBooking.bookingAddress!=null){
+           eoBooking.bookingAddress= eoBooking.bookingAddress.replace("\n", " ");
+        }
+        if(eoBooking.bookingRemarks!=null){
+               eoBooking.bookingRemarks= eoBooking.bookingRemarks.replace("\n", " ");
+
+        }
 
         name.setText(eoBooking.name);
         address.setText(eoBooking.bookingAddress);

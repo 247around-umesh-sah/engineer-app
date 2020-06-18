@@ -219,7 +219,7 @@ public class NewAppointmentFragment extends BMAFragment implements View.OnClickL
         };
         DatePickerDialog dpDialog = new DatePickerDialog(getContext(), listener, year, month, day);
        // dpDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-        long now = System.currentTimeMillis() - 1000;
+        long now = System.currentTimeMillis()+24*60*60*1000;//System.currentTimeMillis() - 1000;
         dpDialog.getDatePicker().setMinDate(now);
         dpDialog.getDatePicker().setMaxDate(now+(1000*60*60*24*14));
         // dpDialog.getDatePicker().setMaxDate(System.currentTimeMillis()+25920000000l );
