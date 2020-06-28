@@ -69,7 +69,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CovidActivity"
-            android:screenOrientation="fullSensor" /><!-- <activity -->
+            android:screenOrientation="portrait" /><!-- <activity -->
         <!-- android:name=".activity.NavigationMapActivity" -->
         <!-- android:theme="@style/AppTheme.NoActionBar" -->
         <!-- android:screenOrientation="portrait" -->

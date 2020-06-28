@@ -34,8 +34,9 @@ public class GetToken {
 
     public GetToken(Context context) {
         this.context = context;
-        sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO);//context.getSharedPreferences(SplashActivity.MyPREFERENCES,
-               // Context.MODE_PRIVATE);
+        if (MainActivityHelper.applicationHelper() != null)
+            sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO);//context.getSharedPreferences(SplashActivity.MyPREFERENCES,
+        // Context.MODE_PRIVATE);
     }
 
     public String getAuthToken(String[] params) throws Exception {
@@ -99,116 +100,111 @@ public class GetToken {
                 engineerProfile(urlParameters, params);
                 break;
             case "engineerSparePartOrder":
-                sparePartOrder(urlParameters,params);
+                sparePartOrder(urlParameters, params);
                 break;
             case "partTypeOnModelNumber":
-                partTypeOnModelNumber(urlParameters,params);
+                partTypeOnModelNumber(urlParameters, params);
                 break;
             case "sparePartName":
-                getSparePartName(urlParameters,params);
+                getSparePartName(urlParameters, params);
                 break;
             case "submitSparePartsOrder":
-                submitSparePartsOrder(urlParameters,params);
+                submitSparePartsOrder(urlParameters, params);
                 break;
             case "symptomCompleteBooking":
-                symptomCompleteBooking(urlParameters,params);
+                symptomCompleteBooking(urlParameters, params);
                 break;
             case "defectCompleteBooking":
-                defectCompleteBooking(urlParameters,params);
+                defectCompleteBooking(urlParameters, params);
                 break;
             case "solutionCompleteBooking":
-                solutionCompleteBooking(urlParameters,params);
+                solutionCompleteBooking(urlParameters, params);
                 break;
             case "bookingProductDetails":
-                bookingProductDetails(urlParameters,params);
+                bookingProductDetails(urlParameters, params);
                 break;
             case "completeBookingByEngineer":
-                completeBookingByEngineer(urlParameters,params);
+                completeBookingByEngineer(urlParameters, params);
                 break;
             case "updateBookingReasons":
-                updateBookingReasons(urlParameters,params);
+                updateBookingReasons(urlParameters, params);
                 break;
             case "updateBookingByEngineer":
-                updateBookingByEngineer(urlParameters,params);
+                updateBookingByEngineer(urlParameters, params);
                 break;
             case "paytmAmountByEngineer":
-                paytmAmountByEngineer(urlParameters,params);
+                paytmAmountByEngineer(urlParameters, params);
                 break;
             case "validateSerialNumber":
-                validateSerialNumber(urlParameters,params);
+                validateSerialNumber(urlParameters, params);
                 break;
 
             case "sparePartsWarrantyChecker":
-                sparePartsWarrantyChecker(urlParameters,params);
+                sparePartsWarrantyChecker(urlParameters, params);
                 break;
             case "checkSparePartsOrder":
-                checkSparePartsOrder(urlParameters,params);
+                checkSparePartsOrder(urlParameters, params);
                 break;
             case "warrantyCheckerAndCallTypeData":
-                warrantyCheckerAndCallTypeData(urlParameters,params);
+                warrantyCheckerAndCallTypeData(urlParameters, params);
                 break;
             case "submitWarrantyCheckerAndEditCallType":
-                submitWarrantyCheckerAndEditCallType(urlParameters,params);
+                submitWarrantyCheckerAndEditCallType(urlParameters, params);
                 break;
             case "spareConsumptionData":
-                spareConsumptionData(urlParameters,params);
+                spareConsumptionData(urlParameters, params);
                 break;
             case "wrongSparePartsName":
-                wrongSparePartsName(urlParameters,params);
+                wrongSparePartsName(urlParameters, params);
                 break;
             case "getBookingDetails":
-                getBookingDetails(urlParameters,params);
+                getBookingDetails(urlParameters, params);
                 break;
             case "searchData":
-                searchData(urlParameters,params);
+                searchData(urlParameters, params);
                 break;
             case "incentiveEearnedBookings":
-                incentiveEearnedBookings(urlParameters,params);
+                incentiveEearnedBookings(urlParameters, params);
                 break;
             case "todaysSlotBookings":
-                todaysSlotBookings(urlParameters,params);
+                todaysSlotBookings(urlParameters, params);
                 break;
             case "usernotifications":
-                usernotifications(urlParameters,params);
+                usernotifications(urlParameters, params);
                 break;
             case "partners":
-                partners(urlParameters,params);
+                partners(urlParameters, params);
                 break;
             case "partnerAppliances":
-                partnerAppliances(urlParameters,params);
+                partnerAppliances(urlParameters, params);
                 break;
             case "partnerappliancesModels":
-                partnerappliancesModels(urlParameters,params);
+                partnerappliancesModels(urlParameters, params);
                 break;
             case "partnerappliancesModelsPartTypes":
-                partnerappliancesModelsPartTypes(urlParameters,params);
+                partnerappliancesModelsPartTypes(urlParameters, params);
                 break;
             case "partnerappliancesModelsPartTypesInventory":
-                partnerappliancesModelsPartTypesInventory(urlParameters,params);
+                partnerappliancesModelsPartTypesInventory(urlParameters, params);
                 break;
             case "submitPrevPartsConsumption":
-                submitPrevPartsConsumption(urlParameters,params);
+                submitPrevPartsConsumption(urlParameters, params);
                 break;
             case "sendCancelRescheduleOTP":
-                sendCancelRescheduleOTP(urlParameters,params);
+                sendCancelRescheduleOTP(urlParameters, params);
                 break;
-
-
-
-
-
 
 
         }
 
-        Log.d("aaaaa","url Parameter = "+urlParameters+"     suburl = "+subUrl);
+        Log.d("aaaaa", "url Parameter = " + urlParameters + "     suburl = " + subUrl);
         String token = generateToken(urlParameters, subUrl);
         Map<String, String> jsonData = new HashMap<>();
-        Log.d("aaaaa","BEFORE deviceinfo= ");
+        Log.d("aaaaa", "BEFORE deviceinfo= ");
         DeviceInfo deviceInfo1 = new DeviceInfo(this.context);
-        Log.d("aaaaa","deviceinfo= "+deviceInfo1);
-        String deviceId=null;
-        if(deviceInfo1!=null &&  !(this.context instanceof SplashActivity)) {
+        Log.d("aaaaa", "deviceinfo= " + deviceInfo1);
+        String deviceId = null;
+        if (deviceInfo1 != null && !(this.context instanceof SplashActivity)) {
             deviceId = deviceInfo1.bindIds();
         }
 
@@ -224,11 +220,12 @@ public class GetToken {
     }
 
     public Map<String, String> getCustomerQrCode(Map<String, String> urlParameters,
-                                                    String[] params) {
+                                                 String[] params) {
         try {
             urlParameters.put("bookingID", params[1]);
             urlParameters.put("amountPaid", params[2]);
             urlParameters.put("engineerNo", sharedPrefs.getString("phoneNumber", null));
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -288,7 +285,8 @@ public class GetToken {
             urlParameters.put("bookingID", params[1]);
             urlParameters.put("cancellationReason", params[2]);
             urlParameters.put("location", params[3]);
-            urlParameters.put("remarks",params[4]);
+            urlParameters.put("remarks", params[4]);
+
             urlParameters.put("service_center_id", sharedPrefs.getString("service_center_id", null));
             urlParameters.put("engineer_id", sharedPrefs.getString("engineerID", null));
             urlParameters.put("agent_id", sharedPrefs.getString("agentID", null));
@@ -319,6 +317,7 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> techSupport(Map<String, String> urlParameters, String[] params) {
         try {
 
@@ -332,6 +331,7 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> missedBookingList(Map<String, String> urlParameters, String[] params) {
         try {
 
@@ -341,11 +341,11 @@ public class GetToken {
             urlParameters.put("service_center_id", serviceCenetrID);
             urlParameters.put("engineer_id", engineerID);
 
-            if(params.length>3 ){
+            if (params.length > 3) {
 
-                if(params[3].equalsIgnoreCase("Cancelled") || params[3].equalsIgnoreCase("Completed")) {
+                if (params[3].equalsIgnoreCase("Cancelled") || params[3].equalsIgnoreCase("Completed")) {
                     urlParameters.put("booking_status", params[3]);
-                }else{
+                } else {
                     urlParameters.put("engineer_pincode", params[3]);
                 }
 
@@ -357,6 +357,7 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> engineerHomeScreen(Map<String, String> urlParameters, String[] params) {
         try {
 
@@ -368,11 +369,10 @@ public class GetToken {
             urlParameters.put("engineer_id", engineerID);
             urlParameters.put("engineer_pincode", params[3]);
 
-                urlParameters.put("device_firebase_token", fireBaseToken);
+            urlParameters.put("device_firebase_token", fireBaseToken);
 
 
-         //   urlParameters.put("deviceBattery", params[4]);
-
+            //   urlParameters.put("deviceBattery", params[4]);
 
 
         } catch (Exception e) {
@@ -402,6 +402,7 @@ public class GetToken {
             String search_text = params[1];
 
             urlParameters.put("search_text", search_text);
+
             urlParameters.put("service_center_id", sharedPrefs.getString("service_center_id", null));
 
 
@@ -411,6 +412,7 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> engineerHeplingDocuments(Map<String, String> urlParameters, String[] params) {
         try {
 
@@ -424,6 +426,7 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> engineerProfile(Map<String, String> urlParameters, String[] params) {
         try {
 
@@ -436,8 +439,9 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> sparePartOrder(Map<String, String> urlParameters,
-                                                 String[] params) {
+                                              String[] params) {
         try {
             urlParameters.put("partner_id", params[1]);
             urlParameters.put("service_id", params[2]);
@@ -449,8 +453,9 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> partTypeOnModelNumber(Map<String, String> urlParameters,
-                                              String[] params) {
+                                                     String[] params) {
         try {
             urlParameters.put("model_number_id", params[1]);
 
@@ -460,14 +465,15 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> getSparePartName(Map<String, String> urlParameters,
-                                                     String[] params) {
+                                                String[] params) {
         try {
             urlParameters.put("part_type", params[1]);
             urlParameters.put("partner_id", params[2]);
             urlParameters.put("service_id", params[3]);
-            if(params.length>4) {
-                Log.d("resp","length = "+params.length);
+            if (params.length > 4) {
+                Log.d("resp", "length = " + params.length);
                 urlParameters.put("model_number_id", params[4]);
             }
 
@@ -477,10 +483,11 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> submitSparePartsOrder(Map<String, String> urlParameters,
-                                                       String[] params) {
+                                                     String[] params) {
         try {
-            Log.d("aaaaaa","aentID GETTOKEN  = "+params[2]);
+            Log.d("aaaaaa", "aentID GETTOKEN  = " + params[2]);
 
             urlParameters.put("submitSparePartsOrder", params[1]);
             urlParameters.put("sc_agent_id", params[2]);
@@ -491,8 +498,9 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> symptomCompleteBooking(Map<String, String> urlParameters,
-                                                     String[] params) {
+                                                      String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
@@ -506,8 +514,9 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> defectCompleteBooking(Map<String, String> urlParameters,
-                                                      String[] params) {
+                                                     String[] params) {
         try {
 
             urlParameters.put("technical_problem", params[1]);
@@ -519,13 +528,13 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> solutionCompleteBooking(Map<String, String> urlParameters,
-                                                     String[] params) {
+                                                       String[] params) {
         try {
 
             urlParameters.put("technical_symptom", params[1]);
             urlParameters.put("technical_defect", params[2]);
-
 
 
         } catch (Exception e) {
@@ -537,7 +546,7 @@ public class GetToken {
 
 
     public Map<String, String> bookingProductDetails(Map<String, String> urlParameters,
-                                                       String[] params) {
+                                                     String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
@@ -547,34 +556,33 @@ public class GetToken {
             urlParameters.put("service_center_id", params[5]);
 
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return urlParameters;
     }
+
     public Map<String, String> completeBookingByEngineer(Map<String, String> urlParameters,
-                                                     String[] params) {
+                                                         String[] params) {
         try {
 
             urlParameters.put("completeBookingByEngineer", params[1]);
             urlParameters.put("engineer_id", params[2]);
 
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return urlParameters;
     }
+
     public Map<String, String> updateBookingReasons(Map<String, String> urlParameters,
-                                                         String[] params) {
+                                                    String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
-
 
 
         } catch (Exception e) {
@@ -585,7 +593,7 @@ public class GetToken {
     }
 
     public Map<String, String> updateBookingByEngineer(Map<String, String> urlParameters,
-                                                    String[] params) {
+                                                       String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
@@ -594,9 +602,9 @@ public class GetToken {
             urlParameters.put("booking_date", params[4]);
             urlParameters.put("partner_id", params[5]);
             urlParameters.put("service_center_id", params[6]);
+            urlParameters.put("sc_agent_id", sharedPrefs.getString("scAgentID", null));
             urlParameters.put("days", "0");
-            urlParameters.put("spare_shipped", true+"");
-
+            urlParameters.put("spare_shipped", true + "");
 
 
         } catch (Exception e) {
@@ -607,7 +615,7 @@ public class GetToken {
     }
 
     public Map<String, String> paytmAmountByEngineer(Map<String, String> urlParameters,
-                                                       String[] params) {
+                                                     String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
@@ -618,8 +626,9 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> validateSerialNumber(Map<String, String> urlParameters,
-                                                     String[] params) {
+                                                    String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
@@ -628,15 +637,15 @@ public class GetToken {
             urlParameters.put("price_tags", params[4]);
 
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return urlParameters;
     }
+
     public Map<String, String> sparePartsWarrantyChecker(Map<String, String> urlParameters,
-                                                    String[] params) {
+                                                         String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
@@ -647,15 +656,15 @@ public class GetToken {
             urlParameters.put("purchase_date", params[6]);
 
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return urlParameters;
     }
+
     public Map<String, String> checkSparePartsOrder(Map<String, String> urlParameters,
-                                                         String[] params) {
+                                                    String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
@@ -666,8 +675,9 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> warrantyCheckerAndCallTypeData(Map<String, String> urlParameters,
-                                                    String[] params) {
+                                                              String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
@@ -682,8 +692,9 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> submitWarrantyCheckerAndEditCallType(Map<String, String> urlParameters,
-                                                              String[] params) {
+                                                                    String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
@@ -699,15 +710,15 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> spareConsumptionData(Map<String, String> urlParameters,
-                                                                    String[] params) {
+                                                    String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
-            if( params[2]!=null) {
+            if (params[2] != null) {
                 urlParameters.put("pre_consume_req", params[2]);
             }
-
 
 
         } catch (Exception e) {
@@ -716,8 +727,9 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> wrongSparePartsName(Map<String, String> urlParameters,
-                                                    String[] params) {
+                                                   String[] params) {
         try {
 
             urlParameters.put("service_id", params[1]);
@@ -730,8 +742,9 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> getBookingDetails(Map<String, String> urlParameters,
-                                                   String[] params) {
+                                                 String[] params) {
         try {
 
             urlParameters.put("booking_id", params[1]);
@@ -744,8 +757,9 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> searchData(Map<String, String> urlParameters,
-                                                 String[] params) {
+                                          String[] params) {
         try {
 
             urlParameters.put("engineer_id", params[1]);
@@ -754,32 +768,30 @@ public class GetToken {
             urlParameters.put("engineer_pincode", params[4]);
 
 
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return urlParameters;
     }
+
     public Map<String, String> incentiveEearnedBookings(Map<String, String> urlParameters,
-                                          String[] params) {
+                                                        String[] params) {
         try {
 
             urlParameters.put("engineer_id", params[1]);
             urlParameters.put("service_center_id", params[2]);
 
 
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return urlParameters;
     }
+
     public Map<String, String> todaysSlotBookings(Map<String, String> urlParameters,
-                                                        String[] params) {
+                                                  String[] params) {
         try {
 
             urlParameters.put("engineer_id", params[1]);
@@ -788,36 +800,32 @@ public class GetToken {
             urlParameters.put("booking_slot", params[4]);
 
 
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return urlParameters;
     }
+
     public Map<String, String> usernotifications(Map<String, String> urlParameters,
-                                                  String[] params) {
-        try {
-
-            urlParameters.put("mobile", params[1]);
-
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return urlParameters;
-    }
-    public Map<String, String> partners(Map<String, String> urlParameters,
                                                  String[] params) {
         try {
 
             urlParameters.put("mobile", params[1]);
 
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+
+    public Map<String, String> partners(Map<String, String> urlParameters,
+                                        String[] params) {
+        try {
+
+            urlParameters.put("mobile", params[1]);
 
 
         } catch (Exception e) {
@@ -826,43 +834,40 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> partnerAppliances(Map<String, String> urlParameters,
-                                        String[] params) {
+                                                 String[] params) {
         try {
 
             urlParameters.put("partner_id", params[1]);
 
 
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return urlParameters;
     }
+
     public Map<String, String> partnerappliancesModels(Map<String, String> urlParameters,
-                                                 String[] params) {
-        try {
-            urlParameters.put("service_id", params[1]);
-            urlParameters.put("partner_id", params[2]);
-
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return urlParameters;
-    }
-    public Map<String, String> partnerappliancesModelsPartTypes(Map<String, String> urlParameters,
                                                        String[] params) {
         try {
             urlParameters.put("service_id", params[1]);
             urlParameters.put("partner_id", params[2]);
 
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return urlParameters;
+    }
+
+    public Map<String, String> partnerappliancesModelsPartTypes(Map<String, String> urlParameters,
+                                                                String[] params) {
+        try {
+            urlParameters.put("service_id", params[1]);
+            urlParameters.put("partner_id", params[2]);
 
 
         } catch (Exception e) {
@@ -871,8 +876,9 @@ public class GetToken {
 
         return urlParameters;
     }
+
     public Map<String, String> partnerappliancesModelsPartTypesInventory(Map<String, String> urlParameters,
-                                                                String[] params) {
+                                                                         String[] params) {
         try {
             urlParameters.put("service_id", params[1]);
             urlParameters.put("partner_id", params[2]);
@@ -880,64 +886,39 @@ public class GetToken {
             urlParameters.put("part_type", params[3]);
 
 
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return urlParameters;
     }
+
     public Map<String, String> submitPrevPartsConsumption(Map<String, String> urlParameters,
-                                                                         String[] params) {
+                                                          String[] params) {
         try {
             urlParameters.put("submitPreviousPartsConsumption", params[1]);
 
 
-
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return urlParameters;
     }
+
     public Map<String, String> sendCancelRescheduleOTP(Map<String, String> urlParameters,
-                                                          String[] params) {
+                                                       String[] params) {
         try {
             urlParameters.put("booking_id", params[1]);
             urlParameters.put("tag", params[2]);
 
 
-
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return urlParameters;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public String getPostDataString(JSONObject params) throws Exception {

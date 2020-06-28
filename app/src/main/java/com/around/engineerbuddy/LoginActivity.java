@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.around.engineerbuddy.R;
 import com.around.engineerbuddy.activity.MainActivity;
 import com.around.engineerbuddy.component.BMAUrlSelectionDialog;
+import com.around.engineerbuddy.helper.ApplicationHelper;
 import com.around.engineerbuddy.util.BMAConstants;
 import com.around.engineerbuddy.util.BMAUIUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -51,7 +52,8 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
         setContentView(R.layout.activity_login);
         //MainActivityHelper.setApplicationObj(this);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO);//getSharedPreferences(SplashActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        if(MainActivityHelper.applicationHelper()!=null){
+        sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO);}//getSharedPreferences(SplashActivity.MyPREFERENCES, Context.MODE_PRIVATE);
 
         cd = new ConnectionDetector(this);
         misc = new Misc(this);
@@ -237,17 +239,19 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
                     JSONObject response = new JSONObject(jsonObject.getString("response"));
                     //Log.w(TAG, response.getString("agent_id"));
                     //Internally store data in mobile
-                    editor = sharedPrefs.edit();
-                    editor.putString("isLogin", "1");
-                    editor.putString("agentID", response.getString("agent_id"));
-                    editor.putString("agentName", response.getString("agent_name"));
-                    editor.putString("scAgentID", response.getString("sc_agent_id"));
-                    editor.putString("service_center_id", response.getString("service_center_id"));
-                    editor.putString("engineerID", response.getString("entity_id"));
-                    editor.putString("phoneNumber", response.getString("user_id"));
+                    if(sharedPrefs!=null) {
+                        editor = sharedPrefs.edit();
+                        editor.putString("isLogin", "1");
+                        editor.putString("agentID", response.getString("agent_id"));
+                        editor.putString("agentName", response.getString("agent_name"));
+                        editor.putString("scAgentID", response.getString("sc_agent_id"));
+                        editor.putString("service_center_id", response.getString("service_center_id"));
+                        editor.putString("engineerID", response.getString("entity_id"));
+                        editor.putString("phoneNumber", response.getString("user_id"));
 
-                    //editor.commit();
-                    editor.apply();
+                        //editor.commit();
+                        editor.apply();
+                    }
 
                     Bundle bundle = new Bundle();
                     bundle.putString(FirebaseAnalytics.Param.ITEM_ID, response.getString("agent_id"));
@@ -291,5 +295,12 @@ public class LoginActivity extends AppCompatActivity implements ApiResponse {
         BMAUrlSelectionDialog bmaUrlSelectionDialog = new BMAUrlSelectionDialog(this);
         bmaUrlSelectionDialog.show();
         ttlTapToOpenAppUrlDlg = 0;
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(MainActivityHelper.applicationHelper()==null) {
+            MainActivityHelper.setApplicationHelper(new ApplicationHelper(getApplicationContext()));
+        }
     }
 }

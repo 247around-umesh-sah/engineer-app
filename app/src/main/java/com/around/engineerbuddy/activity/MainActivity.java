@@ -46,6 +46,7 @@ import com.around.engineerbuddy.fragment.CovidFragment;
 import com.around.engineerbuddy.fragment.FragmentLoader;
 import com.around.engineerbuddy.fragment.HeaderFragment;
 import com.around.engineerbuddy.fragment.ProfileFragment;
+import com.around.engineerbuddy.helper.ApplicationHelper;
 import com.around.engineerbuddy.util.BMAConstants;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -93,7 +94,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         this.engineerID = getIntent().getStringExtra("engineerID");
         this.serviceCenterId = getIntent().getStringExtra("service_center_id");
         this.scAgentId = getIntent().getStringExtra("scAgentID");
-        sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO);
+        if(MainActivityHelper.applicationHelper()!=null) {
+            sharedPrefs = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO);
+        }
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         fragmentManager = getSupportFragmentManager();
@@ -156,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                             MainActivity.this.finish();
                         }
                     };
-                    bmaAlertDialog.show("Are you sure you want to logout?");
+                    bmaAlertDialog.show(getString(R.string.logoutConfirmationMsg));
                 }else  if (id == R.id.notification) {
                     fragment = new BMANotificationFragment();
                     Bundle bundle = new Bundle();
@@ -474,6 +477,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public void startSearch(String filterStr) {
         if (getPageFragment() != null) {
             getPageFragment().startSearch(filterStr);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("aaaaa","Onresume");
+        if(MainActivityHelper.applicationHelper()==null) {
+            MainActivityHelper.setApplicationHelper(new ApplicationHelper(getApplicationContext()));
         }
     }
 }

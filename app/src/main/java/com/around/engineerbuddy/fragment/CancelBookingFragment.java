@@ -307,7 +307,7 @@ public class CancelBookingFragment extends BMAFragment implements View.OnClickLi
                         bmaAlertDialog.dismiss();
                         processCancelBooking(selectedView);
                     }else{
-                        Toast.makeText(getContext(), "Please enter correct OTP or submit without  OTP", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.correctOTPValidation), Toast.LENGTH_SHORT).show();
                     }
                 }else {
 //                if (inputValue.trim().length() == 0) {

@@ -143,7 +143,7 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
                     bundle.putString("bookingID", eoBooking.bookingID);
                     this.updateFragment(bundle, new CancelBookingFragment(), getString(R.string.cancelBooking));
                 }else{
-                    Toast.makeText(getContext(), "You have already cancelled this booking", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.cancellBookingValidation), Toast.LENGTH_SHORT).show();
 
                 }
                 break;
@@ -178,12 +178,17 @@ public class BookingDetailFragment extends BMAFragment implements View.OnClickLi
                     bundle.putParcelable("eoBooking", eoBooking);
                     this.updateFragment(bundle, new CompleteBookingCategoryFragment(), getString(R.string.completeBooking));
                 }else{
-                    Toast.makeText(getContext(), "You are not allow to complete this booking", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.completeAllowValidation), Toast.LENGTH_SHORT).show();
 //
                 }
                 break;
             case R.id.tile4:
                 //bundle.putString(BMAConstants.HEADER_TXT, "New Appointment");
+                if(!eoBooking.allow_reshedule){
+                    Toast.makeText(getContext(), getString(R.string.allowReschduleValidation), Toast.LENGTH_SHORT).show();
+                    return;
+
+                }
 
                 if(eoBooking.service_center_booking_action_status!=null && !eoBooking.service_center_booking_action_status.equalsIgnoreCase("InProcess")) {
                     NewAppointmentFragment newAppointmentFragment = new NewAppointmentFragment();

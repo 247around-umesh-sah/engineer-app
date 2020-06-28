@@ -255,7 +255,7 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
                 }
             };
 
-            bmaAlertDialog.show("Server Error");
+            bmaAlertDialog.show(getString(R.string.serverError));
         }
 
     }
@@ -347,10 +347,10 @@ public class AllTasksFragment extends BMAFragment implements ApiResponse, View.O
                     if(inputValue.length()>=8) {
                         this.startSearch(inputValue);
                     }else{
-                        Toast.makeText(getContext(),"Enter Atleast 8 Character",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),getString(R.string.enterValidCharString),Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(getContext(),"Please enter Booking ID/Phone No",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),getString(R.string.eneterBookingIDValiadation),Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.incentiveRelativeLayout:

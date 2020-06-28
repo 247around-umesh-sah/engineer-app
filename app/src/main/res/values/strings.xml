@@ -176,6 +176,12 @@
     <string name="selectDefective">Select Defective</string>
     <string name="selectSolution">Select Solution</string>
     <string name="addProduct">Add Product</string>
+    <string name="cancellBookingValidation">You can not cancel this booking at the moment</string>
+    <string name="completeAllowValidation">You are not allow to complete this booking</string>
+    <string name="allowReschduleValidation">You are not allow to Reshedule this booking</string>
+
+
+
     <string name="addMore">Add More</string>
     <string name="fileExistValidation">File does not exist</string>
     <string name="videoExistValidation">Video does not exist</string>
@@ -195,6 +201,25 @@
     <string name="selectCompleteOnce">Please select complete one item</string>
     <string name="userIDValidation">UserID can\'t be blank</string>
     <string name="passwordValidation">Password can\'t be blank</string>
+    <string name="serverError">Server Error</string>
+    <string name="enterValidCharString">Enter Atleast 8 Character</string>
+    <string name="eneterBookingIDValiadation">Please enter Booking ID/Phone No</string>
+    <string name="correctOTPValidation">Please enter correct OTP or submit without  OTP</string>
+    <string name="pleaseenterAmount">Please enter amount</string>
+    <string name="enterInvalidAmount">You entered invalid amount</string>
+    <string name="eneterLessAmonutActualAmount">You have entered less amount then actual amount</string>
+    <string name="responseConnfirmationMessage">Your Request has been submitted but response did not receive from server, please check booking status to confirm</string>
+    <string name="NoInterNetConnection">No/Poor internet connection</string>
+    <string name="selecteConsumption">Please select Consumption Reason</string>
+    <string name="logoutConfirmationMsg">Are you sure you want to logout?</string>
+
+
+
+
+
+
+
+
 
 
 </resources>

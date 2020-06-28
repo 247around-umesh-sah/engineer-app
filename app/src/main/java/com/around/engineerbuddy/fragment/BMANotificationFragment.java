@@ -123,7 +123,7 @@ public class BMANotificationFragment extends BMAFragment {
                     super.onWarningDismiss();
                 }
             };
-            bmaAlertDialog.show("Server error");
+            bmaAlertDialog.show(getString(R.string.serverError));
         }
     }
 

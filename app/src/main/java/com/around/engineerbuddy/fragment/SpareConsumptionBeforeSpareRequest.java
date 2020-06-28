@@ -304,7 +304,7 @@ public class SpareConsumptionBeforeSpareRequest extends BMAFragment {
                     errorSelectReason.setError("error");
 
 
-                    Toast.makeText(getContext(), "Please select Consumption Reason ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.selecteConsumption), Toast.LENGTH_SHORT).show();
                     return;
                 }
                    // View itemView =this.recyclerView.findViewHolderForAdapterPosition(eoSpareCosumptionRequest.position).itemView;;

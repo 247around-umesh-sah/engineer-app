@@ -2,7 +2,8 @@
   {
     "EnvironmentID": "Test",
     "url": "http://testapp.247around.com/engineerApi",
-    "primaryKey":"1"
+    "primaryKey":"1",
+    "isChecked": true
 
 
 
@@ -12,8 +13,7 @@
   {
     "EnvironmentID": "Live",
     "url": "https://aroundhomzapp.com/engineerApi",
-    "primaryKey":"2",
-    "isChecked": true
+    "primaryKey":"2"
 
 
 

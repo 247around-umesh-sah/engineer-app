@@ -32,10 +32,10 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
     //public static String base_url = "http://stag.aroundhomzapp.com/engineerApi";
 
     //Testing URL
-   // public static String base_url = "http://testapp.247around.com/engineerApi";
+    public static String base_url = "http://testapp.247around.com/engineerApi";
 
     ///Live Url
-    static String base_url = "https://aroundhomzapp.com/engineerApi";
+   // static String base_url = "https://aroundhomzapp.com/engineerApi";
 
 
     //Kenstar
@@ -128,8 +128,12 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        String urlkey = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("urlKey", null);
-       // Log.d("aaaaa", "URL: KEY = " + urlkey);
+        String urlkey=null;
+        if (MainActivityHelper.applicationHelper() != null && MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO) != null) {
+
+
+            urlkey = MainActivityHelper.applicationHelper().getSharedPrefrences(BMAConstants.LOGIN_INFO).getString("urlKey", null);
+        }// Log.d("aaaaa", "URL: KEY = " + urlkey);
         if (urlkey != null) {
             if (urlkey.equalsIgnoreCase("1")) {
                 base_url = "http://testapp.247around.com/engineerApi";
@@ -140,7 +144,7 @@ public class HttpRequest extends AsyncTask<String, Void, String> {
                 base_url = "https://aroundhomzapp.com/engineerApi";
             }
         }
-        Log.d("aaaaa", "URL: = " + base_url);
+      //  Log.d("aaaaa", "URL: = " + base_url);
         progress = new ProgressDialog(context);
         progress.setMessage(context.getString(R.string.loading));
         progress.setIndeterminate(true);

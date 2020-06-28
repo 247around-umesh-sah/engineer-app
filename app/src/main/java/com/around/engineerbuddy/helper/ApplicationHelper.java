@@ -22,7 +22,9 @@ public class ApplicationHelper {
 //    }
     public  SharedPreferences getSharedPrefrences(String myprencesName) {
         if(sharedprefrence==null){
-            sharedprefrence=this.applicationContex.getSharedPreferences(myprencesName, Context.MODE_PRIVATE);
+            if(this.applicationContex!=null) {
+                sharedprefrence = this.applicationContex.getSharedPreferences(myprencesName, Context.MODE_PRIVATE);
+            }
             //this.editor=sharedprefrence.edit();
         }
         return this.sharedprefrence;

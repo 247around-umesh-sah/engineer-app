@@ -89,10 +89,10 @@ public class CheckoutFragment extends BMAFragment {
                     public void onConfirmation(String inputValue) {
                         super.onConfirmation(inputValue);
                         if(inputValue.trim().length()==0){
-                            Toast.makeText(getContext(),"Please enter amount",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),getString(R.string.pleaseenterAmount),Toast.LENGTH_SHORT).show();
                             return;
                         }else if(Double.valueOf(inputValue)==0 && totalAmount>0){
-                            Toast.makeText(getContext(),"You entered invalid amount",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),getString(R.string.enterInvalidAmount),Toast.LENGTH_SHORT).show();
                         } else if(Double.valueOf(inputValue)<totalAmount){
                             showValidationMessage(inputValue);
                             return;
@@ -162,7 +162,7 @@ public class CheckoutFragment extends BMAFragment {
                 backScreen(amount);
             }
         };
-        bmaAlertDialog.show("You have entered less amount then actual amount");
+        bmaAlertDialog.show(getString(R.string.eneterLessAmonutActualAmount));
        // bmaAlertDialog.showInputField();
     }
     private void backScreen(String inputValue){

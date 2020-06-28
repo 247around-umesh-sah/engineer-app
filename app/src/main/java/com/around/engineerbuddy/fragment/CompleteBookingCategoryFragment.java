@@ -578,8 +578,10 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
     boolean isNetWork;
     @Override
     public void processFinish(String response) {
-        httpRequest.progress.dismiss();
-        Log.d("resp", "response  = " + response);
+        if(this.httpRequest!=null && this.httpRequest.progress!=null) {
+            httpRequest.progress.dismiss();
+        }
+     //   Log.d("resp", "response  = " + response);
         if (response.contains("data")) {
             JSONObject jsonObjectHttpReq;
 
@@ -646,7 +648,7 @@ public class CompleteBookingCategoryFragment extends BMAFragment implements View
                     }
                 }
             };
-            bmaAlertDialog.show(isNetWork ? "Your Request has been submitted but response did not receive from server, please check booking status to confirm" : "No/Poor internet connection");
+            bmaAlertDialog.show(isNetWork ? getString(R.string.responseConnfirmationMessage) : getString(R.string.NoInterNetConnection));
         }
 
 
